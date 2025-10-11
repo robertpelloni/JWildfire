@@ -1063,7 +1063,11 @@ VariationFuncList {
     registerVariationFunc(MobiqNFunc.class);
     registerVariationFunc(FlameBulbFunc.class);
     registerVariationFunc(PointMirrorSymmetryFunc.class);
-
+    registerVariationFunc(AttractorFlowFunc.class);
+    registerVariationFunc(BusyBradFunc.class);
+    registerVariationFunc(GreeblesFunc.class);
+    registerVariationFunc(Neuron3DFunc.class);
+    
     resolvedAliasMap = new HashMap<>();
     for (Entry<Class<? extends VariationFunc>, String> funcCls : aliasMap.entrySet()) {
       VariationFunc varFunc = getVariationInstance(funcCls.getKey(), false);
