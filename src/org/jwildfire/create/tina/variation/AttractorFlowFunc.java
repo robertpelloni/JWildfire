@@ -126,7 +126,7 @@ public class AttractorFlowFunc extends VariationFunc {
   }
 
   @Override
-  public String getName() { return "attractorFlow"; }
+  public String getName() { return "attractor_flow"; }
   
   @Override
   public String[] getParameterNames() { return paramNames; }
