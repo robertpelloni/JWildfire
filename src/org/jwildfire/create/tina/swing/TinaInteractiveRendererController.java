@@ -458,6 +458,7 @@ public class TinaInteractiveRendererController implements IterationObserver {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void resumeRenderThreads() {
     if (threads != null && state == State.RENDER) {
       for (Thread t : threads.getExecutingThreads()) {
@@ -466,6 +467,7 @@ public class TinaInteractiveRendererController implements IterationObserver {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void pauseRenderThreads() {
     if (threads != null && state == State.RENDER) {
       for (Thread t : threads.getExecutingThreads()) {

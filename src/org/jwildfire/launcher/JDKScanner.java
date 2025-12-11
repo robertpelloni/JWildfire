@@ -104,7 +104,7 @@ public class JDKScanner {
 
   private String readRegistryString(String key, String value) throws Exception {
     int[] handles = (int[]) regOpenKey.invoke(systemRoot, new Object[] {
-        new Integer(HKEY_LOCAL_MACHINE), toCstr(key), new Integer(KEY_READ) });
+        Integer.valueOf(HKEY_LOCAL_MACHINE), toCstr(key), Integer.valueOf(KEY_READ) });
     if (handles[1] != 0) {
       return null;
     }

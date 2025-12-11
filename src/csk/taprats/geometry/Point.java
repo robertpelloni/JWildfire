@@ -341,14 +341,14 @@ public class Point extends Primitive
 
 	public static final void main( String[] args ) {
 		Point p = new Point( 
-			(new Double(args[0])).doubleValue(),
-			(new Double(args[1])).doubleValue() );
+			(Double.valueOf(args[0])).doubleValue(),
+			(Double.valueOf(args[1])).doubleValue() );
 		Point a = new Point( 
-			(new Double(args[2])).doubleValue(),
-			(new Double(args[3])).doubleValue() );
+			(Double.valueOf(args[2])).doubleValue(),
+			(Double.valueOf(args[3])).doubleValue() );
 		Point b = new Point( 
-			(new Double(args[4])).doubleValue(),
-			(new Double(args[5])).doubleValue() );
+			(Double.valueOf(args[4])).doubleValue(),
+			(Double.valueOf(args[5])).doubleValue() );
 
 		System.out.println( p.distToLine( a, b ) );
 	}
