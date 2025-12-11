@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'org.jwildfire'
@@ -34,6 +35,11 @@ ext {
     lwjglVersion = '3.3.3'
 }
 
+javafx {
+    version = javaFxVersion
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.swing', 'javafx.graphics' ]
+}
+
 dependencies {
     // Core Dependencies
     implementation 'commons-collections:commons-collections:3.2.2'
@@ -47,20 +53,6 @@ dependencies {
 
     // Dependencies from lib folder (Legacy/Not in Maven Central)
     implementation fileTree(dir: 'lib', include: ['*.jar'], exclude: ['lwjgl.jar', 'junit*.jar', 'commons-io*.jar'])
-
-    // JavaFX
-    implementation "org.openjfx:javafx-base:${javaFxVersion}"
-    implementation "org.openjfx:javafx-controls:${javaFxVersion}"
-    implementation "org.openjfx:javafx-fxml:${javaFxVersion}"
-    implementation "org.openjfx:javafx-graphics:${javaFxVersion}"
-    implementation "org.openjfx:javafx-swing:${javaFxVersion}"
-    
-    // Linux specific JavaFX (Assuming Linux environment for the sandbox)
-    implementation "org.openjfx:javafx-base:${javaFxVersion}:linux"
-    implementation "org.openjfx:javafx-controls:${javaFxVersion}:linux"
-    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:linux"
-    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:linux"
-    implementation "org.openjfx:javafx-swing:${javaFxVersion}:linux"
 
     // LWJGL
     implementation platform("org.lwjgl:lwjgl-bom:${lwjglVersion}")
