@@ -39,7 +39,7 @@ public class Sawtooth extends PostfixMathCommand {
     double r = x - (int) (x);
     if (x < 0.0)
       r += 1.0;
-    inStack.push(new Double(r));
+    inStack.push(Double.valueOf(r));
   }
 
   private double valueToDouble(Object pValue) {

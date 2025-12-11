@@ -241,7 +241,7 @@ public class Tiling
 		throws IOException
 	{
 		st.nextToken();
-		return (new Double( st.sval )).doubleValue();
+		return (Double.valueOf( st.sval )).doubleValue();
 	}
 
 	public static Tiling readTiling( Reader r )

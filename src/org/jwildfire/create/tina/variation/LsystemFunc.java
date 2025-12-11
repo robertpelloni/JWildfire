@@ -97,7 +97,7 @@ public class LsystemFunc extends VariationFunc {
       this.numberOfParams = numberOfParams;
       params = new Double[numberOfParams];
       for (int i = 0; i < numberOfParams; i++) {
-        params[i] = new Double(0.0);
+        params[i] = Double.valueOf(0.0);
         params[i] = 0.0;
       }
     }
@@ -108,7 +108,7 @@ public class LsystemFunc extends VariationFunc {
       this.params = new Double[numberOfParams];
 
       for (int i = 0; i < numberOfParams; i++) {
-        this.params[i] = new Double(0.0);
+        this.params[i] = Double.valueOf(0.0);
         this.params[i] = module.params[i];
       }
     }

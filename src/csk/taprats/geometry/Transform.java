@@ -309,12 +309,12 @@ public class Transform
 
 	public final int hashCode()
 	{
-		return (new Double( a )).hashCode() ^
-			(new Double( b )).hashCode() ^
-			(new Double( c )).hashCode() ^
-			(new Double( d )).hashCode() ^
-			(new Double( e )).hashCode() ^
-			(new Double( f )).hashCode();
+		return (Double.valueOf( a )).hashCode() ^
+			(Double.valueOf( b )).hashCode() ^
+			(Double.valueOf( c )).hashCode() ^
+			(Double.valueOf( d )).hashCode() ^
+			(Double.valueOf( e )).hashCode() ^
+			(Double.valueOf( f )).hashCode();
 	}
 
 	/*

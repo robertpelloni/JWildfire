@@ -89,7 +89,7 @@ public class Sort
 			if( tt == st.TT_EOF ) {
 				break;
 			}
-			v.addElement( new Integer( (int)( st.nval ) ) );
+			v.addElement( Integer.valueOf( (int)( st.nval ) ) );
 		}
 
 		quickSort( v, 0, v.size() - 1, c );

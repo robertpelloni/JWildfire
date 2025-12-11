@@ -41,7 +41,7 @@ public class Rect extends PostfixMathCommand {
       r = 1.0;
     else
       r = 0.0;
-    inStack.push(new Double(r));
+    inStack.push(Double.valueOf(r));
   }
 
   private double valueToDouble(Object pValue) {

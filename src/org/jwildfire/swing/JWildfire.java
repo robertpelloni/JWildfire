@@ -52,6 +52,7 @@ import org.jwildfire.create.tina.render.gpu.GPURendererFactory;
 import org.jwildfire.create.tina.swing.*;
 import org.jwildfire.create.tina.swing.MainEditorFrame;
 
+@SuppressWarnings("deprecation")
 public class JWildfire extends JApplet {
   private final List<FrameHolder> mainInternalFrames;
   private final List<FrameHolder> settingsInternalFrames;

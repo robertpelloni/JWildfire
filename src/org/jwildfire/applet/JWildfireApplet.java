@@ -56,6 +56,7 @@ import org.jwildfire.create.tina.swing.RandomBatchQuality;
 import org.jwildfire.image.SimpleImage;
 import org.jwildfire.swing.ImagePanel;
 
+@SuppressWarnings("deprecation")
 public class JWildfireApplet extends JApplet implements IterationObserver {
   private static final long serialVersionUID = 1L;
 

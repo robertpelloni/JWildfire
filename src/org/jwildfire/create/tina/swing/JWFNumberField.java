@@ -67,7 +67,7 @@ public class JWFNumberField extends JPanel implements MotionCurveEditor {
             getClass().getResource("/org/jwildfire/swing/icons/new/curve-money2-empty.png")));
 
     add(motionCurveBtn, BorderLayout.WEST);
-    spinnerModel = new SpinnerNumberModel(new Double(0), null, null, new Double(valueStep));
+    spinnerModel = new SpinnerNumberModel(Double.valueOf(0), null, null, Double.valueOf(valueStep));
     spinnerField =
         new JSpinner(spinnerModel) {
           @Override
@@ -293,7 +293,7 @@ public class JWFNumberField extends JPanel implements MotionCurveEditor {
   public Object getValue() {
     Object val = spinnerField.getValue();
     if (val != null && val instanceof Double && onlyIntegers) {
-      val = new Double(Tools.FTOI((Double) val));
+      val = Double.valueOf(Tools.FTOI((Double) val));
     }
     return val;
   }

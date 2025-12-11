@@ -47,7 +47,7 @@ public class Triangle extends PostfixMathCommand {
       if (r > 1.0)
         r = 2.0 - r;
     }
-    inStack.push(new Double(r));
+    inStack.push(Double.valueOf(r));
   }
 
   private double valueToDouble(Object pValue) {

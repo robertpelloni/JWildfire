@@ -117,7 +117,7 @@ public class JDKScanner {
   private List<String> readStringSubKeys(int hkey, String key) throws Exception {
     List<String> results = new ArrayList<String>();
     int[] handles = (int[]) regOpenKey.invoke(systemRoot, new Object[] {
-        Integer.valueOf(hkey), toCstr(key), new Integer(KEY_READ)
+        Integer.valueOf(hkey), toCstr(key), Integer.valueOf(KEY_READ)
     });
     if (handles[1] != 0) {
       return null;
