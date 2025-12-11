@@ -18,6 +18,7 @@ package org.jwildfire.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -52,6 +53,8 @@ public class WelcomeFrame extends JFrame {
 
     JPanel northPanel = new JPanel();
     northPanel.setBackground(Color.BLACK);
+    northPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    northPanel.setToolTipText("Visit JWildfire.org");
     northPanel.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
@@ -69,6 +72,8 @@ public class WelcomeFrame extends JFrame {
     southPanel.setLayout(null);
 
     JButton websiteButton = new JButton("Main webpage");
+    websiteButton.setToolTipText("Open the official JWildfire website");
+    websiteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     websiteButton.setDefaultCapable(false);
     websiteButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -85,6 +90,7 @@ public class WelcomeFrame extends JFrame {
 
     JButton communityBtn = new JButton("FB community");
     communityBtn.setToolTipText("JWildfire Open Group at Facebook");
+    communityBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     communityBtn.setDefaultCapable(false);
     communityBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -99,6 +105,8 @@ public class WelcomeFrame extends JFrame {
     southPanel.add(communityBtn);
 
     JButton youtubeVideosBtn = new JButton("Included Variations");
+    youtubeVideosBtn.setToolTipText("List of included variations");
+    youtubeVideosBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     youtubeVideosBtn.setDefaultCapable(false);
     youtubeVideosBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -114,6 +122,8 @@ public class WelcomeFrame extends JFrame {
     southPanel.add(youtubeVideosBtn);
 
     JButton pdfTutorialsBtn = new JButton("Documentation");
+    pdfTutorialsBtn.setToolTipText("Open online documentation");
+    pdfTutorialsBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     pdfTutorialsBtn.setDefaultCapable(false);
     pdfTutorialsBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -128,6 +138,8 @@ public class WelcomeFrame extends JFrame {
     southPanel.add(pdfTutorialsBtn);
 
     JButton donationsBtn = new JButton("Donate");
+    donationsBtn.setToolTipText("Support JWildfire development");
+    donationsBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     donationsBtn.setDefaultCapable(false);
     donationsBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -142,6 +154,8 @@ public class WelcomeFrame extends JFrame {
     southPanel.add(donationsBtn);
 
     JButton updatesBtn = new JButton("Newest downloads");
+    updatesBtn.setToolTipText("Check for updates and downloads");
+    updatesBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     updatesBtn.setDefaultCapable(false);
     updatesBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -156,6 +170,8 @@ public class WelcomeFrame extends JFrame {
     southPanel.add(updatesBtn);
 
     JButton dravesBtn = new JButton("Forum");
+    dravesBtn.setToolTipText("Visit the community forum");
+    dravesBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     dravesBtn.setDefaultCapable(false);
     dravesBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -171,6 +187,8 @@ public class WelcomeFrame extends JFrame {
 
     JPanel panel_2 = new JPanel();
     panel_2.setBackground(Color.BLACK);
+    panel_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    panel_2.setToolTipText("Click to close this window");
     panel_2.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
