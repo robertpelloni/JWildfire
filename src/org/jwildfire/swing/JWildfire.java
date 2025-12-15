@@ -231,15 +231,15 @@ public class JWildfire extends JApplet {
 
       FormulaExplorerFrame formulaExplorerFrame = getJFrame(FormulaExplorerFrame.class);
 
-      formulaExplorerController = new FormulaExplorerController(
-          (FormulaPanel) formulaExplorerFrame.getFormulaPanel(),
-          formulaExplorerFrame.getFormulaExplorerFormula1REd(),
-          formulaExplorerFrame.getFormulaExplorerFormula2REd(),
-          formulaExplorerFrame.getFormulaExplorerFormula3REd(),
-          formulaExplorerFrame.getFormulaExplorerFormulaXMinREd(),
-          formulaExplorerFrame.getFormulaExplorerFormulaXMaxREd(),
-          formulaExplorerFrame.getFormulaExplorerFormulaXCountREd(),
-          formulaExplorerFrame.getFormulaExplorerValuesTextArea());
+      // formulaExplorerController = new FormulaExplorerController(
+      //    (FormulaPanel) formulaExplorerFrame.getFormulaPanel(),
+      //    formulaExplorerFrame.getFormulaExplorerFormula1REd(),
+      //    formulaExplorerFrame.getFormulaExplorerFormula2REd(),
+      //    formulaExplorerFrame.getFormulaExplorerFormula3REd(),
+      //    formulaExplorerFrame.getFormulaExplorerFormulaXMinREd(),
+      //    formulaExplorerFrame.getFormulaExplorerFormulaXMaxREd(),
+      //    formulaExplorerFrame.getFormulaExplorerFormulaXCountREd(),
+      //    formulaExplorerFrame.getFormulaExplorerValuesTextArea());
 
       OperatorsFrame operatorsFrame = getJFrame(OperatorsFrame.class);
       operatorsFrame.setDesktop(this);
@@ -266,7 +266,7 @@ public class JWildfire extends JApplet {
 
       operatorsFrame.setMainController(mainController);
       formulaExplorerFrame.setMainController(mainController);
-      formulaExplorerFrame.setFormulaExplorerController(formulaExplorerController);
+      // formulaExplorerFrame.setFormulaExplorerController(formulaExplorerController);
     }
 
     if (!prefs.isSkipPathCheckAtStartup()) {
@@ -1101,12 +1101,12 @@ public class JWildfire extends JApplet {
 
     mainController.refreshWindowMenu();
 
-    try {
-      formulaExplorerController.calculate();
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
+    //try {
+    //  formulaExplorerController.calculate();
+    //}
+    //catch (Exception e) {
+    //  e.printStackTrace();
+    //}
 
     enableControls();
   }

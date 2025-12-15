@@ -17,182 +17,57 @@
 package org.jwildfire.swing;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Point;
-import java.awt.SystemColor;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.net.URL;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
-import org.jwildfire.base.Prefs;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 @SuppressWarnings("serial")
 public class AIPostDenoiserInfoFrame extends JFrame {
-  private JPanel jContentPane = null;
+  private JFXPanel jfxPanel;
 
   public AIPostDenoiserInfoFrame() {
     super();
     initialize();
   }
 
-  /**
-   * This method initializes this
-   * 
-   * @return void
-   */
   private void initialize() {
     this.setSize(1188, 740);
-    this.setFont(Prefs.getPrefs().getFont("Dialog", Font.PLAIN, 10));
     this.setLocation(new Point(JWildfire.DEFAULT_WINDOW_LEFT, JWildfire.DEFAULT_WINDOW_TOP));
     this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-    this.setTitle("AI Post Denoiser Info");
+    this.setTitle("AI Post Denoiser Info (JavaFX)");
     this.setVisible(false);
     this.setResizable(true);
-    this.setContentPane(getJContentPane());
+    
+    jfxPanel = new JFXPanel();
+    this.getContentPane().add(jfxPanel, BorderLayout.CENTER);
+    
+    Platform.runLater(this::initFX);
   }
 
-  /**
-   * This method initializes jContentPane
-   * 
-   * @return javax.swing.JPanel
-   */
-  private JPanel getJContentPane() {
-    if (jContentPane == null) {
-      jContentPane = new JPanel();
-      jContentPane.setLayout(new BorderLayout());
-      jContentPane.setFont(Prefs.getPrefs().getFont("Dialog", Font.PLAIN, 10));
-      jContentPane.setSize(new Dimension(1097, 617));
-      jContentPane.add(getMainTabbedPane(), BorderLayout.CENTER);
-    }
-    return jContentPane;
-  }
-
-  private JScrollPane optiXDenoiserScrollPane;
-  private JTextPane optiXInfoPane;
-  private JTabbedPane mainTabbedPane;
-  private JScrollPane oidnDenoiserScrollPane;
-  private JTextPane oidnInfoPane;
-
-  private JScrollPane getOptiXDenoiserScrollPane() {
-    if (optiXDenoiserScrollPane == null) {
-      optiXDenoiserScrollPane = new JScrollPane();
-      optiXDenoiserScrollPane.setPreferredSize(new Dimension(6, 400));
-      optiXDenoiserScrollPane.setViewportView(getOptiXInfoPane());
-    }
-    return optiXDenoiserScrollPane;
-  }
-
-  JTextPane getOptiXInfoPane() {
-    if (optiXInfoPane == null) {
-      optiXInfoPane = new JTextPane();
-      optiXInfoPane.setFont(Prefs.getPrefs().getFont("SansSerif", Font.PLAIN, 16));
-      optiXInfoPane.addHyperlinkListener(new HyperlinkListener() {
-        public void hyperlinkUpdate(HyperlinkEvent e) {
-          if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            try {
-              java.awt.Desktop.getDesktop().browse(e.getURL().toURI());
-            }
-            catch (Exception ex) {
-              ex.printStackTrace();
-            }
-          }
-        }
-      });
-      optiXInfoPane.setEditable(false);
-    }
-    return optiXInfoPane;
-  }
-
-  public void initOptiXInfoPane() {
-    optiXInfoPane.setContentType("text/html");
+  private void initFX() {
     try {
-      InputStream is = this.getClass().getResourceAsStream("OptiX_Denoiser.txt");
-      StringBuffer content = new StringBuffer();
-      String lineFeed = System.getProperty("line.separator");
-      String line;
-      Reader r = new InputStreamReader(is, "utf-8");
-      BufferedReader in = new BufferedReader(r);
-      while ((line = in.readLine()) != null) {
-        content.append(line).append(lineFeed);
+      URL resource = getClass().getResource("ai_post_denoiser_info.fxml");
+      if (resource == null) {
+        throw new RuntimeException("ai_post_denoiser_info.fxml not found");
       }
-      in.close();
-      optiXInfoPane.setText("<pre>" + content.toString() + "</pre>");
-      optiXInfoPane.setSelectionStart(0);
-      optiXInfoPane.setSelectionEnd(0);
-    }
-    catch (Exception ex) {
-      ex.printStackTrace();
-    }
-  }
-
-  public void initOIDNInfoPane() {
-    oidnInfoPane.setContentType("text/html");
-    try {
-      InputStream is = this.getClass().getResourceAsStream("OIDN_Denoiser.txt");
-      StringBuffer content = new StringBuffer();
-      String lineFeed = System.getProperty("line.separator");
-      String line;
-      Reader r = new InputStreamReader(is, "utf-8");
-      BufferedReader in = new BufferedReader(r);
-      while ((line = in.readLine()) != null) {
-        content.append(line).append(lineFeed);
-      }
-      in.close();
-      oidnInfoPane.setText("<pre>" + content.toString() + "</pre>");
-      oidnInfoPane.setSelectionStart(0);
-      oidnInfoPane.setSelectionEnd(0);
-    }
-    catch (Exception ex) {
-      ex.printStackTrace();
+      FXMLLoader loader = new FXMLLoader(resource);
+      Parent root = loader.load();
+      Scene scene = new Scene(root);
+      jfxPanel.setScene(scene);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
-  private JTabbedPane getMainTabbedPane() {
-    if (mainTabbedPane == null) {
-      mainTabbedPane = new JTabbedPane(JTabbedPane.TOP);
-      mainTabbedPane.addTab("NVidia's OptiX Denoiser", null, getOptiXDenoiserScrollPane(), null);
-      mainTabbedPane.addTab("Intel's OIDN Denoiser", null, getOidnDenoiserScrollPane(), null);
-    }
-    return mainTabbedPane;
-  }
-
-  private JScrollPane getOidnDenoiserScrollPane() {
-    if (oidnDenoiserScrollPane == null) {
-      oidnDenoiserScrollPane = new JScrollPane();
-      oidnDenoiserScrollPane.setViewportView(getOidnInfoPane());
-    }
-    return oidnDenoiserScrollPane;
-  }
-
-  private JTextPane getOidnInfoPane() {
-    if (oidnInfoPane == null) {
-      oidnInfoPane = new JTextPane();
-      oidnInfoPane.setFont(Prefs.getPrefs().getFont("SansSerif", Font.PLAIN, 16));
-      oidnInfoPane.addHyperlinkListener(new HyperlinkListener() {
-        public void hyperlinkUpdate(HyperlinkEvent e) {
-          if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            try {
-              java.awt.Desktop.getDesktop().browse(e.getURL().toURI());
-            }
-            catch (Exception ex) {
-              ex.printStackTrace();
-            }
-          }
-        }
-      });
-      oidnInfoPane.setEditable(false);
-    }
-    return oidnInfoPane;
-  }
+  // Deprecated methods for compatibility
+  public void initOptiXInfoPane() { }
+  public void initOIDNInfoPane() { }
 }

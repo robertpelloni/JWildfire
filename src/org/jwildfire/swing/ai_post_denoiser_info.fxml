@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jwildfire.swing.AIPostDenoiserInfoController">
+   <center>
+      <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="NVidia's OptiX Denoiser">
+               <content>
+                  <BorderPane>
+                     <center>
+                        <WebView fx:id="optiXWebView" prefHeight="600.0" prefWidth="800.0" />
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+          <Tab text="Intel's OIDN Denoiser">
+               <content>
+                  <BorderPane>
+                     <center>
+                        <WebView fx:id="oidnWebView" prefHeight="600.0" prefWidth="800.0" />
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

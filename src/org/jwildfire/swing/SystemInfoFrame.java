@@ -18,31 +18,23 @@ package org.jwildfire.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
 
-import org.jwildfire.base.Prefs;
-import org.jwildfire.create.tina.variation.RessourceManager;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 public class SystemInfoFrame extends JFrame {
   private static final long serialVersionUID = 1L;
-  private JTextPane textPane;
-  private JButton clearCacheButton;
+  private JFXPanel jfxPanel;
+  private SystemInfoController controller;
 
   /**
    * give components names so we can test them
@@ -50,88 +42,49 @@ public class SystemInfoFrame extends JFrame {
    */
   public SystemInfoFrame() {
 
+    setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    setResizable(true);
+    setName("siif");
+    setTitle("System Information (JavaFX)");
+    setBounds(320, 140, 400, 300);
+
+    jfxPanel = new JFXPanel();
+    getContentPane().add(jfxPanel, BorderLayout.CENTER);
+
+    Platform.runLater(this::initFX);
+    
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowActivated(WindowEvent e) {
         refresh();
       }
     });
+  }
 
-    setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-    setResizable(true);
-    setName("siif");
-
-    JButton refreshButton = new JButton("Refresh");
-    refreshButton.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        refresh();
+  private void initFX() {
+    try {
+      URL resource = getClass().getResource("system_info.fxml");
+      if (resource == null) {
+        throw new RuntimeException("system_info.fxml not found");
       }
-    });
-    refreshButton.setPreferredSize(new Dimension(36, 36));
-    refreshButton.setFont(Prefs.getPrefs().getFont("Dialog", Font.BOLD, 10));
-
-    getContentPane().add(refreshButton, BorderLayout.NORTH);
-    JPanel mainPane = new JPanel();
-    mainPane.setName("siif.sysInfoPanel");
-    getContentPane().add(mainPane, BorderLayout.CENTER);
-    mainPane.setLayout(new BorderLayout(0, 0));
-
-    JScrollPane scrollPane = new JScrollPane();
-    scrollPane.setName("siif.scrollPane");
-    mainPane.add(scrollPane, BorderLayout.CENTER);
-
-    textPane = new JTextPane();
-    textPane.setFont(Prefs.getPrefs().getFont("Dialog", Font.PLAIN, 10));
-    textPane.setEditable(false);
-    textPane.setName("siif.text");
-    scrollPane.setViewportView(textPane);
-    setTitle("System Information");
-    setBounds(320, 140, 297, 208);
-    textPane.setText(collectInfo());
-
-    clearCacheButton = new JButton("Clear cache");
-    clearCacheButton.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        RessourceManager.clearAll();
-        System.gc();
-        refresh();
-      }
-    });
-    clearCacheButton.setPreferredSize(new Dimension(36, 36));
-    clearCacheButton.setFont(Prefs.getPrefs().getFont("Dialog", Font.BOLD, 10));
-    getContentPane().add(clearCacheButton, BorderLayout.SOUTH);
-    pack();
+      FXMLLoader loader = new FXMLLoader(resource);
+      Parent root = loader.load();
+      controller = loader.getController();
+      Scene scene = new Scene(root);
+      jfxPanel.setScene(scene);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public void refresh() {
-    textPane.setText(collectInfo());
+    if (controller != null) {
+      Platform.runLater(() -> controller.refresh());
+    }
   }
 
-  private String collectInfo() {
-    StringBuffer sb = new StringBuffer();
-    sb.append("Operating system: " + System.getProperty("os.name") + "\n");
-    sb.append("Available processors: " + Runtime.getRuntime().availableProcessors() + " cores\n\n");
-    sb.append("Java version: " + System.getProperty("java.version") + "\n\n");
-    long allocatedMemory =
-        (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory());
-    long presumableFreeMemory = Runtime.getRuntime().maxMemory() - allocatedMemory;
-    sb.append("Maximum memory: " + (Runtime.getRuntime().maxMemory() == Long.MAX_VALUE ? "no limit" : formatMemoryInGB(Runtime.getRuntime().maxMemory()) + " GB") + "\n");
-    sb.append("Free memory (approximated): " + formatMemoryInGB(presumableFreeMemory) + " GB\n\n");
-    sb.append("Press the [Clear cache]-button to free any resources (images, meshes, fonts, ...) which are currently hold in memory in order to speed up future calculations.\n\n");
-    return sb.toString();
-  }
-
-  private String formatMemoryInGB(long memory) {
-    NumberFormat fmt = DecimalFormat.getInstance(Locale.US);
-    fmt.setGroupingUsed(false);
-    fmt.setMaximumFractionDigits(1);
-    fmt.setMinimumIntegerDigits(1);
-    return fmt.format(memory / 1024.0 / 1024.0 / 1024.0);
-  }
-
+  // Deprecated/Legacy accessor - kept for compatibility if needed, but returns null now
   public JButton getClearCacheButton() {
-    return clearCacheButton;
+    return null; 
   }
 }

@@ -17,118 +17,61 @@
 package org.jwildfire.swing;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.jwildfire.base.Prefs;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import java.awt.*;
-import java.text.SimpleDateFormat;
+import java.net.URL;
 
 @SuppressWarnings("serial")
 public class MessageLogFrame extends JFrame implements MessageLogEventObserver {
-  private JPanel jContentPane = null;
+  private JFXPanel jfxPanel;
 
   public MessageLogFrame() {
     super();
     initialize();
   }
 
-  /**
-   * This method initializes this
-   * 
-   * @return void
-   */
   private void initialize() {
     this.setSize(1188, 740);
-    this.setFont(Prefs.getPrefs().getFont("Dialog", Font.PLAIN, 10));
     this.setLocation(new Point(JWildfire.DEFAULT_WINDOW_LEFT, JWildfire.DEFAULT_WINDOW_TOP));
     this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-    this.setTitle("Message log");
+    this.setTitle("Message log (JavaFX)");
     this.setVisible(false);
     this.setResizable(true);
-    this.setContentPane(getJContentPane());
+    
+    jfxPanel = new JFXPanel();
+    this.getContentPane().add(jfxPanel, BorderLayout.CENTER);
+    
+    Platform.runLater(this::initFX);
   }
 
-  /**
-   * This method initializes jContentPane
-   * 
-   * @return javax.swing.JPanel
-   */
-  private JPanel getJContentPane() {
-    if (jContentPane == null) {
-      jContentPane = new JPanel();
-      jContentPane.setLayout(new BorderLayout());
-      jContentPane.setFont(Prefs.getPrefs().getFont("Dialog", Font.PLAIN, 10));
-      jContentPane.setSize(new Dimension(1097, 617));
-      jContentPane.add(getScrollPane(), BorderLayout.CENTER);
-    }
-    return jContentPane;
-  }
-
-  private JScrollPane scrollPane;
-  private JTextPane logMessagesPane;
-
-  private JScrollPane getScrollPane() {
-    if (scrollPane == null) {
-      scrollPane = new JScrollPane();
-      scrollPane.setPreferredSize(new Dimension(6, 400));
-      scrollPane.setViewportView(getLogMessagesPane());
-    }
-    return scrollPane;
-  }
-
-  JTextPane getLogMessagesPane() {
-    if (logMessagesPane == null) {
-      logMessagesPane = new JTextPane();
-      logMessagesPane.setFont(Prefs.getPrefs().getFont("SansSerif", Font.PLAIN, 14));
-      logMessagesPane.addHyperlinkListener(new HyperlinkListener() {
-        public void hyperlinkUpdate(HyperlinkEvent e) {
-          if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            try {
-              java.awt.Desktop.getDesktop().browse(e.getURL().toURI());
-            }
-            catch (Exception ex) {
-              ex.printStackTrace();
-            }
-          }
-        }
-      });
-      logMessagesPane.setEditable(false);
-    }
-    return logMessagesPane;
-  }
-
-  public void initLogMessagePane() {
-    logMessagesPane.setContentType("text/html");
+  private void initFX() {
     try {
-      //logMessagesPane.setText("<pre>" + "" + "</pre>");
-      logMessagesPane.setSelectionStart(0);
-      logMessagesPane.setSelectionEnd(0);
-      MessageLogMapHolder.create().registerObserver(this);
+      URL resource = getClass().getResource("message_log.fxml");
+      if (resource == null) {
+        throw new RuntimeException("message_log.fxml not found");
+      }
+      FXMLLoader loader = new FXMLLoader(resource);
+      Parent root = loader.load();
+      Scene scene = new Scene(root);
+      jfxPanel.setScene(scene);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    catch (Exception ex) {
-      ex.printStackTrace();
-    }
+  }
+
+  // Deprecated method for compatibility - Controller handles registration now
+  public void initLogMessagePane() {
+    // No-op
   }
 
   @Override
   public void update(ILoggingEvent event) {
-    StringBuilder builder = new StringBuilder();
-    builder.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(event.getTimeStamp())+" "+event.getLevel()+"\n");
-    builder.append("    "+event.getLoggerName()+ ": " + event.getFormattedMessage()+"\n");
-    for(StackTraceElement element: event.getCallerData()) {
-      builder.append("        "+element.toString()+"\n");
-    }
-    builder.append("\n\n");
-    try {
-      Document doc = logMessagesPane.getDocument();
-      doc.insertString(0, builder.toString(), null);
-      logMessagesPane.setCaretPosition(0);
-    } catch (BadLocationException e) {
-      e.printStackTrace();
-    }
+    // No-op, logic moved to Controller
   }
 }

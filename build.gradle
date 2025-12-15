@@ -37,7 +37,7 @@ ext {
 
 javafx {
     version = javaFxVersion
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.swing', 'javafx.graphics' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.swing', 'javafx.graphics', 'javafx.web' ]
 }
 
 dependencies {
