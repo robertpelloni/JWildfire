@@ -61,6 +61,9 @@ dependencies {
     implementation "org.lwjgl:lwjgl-opengl"
     implementation "org.lwjgl:lwjgl-opencl"
 
+    // ControlsFX
+    implementation 'org.controlsfx:controlsfx:11.2.1'
+
     // LWJGL Natives (Linux)
     runtimeOnly "org.lwjgl:lwjgl::natives-linux"
     runtimeOnly "org.lwjgl:lwjgl-glfw::natives-linux"
