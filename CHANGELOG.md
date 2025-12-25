@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Updated project version to 9.01 across `pom.xml`, `build.gradle`, and `Tools.java`.
 - Synchronized version numbers.
+- Updated `ROADMAP.md` with ambitious goals (Electric Sheep, projectM, Visions of Chaos).
+- Modernized `build.gradle`:
+    - Added JUnit 5 support (Jupiter + Vintage engine).
+    - Updated `commons-io` to 2.14.0.
 
 ## [9.00] - 2025-10-01
 - Previous release (inferred from code).

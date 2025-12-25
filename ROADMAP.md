@@ -17,8 +17,20 @@
 ### Medium Term
 - [ ] Refactor `Tools.java` to read version from a resource file instead of hardcoding.
 - [ ] Add CI/CD pipeline configuration (e.g., GitHub Actions) to automate builds and releases.
-- [ ] Improve test coverage.
+- [ ] Improve test coverage and modernize test framework (JUnit 5).
+- [ ] **Modernization**: Update core libraries and toolsets (Commons, LWJGL, etc.).
 
 ### Long Term
-- [ ] Major UI overhaul (if applicable).
-- [ ] Performance optimizations for rendering kernels.
+- [ ] **UI Overhaul**: Modernize the Swing UI, potentially exploring JavaFX hybrids or complete rewrites.
+- [ ] **Performance**: Optimizations for rendering kernels.
+
+### Future / Ambitious Goals
+#### Integrations & Visualizers
+- [ ] **Electric Sheep**: Integrate clients and algorithms. Explore "Sheep" rendering modes.
+- [ ] **Music Visualization**: Integrate projectM, libprojectM, MilkDrop 2/3, and Geiss algorithms.
+- [ ] **Real-time**: Leverage LWJGL for real-time visualization capabilities.
+
+#### Algorithm Expansion
+- [ ] **Visions of Chaos**: Analyze and implement algorithms and features found in VoC.
+- [ ] **Fractal Suites**: Analyze and integrate features from other major fractal/flame programs.
+- [ ] **New Generators**: Expand the library of available variations and generators.

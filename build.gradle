@@ -49,7 +49,7 @@ dependencies {
     implementation 'edu.emory.mathcs:JTransforms:2.4'
     implementation 'org.scijava:jep:2.4.2'
     implementation 'com.jtattoo:JTattoo:1.6.11'
-    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'commons-io:commons-io:2.14.0'
 
     // Dependencies from lib folder (Legacy/Not in Maven Central)
     implementation fileTree(dir: 'lib', include: ['*.jar'], exclude: ['lwjgl.jar', 'junit*.jar', 'commons-io*.jar'])
@@ -71,6 +71,13 @@ dependencies {
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.10.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 tasks.withType(JavaCompile) {
