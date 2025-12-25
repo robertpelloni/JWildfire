@@ -76,6 +76,7 @@ public class JWildfire extends JApplet {
     mainInternalFrames.add(new DefaultJFrameHolder<>(HelpFrame.class, this, WindowPrefs.WINDOW_HELP, "Fractal flames: Help"));
     mainInternalFrames.add(new DefaultJFrameHolder<>(IFlamesFrame.class, this, WindowPrefs.WINDOW_IFLAMES, "IFlames"));
     mainInternalFrames.add(new DefaultJFrameHolder<>(org.jwildfire.visualizer.MusicVisualizerInternalFrame.class, this, WindowPrefs.WINDOW_MUSIC_VISUALIZER, "Music Visualizer"));
+    mainInternalFrames.add(new DefaultJFrameHolder<>(org.jwildfire.sheep.ElectricSheepInternalFrame.class, this, WindowPrefs.WINDOW_ELECTRIC_SHEEP, "Electric Sheep"));
     mainInternalFrames.add(new DefaultJFrameHolder<>(OperatorsFrame.class, this, WindowPrefs.WINDOW_IMAGEPROCESSING, "Image processing"));
     mainInternalFrames.add(new DefaultJFrameHolder<>(FormulaExplorerFrame.class, this, WindowPrefs.WINDOW_FORMULAEXPLORER, "Formula explorer"));
 
@@ -220,6 +221,7 @@ public class JWildfire extends JApplet {
       tinaController = mainEditorFrame.createController(this, errorHandler, prefs, mutaGenFrame, flameBrowserFrame, easyMovieMakerFrame, dancingFlamesFrame, batchFlameRendererFrame, quiltFlameRendererFrame, meshGenFrame, interactiveRendererFrame, gpuRendererFrame, helpFrame);
 
       getJFrame(org.jwildfire.visualizer.MusicVisualizerInternalFrame.class); // Initialize Visualizer Frame
+      getJFrame(org.jwildfire.sheep.ElectricSheepInternalFrame.class); // Initialize Electric Sheep Frame
 
       flameBrowserFrame.setTinaController(tinaController);
       mutaGenFrame.setTinaController(tinaController);
