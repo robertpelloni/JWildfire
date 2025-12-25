@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.02] - 2025-12-25
+
+### Added
+- **Electric Sheep Integration**:
+    - Added `ElectricSheepInternalFrame` for UI interaction.
+    - Added `SheepDownloader` (mock implementation) and `SheepRenderer` (stub).
+- **Music Visualizer**:
+    - Added `MusicVisualizerInternalFrame` with real-time audio capture.
+    - Added `AudioCapture` using `javax.sound.sampled`.
+    - Added `SimpleGLVisualizer` (LWJGL prototype).
+- **Versioning**:
+    - Added `resources/app-version.txt` as the source of truth for the runtime version.
+    - Refactored `Tools.java` to read the version from the resource file.
+
 ## [9.01] - 2025-12-25
 
 ### Added

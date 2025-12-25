@@ -61,7 +61,18 @@ import org.jwildfire.io.ImageReader;
 
 public class Tools {
   public static final String APP_TITLE = "JWildfire";
-  private static final String APP_VERSION = "V9.01 (25.12.2025)";
+  private static String APP_VERSION = "V9.02 (25.12.2025)";
+
+  static {
+    try {
+      String version = getRessourceAsString(Tools.class, "/app-version.txt");
+      if (version != null && !version.trim().isEmpty()) {
+        APP_VERSION = version.trim();
+      }
+    } catch (Exception e) {
+      System.err.println("Could not load version from resource: " + e.getMessage());
+    }
+  }
 
   public static final boolean STEAM_EDITION = false;
   public static final boolean SPECIAL_VERSION = false;

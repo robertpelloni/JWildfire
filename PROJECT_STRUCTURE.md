@@ -21,7 +21,9 @@ This document provides an overview of the JWildfire project structure, including
   - `org/jwildfire/`: Main package.
     - `base/`: Core utilities (e.g., `Tools.java`).
     - `create/`: Creation logic.
+    - `sheep/`: **[NEW]** Electric Sheep integration (Downloader, Renderer, UI).
     - `swing/`: Swing UI components.
+    - `visualizer/`: **[NEW]** Music Visualizer (Audio Capture, Visualizer Interface, UI).
 - `test/`: Unit tests.
 
 ### Components / "Submodules"

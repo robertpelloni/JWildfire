@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jwildfire</groupId>
     <artifactId>jwildfire-lib</artifactId>
-    <version>9.01-SNAPSHOT</version>
+    <version>9.02-SNAPSHOT</version>
     <url>http://jwildfire.org</url>
 
     <properties>

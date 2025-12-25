@@ -28,14 +28,16 @@
 #### Integrations & Visualizers
 - [ ] **Electric Sheep**:
     - [x] **Scaffolding**: Created `org.jwildfire.sheep` package with `SheepDownloader` and `SheepRenderer`.
+    - [x] **UI**: Integrated `ElectricSheepInternalFrame` into the main application.
     - [ ] Obtain sample Sheep files for compatibility testing.
-    - [ ] Implement "Sheep Downloader" module (API verification needed).
+    - [ ] Implement "Sheep Downloader" module (Real API integration).
     - [ ] Create "Sheep Rendering" mode (looping, specific constraints).
 - [ ] **Music Visualization**:
     - [x] **Scaffolding**: Created `org.jwildfire.visualizer` package with `Visualizer` interface.
+    - [x] **UI**: Integrated `MusicVisualizerInternalFrame` with audio capture.
     - [x] **Prototype**: Created `SimpleGLVisualizer` using LWJGL.
     - [ ] **projectM**: Investigate Project Panama (Java 21) for native binding to `libprojectM`.
-    - [ ] **Real-time**: Prototype a basic LWJGL-based music visualizer window.
+    - [ ] **Real-time**: Connect `SimpleGLVisualizer` to a real OpenGL context within the Swing frame.
 
 #### Algorithm Expansion
 - [ ] **Visions of Chaos**:
