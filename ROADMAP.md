@@ -26,11 +26,17 @@
 
 ### Future / Ambitious Goals
 #### Integrations & Visualizers
-- [ ] **Electric Sheep**: Integrate clients and algorithms. Explore "Sheep" rendering modes.
-- [ ] **Music Visualization**: Integrate projectM, libprojectM, MilkDrop 2/3, and Geiss algorithms.
-- [ ] **Real-time**: Leverage LWJGL for real-time visualization capabilities.
+- [ ] **Electric Sheep**:
+    - [ ] Obtain sample Sheep files for compatibility testing.
+    - [ ] Implement "Sheep Downloader" module.
+    - [ ] Create "Sheep Rendering" mode (looping, specific constraints).
+- [ ] **Music Visualization**:
+    - [ ] **projectM**: Investigate Project Panama (Java 21) for native binding to `libprojectM`.
+    - [ ] **Real-time**: Prototype a basic LWJGL-based music visualizer window.
 
 #### Algorithm Expansion
-- [ ] **Visions of Chaos**: Analyze and implement algorithms and features found in VoC.
+- [ ] **Visions of Chaos**:
+    - [ ] Perform Gap Analysis against VoC feature list.
+    - [ ] Implement missing Attractors and 3D Fractal types.
 - [ ] **Fractal Suites**: Analyze and integrate features from other major fractal/flame programs.
 - [ ] **New Generators**: Expand the library of available variations and generators.
