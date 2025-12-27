@@ -3,7 +3,7 @@
 ## Overview
 This document provides an overview of the JWildfire project structure, including submodules (components) and their locations.
 
-**Current Version**: 9.01
+**Current Version**: 9.03
 **Build Date**: 2025-12-25
 
 ## Directory Structure
@@ -15,6 +15,7 @@ This document provides an overview of the JWildfire project structure, including
 - `CHANGELOG.md`: History of changes.
 - `ROADMAP.md`: Future plans.
 - `README.md`: General project information.
+- `LLM_INSTRUCTIONS.md`: Universal instructions for AI agents.
 
 ### Source Code
 - `src/`: Main source code directory (Java).

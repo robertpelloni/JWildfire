@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.03] - 2025-12-25
+
+### Changed
+- **Documentation**:
+    - Overhauled `LLM_INSTRUCTIONS.md` to serve as the universal source of truth for all AI agents.
+    - Updated `PROJECT_STRUCTURE.md` to reflect the current state of the project.
+    - Verified and standardized `CLAUDE.md`, `GEMINI.md`, `GPT.md`, and `copilot-instructions.md`.
+
 ## [9.02] - 2025-12-25
 
 ### Added

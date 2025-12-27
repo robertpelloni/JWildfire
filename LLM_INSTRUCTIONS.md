@@ -5,26 +5,50 @@ This file contains universal instructions for all AI models working on the JWild
 ## Project Context
 - **Project Name**: JWildfire
 - **Language**: Java (Version 21)
-- **Build Systems**: Gradle, Maven
-- **Key Frameworks**: Swing, JavaFX, LWJGL
+- **Build Systems**: Gradle, Maven (Dual support)
+- **Key Frameworks**: 
+  - **UI**: Swing (JInternalFrames, custom components)
+  - **Graphics**: LWJGL 3 (OpenGL/OpenCL), Java 2D
+  - **Audio**: `javax.sound.sampled`
+- **New Modules**:
+  - `org.jwildfire.sheep`: Electric Sheep integration (Downloader, Renderer).
+  - `org.jwildfire.visualizer`: Music Visualization (AudioCapture, Swing/GL Visualizers).
 
 ## Coding Standards
-- **Indentation**: Use 2 spaces for indentation (as seen in `Tools.java`).
+- **Indentation**: Use 2 spaces for indentation.
 - **Encoding**: UTF-8.
-- **Versioning**: 
-  - Always check `VERSION.md` for the current version.
-  - When making changes that affect the release, update `CHANGELOG.md`.
-  - Increment `VERSION.md` for new builds/releases.
-  - Ensure `pom.xml`, `build.gradle`, and `Tools.java` are synchronized with `VERSION.md`.
+- **Style**: Follow existing patterns in `src/org/jwildfire`. Prefer clear variable names and Javadoc for public methods.
+
+## Versioning Protocol
+- **Source of Truth**: `resources/app-version.txt`.
+- **Access**: Use `org.jwildfire.base.Tools.APP_VERSION` to access the version string programmatically.
+- **Update Process**:
+  1. Modify `resources/app-version.txt`.
+  2. Update `CHANGELOG.md` with the new version and date.
+  3. (Optional) Sync `pom.xml` and `build.gradle` if a major release.
+  4. Commit with message: "Bump version to X.XX".
 
 ## Documentation
-- Update `ROADMAP.md` when completing features.
-- Update `PROJECT_STRUCTURE.md` if adding new modules or directories.
+- **Roadmap**: Update `ROADMAP.md` immediately upon completing or starting a feature.
+- **Structure**: Update `PROJECT_STRUCTURE.md` if adding new packages or directories.
+- **Changelog**: Log every significant change in `CHANGELOG.md`.
 
 ## Git Workflow
-- Commit messages should be descriptive.
-- Reference the version number in commit messages when bumping versions.
+- **Commits**: Descriptive messages. Reference issue IDs if applicable.
+- **Submodules**: Always check for submodule updates (`git submodule update --init --recursive`) before starting work.
+- **Sync**: Pull frequently to avoid conflicts.
 
-## Specific Tasks
-- **Changelog**: Always add an entry under the "Unreleased" or current version section in `CHANGELOG.md` for any code change.
-- **Version Bump**: If instructed to bump version, update `VERSION.md`, `pom.xml`, `build.gradle`, and `Tools.java`.
+## Feature Specifics
+- **Electric Sheep**:
+  - Located in `org.jwildfire.sheep`.
+  - Uses `SheepDownloader` (supports Mock/Local) and `SheepRenderer` (wraps `GPURenderer`).
+- **Music Visualizer**:
+  - Located in `org.jwildfire.visualizer`.
+  - `AudioCapture` handles microphone input.
+  - `Visualizer` interface allows swapping backends (Swing vs OpenGL).
+
+## Agent/Model Specifics
+- **Claude**: Focus on architectural consistency and detailed documentation.
+- **Gemini**: Leverage large context window for deep code analysis.
+- **GPT**: Focus on code generation and refactoring.
+- **Copilot**: Focus on inline code completion and immediate task execution.

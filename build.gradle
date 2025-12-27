@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'org.jwildfire'
-version = '9.02-SNAPSHOT'
+version = '9.03-SNAPSHOT'
 
 repositories {
     mavenCentral()
