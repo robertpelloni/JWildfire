@@ -5,23 +5,50 @@ import org.jwildfire.create.tina.base.XYZPoint;
 
 /**
  * A generic ODE solver variation.
- * Currently implements the Lorenz attractor as a proof of concept.
- * Future versions will parse user-defined equations.
+ * Supports custom user-defined equations via Janino compilation.
  */
 public class OdeIntegrationVariation extends VariationFunc {
     private static final long serialVersionUID = 1L;
 
     // Parameters
     private double dt = 0.01;
-    private double a = 10.0; // Sigma
-    private double b = 28.0; // Rho
-    private double c = 8.0 / 3.0; // Beta
-    private int type = 0; // 0=Lorenz, 1=Rossler, 2=Aizawa
+    private double a = 10.0;
+    private double b = 28.0;
+    private double c = 8.0 / 3.0;
+    private double d = 0.0;
+    private double e = 0.0;
+    private double f = 0.0;
+    
+    // 0=Lorenz, 1=Rossler, 2=Aizawa, 3=Custom
+    private int type = 0; 
 
-    private static final String[] PARAM_NAMES = { "dt", "a", "b", "c", "type" };
+    private static final String[] PARAM_NAMES = { "dt", "a", "b", "c", "d", "e", "f", "type" };
+    private static final String[] RES_NAMES = { "code" };
+
+    private String code = "";
+    private transient OdeIntegrationRunner runner;
+    private transient boolean runnerFailed = false;
 
     @Override
     public void transform(FlameTransformationContext pContext, XForm pXForm, XYZPoint pAffineTP, XYZPoint pVarTP, double pAmount) {
+        if (type == 3) { // Custom
+            if (runner == null && !runnerFailed && code != null && !code.isEmpty()) {
+                try {
+                    runner = OdeIntegrationRunner.compile(code);
+                } catch (Exception ex) {
+                    runnerFailed = true;
+                    System.err.println("Failed to compile ODE script: " + ex.getMessage());
+                }
+            }
+            
+            if (runner != null) {
+                runner.setParams(dt, a, b, c, d, e, f);
+                runner.transform(pContext, pXForm, pAffineTP, pVarTP, pAmount);
+                return;
+            }
+        }
+
+        // Built-in solvers
         double x = pAffineTP.x;
         double y = pAffineTP.y;
         double z = pAffineTP.z;
@@ -37,30 +64,17 @@ public class OdeIntegrationVariation extends VariationFunc {
             dy = x + a * y;
             dz = b + z * (x - c);
         } else if (type == 2) { // Aizawa
-            double eps = 0.25;
-            double f = 0.11; // Using 'c' for f? Let's stick to standard params mapping
-            // Aizawa usually has: a, b, c, d, e, f. We only have 3 params exposed + dt.
-            // Let's map: a=a, b=b, c=c. Hardcode others or reuse.
-            // dx = (z-b)x - dy
-            // dy = dx + (z-b)y
-            // dz = c + az - z^3/3 - (x^2+y^2)(1+ez) + fz x^3
-            // This is too complex for 3 params. Fallback to simple Lorenz for now.
-            dx = a * (y - x);
-            dy = x * (b - z) - y;
-            dz = x * y - c * z;
+            // Using standard Aizawa params if not provided: a=0.95, b=0.7, c=0.6, d=3.5, e=0.25, f=0.1
+            // Mapping: a->a, b->b, c->c, d->d, e->e, f->f
+            dx = (z - b) * x - d * y;
+            dy = d * x + (z - b) * y;
+            dz = c + a * z - (z * z * z) / 3.0 - (x * x + y * y) * (1.0 + e * z) + f * z * x * x * x;
         }
 
         // Euler integration
         pVarTP.x += dx * dt * pAmount;
         pVarTP.y += dy * dt * pAmount;
         pVarTP.z += dz * dt * pAmount;
-        
-        // If we want to replace the point instead of adding to it (which is typical for attractors):
-        // But JWildfire variations usually add to the result or transform it.
-        // If we want to trace the orbit, we need to maintain state, which is hard in this stateless transform.
-        // However, if we treat the input point as the "current state" and output the "next state",
-        // iterating this variation in the chaos game will trace the attractor *if* the affine transform doesn't mess it up.
-        // Usually, for attractors, we want the affine transform to be Identity.
     }
 
     @Override
@@ -75,7 +89,7 @@ public class OdeIntegrationVariation extends VariationFunc {
 
     @Override
     public Object[] getParameterValues() {
-        return new Object[] { dt, a, b, c, type };
+        return new Object[] { dt, a, b, c, d, e, f, type };
     }
 
     @Override
@@ -84,6 +98,33 @@ public class OdeIntegrationVariation extends VariationFunc {
         else if (pName.equalsIgnoreCase("a")) a = pValue;
         else if (pName.equalsIgnoreCase("b")) b = pValue;
         else if (pName.equalsIgnoreCase("c")) c = pValue;
+        else if (pName.equalsIgnoreCase("d")) d = pValue;
+        else if (pName.equalsIgnoreCase("e")) e = pValue;
+        else if (pName.equalsIgnoreCase("f")) f = pValue;
         else if (pName.equalsIgnoreCase("type")) type = (int) pValue;
+    }
+
+    @Override
+    public String[] getRessourceNames() {
+        return RES_NAMES;
+    }
+
+    @Override
+    public byte[][] getRessourceValues() {
+        return new byte[][] { (code != null ? code.getBytes() : new byte[0]) };
+    }
+
+    @Override
+    public void setRessource(String pName, byte[] pValue) {
+        if (RES_NAMES[0].equalsIgnoreCase(pName)) {
+            code = new String(pValue);
+            runner = null; // Force recompile
+            runnerFailed = false;
+        }
+    }
+
+    @Override
+    public RessourceType getRessourceType(String pName) {
+        return RessourceType.JAVA_CODE;
     }
 }

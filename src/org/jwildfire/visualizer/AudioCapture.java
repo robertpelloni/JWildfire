@@ -1,7 +1,7 @@
 package org.jwildfire.visualizer;
 
 import javax.sound.sampled.*;
-import edu.emory.mathcs.jtransforms.fft.FloatFFT_1D;
+import org.jtransforms.fft.FloatFFT_1D;
 
 /**
  * Captures audio from the default input device (microphone/line-in).

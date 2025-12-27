@@ -6,6 +6,10 @@ import java.io.File;
 import java.util.List;
 
 import org.jwildfire.base.Prefs;
+import org.jwildfire.base.Tools;
+import org.jwildfire.create.tina.base.Flame;
+import org.jwildfire.create.tina.io.FlameReader;
+import org.jwildfire.create.tina.swing.TinaController;
 import org.jwildfire.swing.JWildfire;
 
 public class ElectricSheepInternalFrame extends JInternalFrame {
@@ -16,6 +20,7 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
     private DefaultListModel<String> listModel;
     private JTextArea logArea;
     private JPanel renderPanel;
+    private TinaController tinaController;
 
     public ElectricSheepInternalFrame(JWildfire desktop) {
         super("Electric Sheep", true, true, true, true);
@@ -23,6 +28,10 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
         this.downloader = new SheepDownloader();
         
         initUI();
+    }
+
+    public void setTinaController(TinaController tinaController) {
+        this.tinaController = tinaController;
     }
 
     private void initUI() {
@@ -34,14 +43,17 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
         JButton refreshButton = new JButton("Refresh Server");
         JButton downloadButton = new JButton("Download Selected");
         JButton renderButton = new JButton("Render Selected");
+        JButton editButton = new JButton("Edit in JWildfire");
         
         refreshButton.addActionListener(e -> refreshSheepList());
         downloadButton.addActionListener(e -> downloadSelectedSheep());
         renderButton.addActionListener(e -> renderSelectedSheep());
+        editButton.addActionListener(e -> editSelectedSheep());
         
         topPanel.add(refreshButton);
         topPanel.add(downloadButton);
         topPanel.add(renderButton);
+        topPanel.add(editButton);
         add(topPanel, BorderLayout.NORTH);
 
         // Center: Split Pane (List vs Render)
@@ -132,6 +144,50 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
         
         log("Rendering " + id + "...");
         renderer.renderSheep(path);
+    }
+
+    private void editSelectedSheep() {
+        if (tinaController == null) {
+            log("Error: Editor controller not linked.");
+            return;
+        }
+
+        String selected = sheepList.getSelectedValue();
+        if (selected == null) return;
+        
+        String id = parseId(selected);
+        String filename = id.equals("RENDER_JOB") ? "render_job.flame" : id + ".xml";
+        String path = System.getProperty("java.io.tmpdir") + "/" + filename;
+        
+        File f = new File(path);
+        if (!f.exists()) {
+            log("File not found: " + path + ". Please download first.");
+            return;
+        }
+        
+        log("Loading " + id + " into editor...");
+        new Thread(() -> {
+            try {
+                FlameReader reader = new FlameReader(Prefs.getPrefs());
+                List<Flame> flames = reader.readFlames(path);
+                if (!flames.isEmpty()) {
+                    Flame flame = flames.get(0);
+                    SwingUtilities.invokeLater(() -> {
+                        tinaController.setCurrFlame(flame);
+                        log("Loaded " + flame.getName());
+                        // Bring editor to front
+                        // desktop.getJFrame(MainEditorFrame.class).toFront(); // Accessing private method?
+                        // We can't access getJFrame easily if it's private or protected in JWildfire.
+                        // But setting the flame should update the UI.
+                    });
+                } else {
+                    SwingUtilities.invokeLater(() -> log("No flames found in file."));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                SwingUtilities.invokeLater(() -> log("Error loading flame: " + e.getMessage()));
+            }
+        }).start();
     }
 
     private void log(String msg) {

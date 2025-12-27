@@ -41,73 +41,92 @@ public class SheepRenderer {
                 setStatus("Loading flame...");
                 FlameReader reader = new FlameReader(Prefs.getPrefs());
                 List<Flame> flames = reader.readFlames(flameFilePath);
-                if (flames.isEmpty()) {
-                    setStatus("No flames found in file.");
-                    return;
-                }
-
-                Flame sheep = flames.get(0);
-                int width = outputPanel.getWidth();
-                int height = outputPanel.getHeight();
-                if (width <= 0) width = 800;
-                if (height <= 0) height = 600;
-
-                setStatus("Rendering...");
-                
-                SimpleImage renderedImage = null;
-                if (GPURendererFactory.isAvailable()) {
-                    GPURenderer renderer = GPURendererFactory.getGPURenderer();
-                    renderedImage = renderer.renderPreview(
-                        sheep, 
-                        width, 
-                        height, 
-                        Prefs.getPrefs(), 
-                        new ProgressUpdater() {
-                            @Override
-                            public void initProgress(int maxSteps) {}
-                            @Override
-                            public void updateProgress(int currentStep) {}
-                            @Override
-                            public void cancel() {}
-                        }, 
-                        null, 
-                        null, 
-                        new FlamePanelConfig(), 
-                        new ErrorHandler() {
-                            @Override
-                            public void handleError(Throwable ex) {
-                                ex.printStackTrace();
-                            }
-                            @Override
-                            public void handleError(String msg, Throwable ex) {
-                                System.err.println(msg);
-                                ex.printStackTrace();
-                            }
-                        }, 
-                        logger
-                    );
-                } else {
-                    setStatus("GPU Renderer not available.");
-                    return;
-                }
-
-                if (renderedImage != null) {
-                    final BufferedImage img = renderedImage.getBufferedImg();
-                    SwingUtilities.invokeLater(() -> {
-                        imageLabel.setIcon(new ImageIcon(img));
-                        imageLabel.setText("");
-                        outputPanel.revalidate();
-                        outputPanel.repaint();
-                    });
-                } else {
-                    setStatus("Render failed.");
-                }
-
+                renderFlames(flames);
             } catch (Exception e) {
                 e.printStackTrace();
                 setStatus("Error: " + e.getMessage());
             }
         }).start();
+    }
+
+    public void renderSheepFromXML(String xml) {
+        if (outputPanel == null) return;
+
+        new Thread(() -> {
+            try {
+                setStatus("Loading flame from XML...");
+                FlameReader reader = new FlameReader(Prefs.getPrefs());
+                List<Flame> flames = reader.readFlamesfromXML(xml);
+                renderFlames(flames);
+            } catch (Exception e) {
+                e.printStackTrace();
+                setStatus("Error: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    private void renderFlames(List<Flame> flames) {
+        if (flames.isEmpty()) {
+            setStatus("No flames found.");
+            return;
+        }
+
+        Flame sheep = flames.get(0);
+        int width = outputPanel.getWidth();
+        int height = outputPanel.getHeight();
+        if (width <= 0) width = 800;
+        if (height <= 0) height = 600;
+
+        setStatus("Rendering...");
+        
+        SimpleImage renderedImage = null;
+        if (GPURendererFactory.isAvailable()) {
+            GPURenderer renderer = GPURendererFactory.getGPURenderer();
+            renderedImage = renderer.renderPreview(
+                sheep, 
+                width, 
+                height, 
+                Prefs.getPrefs(), 
+                new ProgressUpdater() {
+                    @Override
+                    public void initProgress(int maxSteps) {}
+                    @Override
+                    public void updateProgress(int currentStep) {}
+                    @Override
+                    public void cancel() {}
+                }, 
+                null, 
+                null, 
+                new FlamePanelConfig(), 
+                new ErrorHandler() {
+                    @Override
+                    public void handleError(Throwable ex) {
+                        ex.printStackTrace();
+                    }
+                    @Override
+                    public void handleError(String msg, Throwable ex) {
+                        System.err.println(msg);
+                        ex.printStackTrace();
+                    }
+                }, 
+                logger
+            );
+        } else {
+            setStatus("GPU Renderer not available.");
+            return;
+        }
+
+        if (renderedImage != null) {
+            final BufferedImage img = renderedImage.getBufferedImg();
+            SwingUtilities.invokeLater(() -> {
+                imageLabel.setIcon(new ImageIcon(img));
+                imageLabel.setText("");
+                outputPanel.revalidate();
+                outputPanel.repaint();
+            });
+        } else {
+            setStatus("Render failed.");
+        }
     }
 
     private void setStatus(String msg) {

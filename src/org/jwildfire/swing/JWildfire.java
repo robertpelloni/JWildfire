@@ -221,7 +221,8 @@ public class JWildfire extends JApplet {
       tinaController = mainEditorFrame.createController(this, errorHandler, prefs, mutaGenFrame, flameBrowserFrame, easyMovieMakerFrame, dancingFlamesFrame, batchFlameRendererFrame, quiltFlameRendererFrame, meshGenFrame, interactiveRendererFrame, gpuRendererFrame, helpFrame);
 
       getJFrame(org.jwildfire.visualizer.MusicVisualizerInternalFrame.class); // Initialize Visualizer Frame
-      getJFrame(org.jwildfire.sheep.ElectricSheepInternalFrame.class); // Initialize Electric Sheep Frame
+      org.jwildfire.sheep.ElectricSheepInternalFrame esFrame = getJFrame(org.jwildfire.sheep.ElectricSheepInternalFrame.class); // Initialize Electric Sheep Frame
+      esFrame.setTinaController(tinaController);
 
       flameBrowserFrame.setTinaController(tinaController);
       mutaGenFrame.setTinaController(tinaController);

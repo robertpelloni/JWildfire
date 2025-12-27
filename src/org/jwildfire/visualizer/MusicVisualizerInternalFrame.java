@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import org.jwildfire.base.Prefs;
 import org.jwildfire.swing.JWildfire;
+import org.jwildfire.visualizer.projectm.ProjectMVisualizer;
 
 public class MusicVisualizerInternalFrame extends JInternalFrame {
     private final JWildfire desktop;
@@ -14,6 +15,8 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
     private final AudioCapture audioCapture;
     private Timer renderTimer;
     private JPanel canvasPanel;
+
+    private JComboBox<String> shaderCombo;
 
     public MusicVisualizerInternalFrame(JWildfire desktop) {
         super("Music Visualizer", true, true, true, true);
@@ -43,9 +46,17 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
         glButton.addActionListener(e -> launchOpenGL());
         controlPanel.add(glButton);
 
+        // Raymarching Controls
+        shaderCombo = new JComboBox<>(new String[]{"Mandelbulb", "Sphere"});
+        controlPanel.add(shaderCombo);
+
         JButton rayButton = new JButton("Launch Raymarching");
         rayButton.addActionListener(e -> launchRaymarching());
         controlPanel.add(rayButton);
+
+        JButton pmButton = new JButton("Launch projectM");
+        pmButton.addActionListener(e -> launchProjectM());
+        controlPanel.add(pmButton);
 
         add(controlPanel, BorderLayout.NORTH);
 
@@ -96,7 +107,18 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
     }
 
     private void launchRaymarching() {
-        launchVisualizer(new RaymarchingVisualizer());
+        RaymarchingVisualizer viz = new RaymarchingVisualizer();
+        String selected = (String) shaderCombo.getSelectedItem();
+        if ("Sphere".equals(selected)) {
+            viz.setFragmentShader(RaymarchingVisualizer.SHADER_SPHERE);
+        } else {
+            viz.setFragmentShader(RaymarchingVisualizer.SHADER_MANDELBULB);
+        }
+        launchVisualizer(viz);
+    }
+
+    private void launchProjectM() {
+        launchVisualizer(new ProjectMVisualizer());
     }
 
     private void launchVisualizer(Visualizer viz) {

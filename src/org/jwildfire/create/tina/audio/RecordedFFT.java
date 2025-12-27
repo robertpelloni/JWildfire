@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.emory.mathcs.jtransforms.fft.FloatFFT_1D;
+import org.jtransforms.fft.FloatFFT_1D;
 
 import static org.jwildfire.base.mathlib.MathLib.sqrt;
 

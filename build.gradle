@@ -19,12 +19,32 @@ targetCompatibility = JavaVersion.VERSION_21
 sourceSets {
     main {
         java { srcDir 'src' }
-        resources { srcDir 'resources' }
+        resources { 
+            srcDir 'resources'
+            srcDir 'build/generated/resources'
+        }
     }
     test {
         java { srcDir 'test/src' }
     }
 }
+
+task generateVersionFile {
+    doLast {
+        def versionFile = file('VERSION.md')
+        def versionText = versionFile.exists() ? versionFile.text.trim() : '0.0.0'
+        def dateText = new java.text.SimpleDateFormat("dd.MM.yyyy").format(new Date())
+        def fullVersion = "V${versionText} (${dateText})"
+        
+        def outputDir = file('build/generated/resources')
+        outputDir.mkdirs()
+        def outputFile = file('build/generated/resources/app-version.txt')
+        outputFile.text = fullVersion
+        println "Generated version file: ${fullVersion}"
+    }
+}
+
+processResources.dependsOn generateVersionFile
 
 application {
     mainClass = 'org.jwildfire.swing.JWildfire'
@@ -43,16 +63,28 @@ javafx {
 dependencies {
     // Core Dependencies
     implementation 'commons-collections:commons-collections:3.2.2'
-    implementation 'com.kitfox.svg:svg-salamander:1.0'
+    implementation 'com.kitfox.svg:svg-salamander:1.1.3'
     implementation 'colt:colt:1.2.0'
     implementation 'javazoom:jlayer:1.0.1'
-    implementation 'edu.emory.mathcs:JTransforms:2.4'
+    implementation 'com.github.wendykierp:JTransforms:3.1'
     implementation 'org.scijava:jep:2.4.2'
-    implementation 'com.jtattoo:JTattoo:1.6.11'
+    implementation 'com.jtattoo:JTattoo:1.6.13'
     implementation 'commons-io:commons-io:2.14.0'
+    
+    // Modernized Dependencies (Moved from lib/)
+    implementation 'org.codehaus.janino:janino:3.1.10'
+    implementation 'org.joml:joml:1.10.5'
+    implementation 'com.cedarsoftware:json-io:4.14.0'
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
 
     // Dependencies from lib folder (Legacy/Not in Maven Central)
-    implementation fileTree(dir: 'lib', include: ['*.jar'], exclude: ['lwjgl.jar', 'junit*.jar', 'commons-io*.jar'])
+    // Exclude JARs that are now handled by Maven
+    implementation fileTree(dir: 'lib', include: ['*.jar'], exclude: [
+        'lwjgl.jar', 'junit*.jar', 'commons-io*.jar',
+        'janino.jar', 'joml*.jar', 'json-io*.jar', 'slf4j*.jar', 'logback*.jar',
+        'jtransforms*.jar', 'svgSalamander.jar', 'JTattoo*.jar'
+    ])
 
     // LWJGL
     implementation platform("org.lwjgl:lwjgl-bom:${lwjglVersion}")
