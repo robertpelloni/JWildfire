@@ -36,7 +36,7 @@
     - [x] **UI**: Integrated `MusicVisualizerInternalFrame` with audio capture.
     - [x] **Implementation**: Created `SwingVisualizer` with spectrum and waveform rendering.
     - [ ] **projectM**: Investigate Project Panama (Java 21) for native binding to `libprojectM`.
-    - [ ] **OpenGL**: Connect `SimpleGLVisualizer` to a real OpenGL context (requires `lwjgl-awt` or similar).
+    - [x] **OpenGL**: Connect `SimpleGLVisualizer` to a real OpenGL context (via `GLFWVisualizerRunner`).
 
 #### Algorithm Expansion
 - [ ] **Visions of Chaos**:

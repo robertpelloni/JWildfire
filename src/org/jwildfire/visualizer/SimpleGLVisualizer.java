@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
  */
 public class SimpleGLVisualizer implements Visualizer {
     private boolean initialized = false;
+    private float[] spectrum;
 
     @Override
     public void init() {
@@ -24,7 +25,7 @@ public class SimpleGLVisualizer implements Visualizer {
 
     @Override
     public void updateAudio(float[] pcmData, float[] spectrum) {
-        // Store data for rendering
+        this.spectrum = spectrum;
     }
 
     @Override
@@ -35,15 +36,38 @@ public class SimpleGLVisualizer implements Visualizer {
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-        // Draw a simple test triangle
-        GL11.glBegin(GL11.GL_TRIANGLES);
-            GL11.glColor3f(1.0f, 0.0f, 0.0f);
-            GL11.glVertex2f(0.0f, 0.5f);
-            GL11.glColor3f(0.0f, 1.0f, 0.0f);
-            GL11.glVertex2f(-0.5f, -0.5f);
-            GL11.glColor3f(0.0f, 0.0f, 1.0f);
-            GL11.glVertex2f(0.5f, -0.5f);
-        GL11.glEnd();
+        if (spectrum != null && spectrum.length > 0) {
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glLoadIdentity();
+            GL11.glMatrixMode(GL11.GL_MODELVIEW);
+            GL11.glLoadIdentity();
+
+            GL11.glBegin(GL11.GL_QUADS);
+            float barWidth = 2.0f / spectrum.length;
+            for (int i = 0; i < spectrum.length; i++) {
+                float x = -1.0f + i * barWidth;
+                float h = spectrum[i] * 2.0f; // Scale factor
+                
+                // Color based on frequency
+                GL11.glColor3f(i / (float)spectrum.length, 1.0f - i / (float)spectrum.length, 0.5f);
+                
+                GL11.glVertex2f(x, -1.0f);
+                GL11.glVertex2f(x + barWidth, -1.0f);
+                GL11.glVertex2f(x + barWidth, -1.0f + h);
+                GL11.glVertex2f(x, -1.0f + h);
+            }
+            GL11.glEnd();
+        } else {
+            // Draw a simple test triangle if no audio
+            GL11.glBegin(GL11.GL_TRIANGLES);
+                GL11.glColor3f(1.0f, 0.0f, 0.0f);
+                GL11.glVertex2f(0.0f, 0.5f);
+                GL11.glColor3f(0.0f, 1.0f, 0.0f);
+                GL11.glVertex2f(-0.5f, -0.5f);
+                GL11.glColor3f(0.0f, 0.0f, 1.0f);
+                GL11.glVertex2f(0.5f, -0.5f);
+            GL11.glEnd();
+        }
     }
 
     @Override

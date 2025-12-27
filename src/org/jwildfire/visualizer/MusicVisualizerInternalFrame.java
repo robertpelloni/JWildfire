@@ -38,6 +38,11 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
         
         controlPanel.add(startButton);
         controlPanel.add(stopButton);
+
+        JButton glButton = new JButton("Launch OpenGL");
+        glButton.addActionListener(e -> launchOpenGL());
+        controlPanel.add(glButton);
+
         add(controlPanel, BorderLayout.NORTH);
 
         // Canvas Panel
@@ -80,5 +85,23 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
         if (renderTimer != null) renderTimer.stop();
         audioCapture.stop();
         visualizer.dispose();
+    }
+
+    private void launchOpenGL() {
+        if (audioCapture == null) return;
+        
+        // Ensure audio is running
+        try {
+            if (!audioCapture.isCapturing()) {
+                audioCapture.start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error starting audio: " + e.getMessage());
+            return;
+        }
+
+        Thread t = new Thread(new GLFWVisualizerRunner(new SimpleGLVisualizer(), audioCapture));
+        t.start();
     }
 }

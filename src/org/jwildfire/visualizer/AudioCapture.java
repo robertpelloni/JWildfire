@@ -1,20 +1,24 @@
 package org.jwildfire.visualizer;
 
 import javax.sound.sampled.*;
+import edu.emory.mathcs.jtransforms.fft.FloatFFT_1D;
 
 /**
  * Captures audio from the default input device (microphone/line-in).
  */
 public class AudioCapture {
     private TargetDataLine line;
-    private boolean running = false;
+    private volatile boolean running = false;
     private final int sampleRate = 44100;
     private final int bufferSize = 1024;
     private byte[] buffer;
     private float[] pcmData;
-    private float[] spectrumData; // Placeholder for FFT data
+    private float[] spectrumData;
+    private FloatFFT_1D fft;
 
     public void start() throws LineUnavailableException {
+        if (running) return;
+
         AudioFormat format = new AudioFormat(sampleRate, 16, 1, true, true);
         DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 
@@ -29,6 +33,7 @@ public class AudioCapture {
         buffer = new byte[bufferSize * 2]; // 16-bit samples
         pcmData = new float[bufferSize];
         spectrumData = new float[bufferSize / 2];
+        fft = new FloatFFT_1D(bufferSize);
         
         running = true;
         
@@ -46,7 +51,21 @@ public class AudioCapture {
                     int sample = (buffer[i] << 8) | (buffer[i + 1] & 0xFF);
                     pcmData[j] = sample / 32768.0f;
                 }
-                // TODO: Perform FFT to populate spectrumData
+                
+                // Perform FFT
+                float[] fftData = new float[bufferSize];
+                System.arraycopy(pcmData, 0, fftData, 0, bufferSize);
+                fft.realForward(fftData);
+                
+                // Calculate magnitude
+                if (spectrumData != null) {
+                    spectrumData[0] = Math.abs(fftData[0]);
+                    for (int k = 1; k < bufferSize / 2; k++) {
+                        float re = fftData[2 * k];
+                        float im = fftData[2 * k + 1];
+                        spectrumData[k] = (float) Math.sqrt(re * re + im * im);
+                    }
+                }
             }
         }
     }
@@ -57,6 +76,10 @@ public class AudioCapture {
             line.stop();
             line.close();
         }
+    }
+
+    public boolean isCapturing() {
+        return running;
     }
 
     public float[] getPcmData() {
