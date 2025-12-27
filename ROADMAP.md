@@ -30,17 +30,18 @@
     - [x] **UI**: Integrated `ElectricSheepInternalFrame` into the main application.
     - [x] **Logic**: Implemented `SheepRenderer` using `GPURendererFactory`.
     - [x] **Downloader**: Implemented robust mock downloader with sample file support.
-    - [ ] **API**: Reverse engineer or find documentation for the real Electric Sheep API.
+    - [x] **API**: Researched protocol and implemented `SheepServer` for list retrieval.
 - [ ] **Music Visualization**:
     - [x] **Scaffolding**: Created `org.jwildfire.visualizer` package with `Visualizer` interface.
     - [x] **UI**: Integrated `MusicVisualizerInternalFrame` with audio capture.
     - [x] **Implementation**: Created `SwingVisualizer` with spectrum and waveform rendering.
-    - [ ] **projectM**: Investigate Project Panama (Java 21) for native binding to `libprojectM`.
+    - [x] **projectM**: Created `ProjectMBinding` using Java 21 Foreign Function & Memory API (Preview).
     - [x] **OpenGL**: Connect `SimpleGLVisualizer` to a real OpenGL context (via `GLFWVisualizerRunner`).
 
 #### Algorithm Expansion
-- [ ] **Visions of Chaos**:
-    - [ ] Perform Gap Analysis against VoC feature list.
-    - [ ] Implement missing Attractors and 3D Fractal types.
+- [ ] **Visions of Chaos Gap Analysis**:
+    - **Findings**: VoC uses dedicated engines (Raymarching, ODE Solver) vs JWildfire's IFS/Point Cloud approach.
+    - **Goal**: Implement a **Generic ODE Solver** variation to support arbitrary attractor equations (parsing user input).
+    - **Goal**: Explore a **Raymarching Renderer** (possibly via the new OpenGL module) for solid 3D fractals.
 - [ ] **Fractal Suites**: Analyze and integrate features from other major fractal/flame programs.
 - [ ] **New Generators**: Expand the library of available variations and generators.

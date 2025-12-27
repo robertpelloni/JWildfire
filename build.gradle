@@ -83,6 +83,15 @@ test {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     options.release = 21
+    options.compilerArgs += "--enable-preview"
+}
+
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+
+tasks.withType(JavaExec) {
+    jvmArgs += "--enable-preview"
 }
 
 tasks.withType(Tar) { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }

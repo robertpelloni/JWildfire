@@ -7,12 +7,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Handles downloading of Electric Sheep genomes (flames).
  */
 public class SheepDownloader {
-    private static final String SHEEP_SERVER_URL = "https://v2d7c.sheepserver.net/gen/"; // Example URL, needs verification
+    private final SheepServer server;
+
+    public SheepDownloader() {
+        this.server = new SheepServer();
+    }
 
     public void downloadSheep(String sheepId, String destinationPath) throws IOException {
         // Mock implementation for now
@@ -35,24 +42,31 @@ public class SheepDownloader {
             return;
         }
 
-        String fileUrl = SHEEP_SERVER_URL + sheepId + ".xml"; // Assuming XML format
-        try (BufferedInputStream in = new BufferedInputStream(new URL(fileUrl).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
-            byte dataBuffer[] = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
-            }
-        }
+        // TODO: Implement real genome download.
+        // Currently, the API for fetching a specific genome by ID is not fully clear.
+        // We might need to use the render server's /cgi/get endpoint or similar.
+        System.err.println("Real genome download not yet implemented for ID: " + sheepId);
     }
     
-    public java.util.List<String> listAvailableSheep() {
-        // Mock implementation
-        java.util.List<String> list = new java.util.ArrayList<>();
-        list.add("Mock Sheep 1 (Gold)");
-        list.add("Mock Sheep 2 (Blue)");
-        list.add("Mock Sheep 3 (Fractal)");
-        // In real implementation, parse JSON/XML from server
-        return list;
+    public List<String> listAvailableSheep() {
+        try {
+            Map<String, String> flock = server.getFlockList();
+            List<String> list = new ArrayList<>();
+            for (Map.Entry<String, String> entry : flock.entrySet()) {
+                list.add("Sheep " + entry.getKey() + " (" + entry.getValue() + ")");
+            }
+            return list;
+        } catch (Exception e) {
+            System.err.println("Failed to fetch flock list: " + e.getMessage());
+            e.printStackTrace();
+            
+            // Fallback to mock
+            List<String> list = new ArrayList<>();
+            list.add("Mock Sheep 1 (Gold)");
+            list.add("Mock Sheep 2 (Blue)");
+            list.add("Mock Sheep 3 (Fractal)");
+            list.add("Error fetching real list: " + e.getMessage());
+            return list;
+        }
     }
 }
