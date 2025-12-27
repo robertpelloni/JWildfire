@@ -1,9 +1,9 @@
 # JWildfire Roadmap
 
 ## Current Status
-- **Version**: 9.01
+- **Version**: 9.02
 - **Date**: 2025-12-25
-- **Focus**: Documentation, Versioning, and Project Structure Analysis.
+- **Focus**: Feature Implementation (Electric Sheep, Music Visualizer).
 
 ## Planned Features
 
@@ -11,11 +11,10 @@
 - [x] Centralize versioning.
 - [x] Create comprehensive documentation (Changelog, Roadmap, Project Structure).
 - [x] Establish LLM instruction files.
+- [x] Refactor `Tools.java` to read version from a resource file instead of hardcoding.
 - [ ] Implement automated version injection from `VERSION.md` into the build process.
-- [ ] Review and update all submodules (if any are added in the future).
 
 ### Medium Term
-- [ ] Refactor `Tools.java` to read version from a resource file instead of hardcoding.
 - [ ] Add CI/CD pipeline configuration (e.g., GitHub Actions) to automate builds and releases.
 - [ ] Improve test coverage and modernize test framework (JUnit 5).
 - [ ] **Modernization**: Update core libraries and toolsets (Commons, LWJGL, etc.).
@@ -29,15 +28,15 @@
 - [ ] **Electric Sheep**:
     - [x] **Scaffolding**: Created `org.jwildfire.sheep` package with `SheepDownloader` and `SheepRenderer`.
     - [x] **UI**: Integrated `ElectricSheepInternalFrame` into the main application.
-    - [ ] Obtain sample Sheep files for compatibility testing.
-    - [ ] Implement "Sheep Downloader" module (Real API integration).
-    - [ ] Create "Sheep Rendering" mode (looping, specific constraints).
+    - [x] **Logic**: Implemented `SheepRenderer` using `GPURendererFactory`.
+    - [x] **Downloader**: Implemented robust mock downloader with sample file support.
+    - [ ] **API**: Reverse engineer or find documentation for the real Electric Sheep API.
 - [ ] **Music Visualization**:
     - [x] **Scaffolding**: Created `org.jwildfire.visualizer` package with `Visualizer` interface.
     - [x] **UI**: Integrated `MusicVisualizerInternalFrame` with audio capture.
-    - [x] **Prototype**: Created `SimpleGLVisualizer` using LWJGL.
+    - [x] **Implementation**: Created `SwingVisualizer` with spectrum and waveform rendering.
     - [ ] **projectM**: Investigate Project Panama (Java 21) for native binding to `libprojectM`.
-    - [ ] **Real-time**: Connect `SimpleGLVisualizer` to a real OpenGL context within the Swing frame.
+    - [ ] **OpenGL**: Connect `SimpleGLVisualizer` to a real OpenGL context (requires `lwjgl-awt` or similar).
 
 #### Algorithm Expansion
 - [ ] **Visions of Chaos**:

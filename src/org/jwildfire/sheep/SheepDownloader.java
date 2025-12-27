@@ -1,9 +1,12 @@
 package org.jwildfire.sheep;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Handles downloading of Electric Sheep genomes (flames).
@@ -15,7 +18,20 @@ public class SheepDownloader {
         // Mock implementation for now
         if (sheepId.startsWith("Mock")) {
             System.out.println("Simulating download for " + sheepId);
-            try { Thread.sleep(1000); } catch (InterruptedException e) {}
+            try { Thread.sleep(500); } catch (InterruptedException e) {}
+            
+            // Copy sample file
+            File sampleFile = new File("resources/sheep/sample.flame");
+            if (sampleFile.exists()) {
+                Files.copy(sampleFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } else {
+                // Fallback if resource not found (e.g. running from jar)
+                // Create a dummy file
+                try (FileOutputStream out = new FileOutputStream(destinationPath)) {
+                    String dummyXml = "<flame name='Dummy'></flame>";
+                    out.write(dummyXml.getBytes());
+                }
+            }
             return;
         }
 

@@ -2,7 +2,7 @@ package org.jwildfire.sheep;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 import org.jwildfire.base.Prefs;
@@ -11,22 +11,22 @@ import org.jwildfire.swing.JWildfire;
 public class ElectricSheepInternalFrame extends JInternalFrame {
     private final JWildfire desktop;
     private final SheepDownloader downloader;
-    private final SheepRenderer renderer;
+    private SheepRenderer renderer;
     private JList<String> sheepList;
     private DefaultListModel<String> listModel;
     private JTextArea logArea;
+    private JPanel renderPanel;
 
     public ElectricSheepInternalFrame(JWildfire desktop) {
         super("Electric Sheep", true, true, true, true);
         this.desktop = desktop;
         this.downloader = new SheepDownloader();
-        this.renderer = new SheepRenderer(null); // TODO: Pass actual renderer
         
         initUI();
     }
 
     private void initUI() {
-        setSize(600, 500);
+        setSize(900, 600);
         setLayout(new BorderLayout());
 
         // Top Panel: Controls
@@ -44,20 +44,30 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
         topPanel.add(renderButton);
         add(topPanel, BorderLayout.NORTH);
 
-        // Center Panel: Split Pane (List + Log)
+        // Center: Split Pane (List vs Render)
         listModel = new DefaultListModel<>();
         sheepList = new JList<>(listModel);
         JScrollPane listScroll = new JScrollPane(sheepList);
         listScroll.setBorder(BorderFactory.createTitledBorder("Available Sheep"));
+        listScroll.setPreferredSize(new Dimension(250, 0));
 
+        renderPanel = new JPanel();
+        renderPanel.setBorder(BorderFactory.createTitledBorder("Preview"));
+        renderer = new SheepRenderer(renderPanel);
+        
+        JSplitPane centerSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listScroll, renderPanel);
+        centerSplit.setDividerLocation(250);
+
+        // Bottom: Log
         logArea = new JTextArea();
         logArea.setEditable(false);
+        logArea.setRows(6);
         JScrollPane logScroll = new JScrollPane(logArea);
         logScroll.setBorder(BorderFactory.createTitledBorder("Log"));
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, listScroll, logScroll);
-        splitPane.setDividerLocation(300);
-        add(splitPane, BorderLayout.CENTER);
+        JSplitPane mainSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, centerSplit, logScroll);
+        mainSplit.setDividerLocation(450);
+        add(mainSplit, BorderLayout.CENTER);
     }
 
     private void refreshSheepList() {
@@ -94,8 +104,16 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
     private void renderSelectedSheep() {
         String selected = sheepList.getSelectedValue();
         if (selected == null) return;
-        log("Rendering " + selected + " (Not fully implemented)");
-        // renderer.renderSheep(...);
+        
+        String path = System.getProperty("java.io.tmpdir") + "/" + selected + ".xml";
+        File f = new File(path);
+        if (!f.exists()) {
+            log("File not found: " + path + ". Please download first.");
+            return;
+        }
+        
+        log("Rendering " + selected + "...");
+        renderer.renderSheep(path);
     }
 
     private void log(String msg) {
