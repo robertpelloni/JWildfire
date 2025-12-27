@@ -43,6 +43,10 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
         glButton.addActionListener(e -> launchOpenGL());
         controlPanel.add(glButton);
 
+        JButton rayButton = new JButton("Launch Raymarching");
+        rayButton.addActionListener(e -> launchRaymarching());
+        controlPanel.add(rayButton);
+
         add(controlPanel, BorderLayout.NORTH);
 
         // Canvas Panel
@@ -88,6 +92,14 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
     }
 
     private void launchOpenGL() {
+        launchVisualizer(new SimpleGLVisualizer());
+    }
+
+    private void launchRaymarching() {
+        launchVisualizer(new RaymarchingVisualizer());
+    }
+
+    private void launchVisualizer(Visualizer viz) {
         if (audioCapture == null) return;
         
         // Ensure audio is running
@@ -101,7 +113,7 @@ public class MusicVisualizerInternalFrame extends JInternalFrame {
             return;
         }
 
-        Thread t = new Thread(new GLFWVisualizerRunner(new SimpleGLVisualizer(), audioCapture));
+        Thread t = new Thread(new GLFWVisualizerRunner(viz, audioCapture));
         t.start();
     }
 }

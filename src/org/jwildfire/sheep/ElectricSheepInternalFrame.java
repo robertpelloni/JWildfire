@@ -88,12 +88,15 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
         String selected = sheepList.getSelectedValue();
         if (selected == null) return;
         
-        log("Downloading " + selected + "...");
+        String id = parseId(selected);
+        
+        log("Downloading " + id + "...");
         new Thread(() -> {
             try {
                 // TODO: Define download path in Prefs
-                String path = System.getProperty("java.io.tmpdir") + "/" + selected + ".xml";
-                downloader.downloadSheep(selected, path);
+                String filename = id.equals("RENDER_JOB") ? "render_job.flame" : id + ".xml";
+                String path = System.getProperty("java.io.tmpdir") + "/" + filename;
+                downloader.downloadSheep(id, path);
                 SwingUtilities.invokeLater(() -> log("Downloaded to " + path));
             } catch (Exception e) {
                 SwingUtilities.invokeLater(() -> log("Error: " + e.getMessage()));
@@ -101,18 +104,33 @@ public class ElectricSheepInternalFrame extends JInternalFrame {
         }).start();
     }
 
+    private String parseId(String displayString) {
+        if (displayString.startsWith("RENDER_JOB")) return "RENDER_JOB";
+        if (displayString.startsWith("Sheep ")) {
+            int start = 6; // "Sheep ".length()
+            int end = displayString.indexOf(" ", start);
+            if (end > 0) {
+                return displayString.substring(start, end);
+            }
+        }
+        return displayString; // Fallback
+    }
+
     private void renderSelectedSheep() {
         String selected = sheepList.getSelectedValue();
         if (selected == null) return;
         
-        String path = System.getProperty("java.io.tmpdir") + "/" + selected + ".xml";
+        String id = parseId(selected);
+        String filename = id.equals("RENDER_JOB") ? "render_job.flame" : id + ".xml";
+        String path = System.getProperty("java.io.tmpdir") + "/" + filename;
+        
         File f = new File(path);
         if (!f.exists()) {
             log("File not found: " + path + ". Please download first.");
             return;
         }
         
-        log("Rendering " + selected + "...");
+        log("Rendering " + id + "...");
         renderer.renderSheep(path);
     }
 

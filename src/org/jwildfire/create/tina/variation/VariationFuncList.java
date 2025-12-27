@@ -664,6 +664,7 @@ VariationFuncList {
     registerVariationFunc(Cylinder2Func.class);
     registerVariationFunc(Affine3DFunc.class);
     registerVariationFunc(Q_odeFunc.class);
+    registerVariationFunc(OdeIntegrationVariation.class);
 
     registerVariationFunc(CurliecueFunc.class);
     registerVariationFunc(CurliecueFunc2.class);

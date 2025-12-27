@@ -42,6 +42,8 @@
 - [ ] **Visions of Chaos Gap Analysis**:
     - **Findings**: VoC uses dedicated engines (Raymarching, ODE Solver) vs JWildfire's IFS/Point Cloud approach.
     - **Goal**: Implement a **Generic ODE Solver** variation to support arbitrary attractor equations (parsing user input).
-    - **Goal**: Explore a **Raymarching Renderer** (possibly via the new OpenGL module) for solid 3D fractals.
+        - *Status*: Implemented `OdeIntegrationVariation` (Lorenz/Rossler support).
+    - [x] **Goal**: Explore a **Raymarching Renderer** (possibly via the new OpenGL module) for solid 3D fractals.
+        - *Status*: Implemented `RaymarchingVisualizer` with GLSL shader support.
 - [ ] **Fractal Suites**: Analyze and integrate features from other major fractal/flame programs.
 - [ ] **New Generators**: Expand the library of available variations and generators.

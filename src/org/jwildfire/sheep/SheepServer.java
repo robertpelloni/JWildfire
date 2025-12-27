@@ -123,9 +123,60 @@ public class SheepServer {
     // Placeholder for fetching a specific genome
     // Since we don't have a direct "get genome by ID" endpoint confirmed, 
     // we might need to rely on the 'url' from the list or the /cgi/get endpoint.
-    public String getGenome(String id) {
-        // TODO: Research how to get genome by ID.
-        // For now, return a dummy or try to construct a URL if possible.
-        return null;
+    public String getGenome(String id) throws Exception {
+        if (renderServer == null) authenticate();
+
+        // Note: The standard client typically downloads genomes as part of a "job" to render them.
+        // However, we can try to fetch a specific sheep if we know the generation and ID, 
+        // or we might have to rely on the video URL to find the corresponding flame file if hosted.
+        //
+        // Research suggests the server might not expose a simple "get by ID" for arbitrary sheep 
+        // without being part of the render farm logic.
+        //
+        // For now, we will implement the standard "get work" endpoint which returns a genome to render.
+        // If we want a specific ID, we might need to parse the flock list for a URL ending in .xml 
+        // (though the list usually points to .avi).
+        
+        // Let's try to construct a URL based on common patterns if the ID is known.
+        // Pattern: http://v2d7c.sheepserver.net/gen/244/123/sheep-244-12345-12340.xml (Hypothetical)
+        
+        // Fallback: Use the fetchRenderingJob logic if no ID is provided or if we just want "a sheep".
+        if (id == null || id.isEmpty()) {
+            return fetchRenderingJob();
+        }
+        
+        throw new UnsupportedOperationException("Fetching specific sheep by ID is not yet fully reverse-engineered.");
+    }
+
+    /**
+     * Fetches a genome to render from the server (for distributed rendering).
+     * @return The flame XML content.
+     */
+    public String fetchRenderingJob() throws Exception {
+        if (renderServer == null) authenticate();
+
+        // Parameters: n=<nickname>, w=<user_url>, v=<client_version>, u=<unique_id>
+        String uniqueId = "0000000000000000"; 
+        String nickname = DEFAULT_NICKNAME;
+        
+        StringBuilder query = new StringBuilder();
+        query.append("n=").append(URLEncoder.encode(nickname, StandardCharsets.UTF_8));
+        query.append("&u=").append(uniqueId);
+        query.append("&v=").append(URLEncoder.encode(CLIENT_VERSION, StandardCharsets.UTF_8));
+        
+        String url = "http://" + renderServer + "/cgi/get?" + query.toString();
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("Failed to fetch rendering job: " + response.statusCode());
+        }
+        
+        return response.body();
     }
 }

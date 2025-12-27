@@ -42,7 +42,19 @@ public class SheepDownloader {
             return;
         }
 
-        // TODO: Implement real genome download.
+        if (sheepId.equals("RENDER_JOB")) {
+            try {
+                String xml = server.fetchRenderingJob();
+                try (FileOutputStream out = new FileOutputStream(destinationPath)) {
+                    out.write(xml.getBytes());
+                }
+                return;
+            } catch (Exception e) {
+                throw new IOException("Failed to fetch rendering job", e);
+            }
+        }
+
+        // TODO: Implement real genome download by ID.
         // Currently, the API for fetching a specific genome by ID is not fully clear.
         // We might need to use the render server's /cgi/get endpoint or similar.
         System.err.println("Real genome download not yet implemented for ID: " + sheepId);
@@ -52,6 +64,10 @@ public class SheepDownloader {
         try {
             Map<String, String> flock = server.getFlockList();
             List<String> list = new ArrayList<>();
+            
+            // Add special item for fetching a job
+            list.add("RENDER_JOB (Fetch new work)");
+            
             for (Map.Entry<String, String> entry : flock.entrySet()) {
                 list.add("Sheep " + entry.getKey() + " (" + entry.getValue() + ")");
             }
