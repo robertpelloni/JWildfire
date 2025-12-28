@@ -1,9 +1,11 @@
 # JWildfire Project Structure Dashboard
 
+For a detailed dashboard of components and versions, please see **[DASHBOARD.md](DASHBOARD.md)**.
+
 ## Overview
 This document provides an overview of the JWildfire project structure, including submodules (components) and their locations.
 
-**Current Version**: 9.03
+**Current Version**: 9.04
 **Build Date**: 2025-12-25
 
 ## Directory Structure

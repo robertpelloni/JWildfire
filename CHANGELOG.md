@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.04] - 2025-12-27
+
+### Added
+- **Dashboard**: Created `DASHBOARD.md` to list all components, versions, and project structure details.
+
+### Changed
+- **Dependencies**: Merged upstream updates (Logback 1.2.13 in Maven build).
+- **Documentation**: Updated `PROJECT_STRUCTURE.md` and `ROADMAP.md`.
+
 ## [9.03] - 2025-12-27
 
 ### Added

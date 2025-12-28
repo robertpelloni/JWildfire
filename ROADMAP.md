@@ -1,15 +1,15 @@
 # JWildfire Roadmap
 
 ## Current Status
-- **Version**: 9.03
+- **Version**: 9.04
 - **Date**: 2025-12-27
-- **Focus**: Feature Implementation (Electric Sheep, Music Visualizer, Visions of Chaos Gaps).
+- **Focus**: Maintenance and Documentation.
 
 ## Planned Features
 
 ### Short Term
 - [x] Centralize versioning.
-- [x] Create comprehensive documentation (Changelog, Roadmap, Project Structure).
+- [x] Create comprehensive documentation (Changelog, Roadmap, Project Structure, Dashboard).
 - [x] Establish LLM instruction files.
 - [x] Refactor `Tools.java` to read version from a resource file instead of hardcoding.
 - [x] Implement automated version injection from `VERSION.md` into the build process.
