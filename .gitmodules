@@ -1,0 +1,3 @@
+[submodule "apophysis-j"]
+	path = apophysis-j
+	url = https://github.com/robertpelloni/apophysis-j
