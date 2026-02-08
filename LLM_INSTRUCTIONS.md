@@ -7,26 +7,26 @@ This file contains universal instructions for all AI models working on the JWild
 - **Language**: Java (Version 21)
 - **Build Systems**: Gradle, Maven (Dual support)
 - **Key Frameworks**: 
-  - **UI**: Swing (JInternalFrames, custom components)
+  - **UI**: Hybrid Swing (JInternalFrames) / JavaFX (JFXPanel, FXML)
   - **Graphics**: LWJGL 3 (OpenGL/OpenCL), Java 2D
   - **Audio**: `javax.sound.sampled`
 - **New Modules**:
-  - `org.jwildfire.sheep`: Electric Sheep integration (Downloader, Renderer).
-  - `org.jwildfire.visualizer`: Music Visualization (AudioCapture, Swing/GL Visualizers).
+  - `org.jwildfire.sheep`: Electric Sheep integration (JavaFX UI, Downloader, Renderer).
+  - `org.jwildfire.visualizer`: Music Visualization (JavaFX UI, AudioCapture, Swing/GL Visualizers).
 
 ## Coding Standards
 - **Indentation**: Use 2 spaces for indentation.
 - **Encoding**: UTF-8.
 - **Style**: Follow existing patterns in `src/org/jwildfire`. Prefer clear variable names and Javadoc for public methods.
+- **UI Modernization**: Prefer JavaFX (`JFXPanel` inside `JInternalFrame`) for new or refactored UI components. Use `fxml` for layout and `Controller` classes for logic.
 
 ## Versioning Protocol
-- **Source of Truth**: `resources/app-version.txt`.
-- **Access**: Use `org.jwildfire.base.Tools.APP_VERSION` to access the version string programmatically.
+- **Source of Truth**: `VERSION.md`.
+- **Access**: `org.jwildfire.base.Tools.APP_VERSION` reads from `resources/app-version.txt` (generated during build).
 - **Update Process**:
-  1. Modify `resources/app-version.txt`.
+  1. Modify `VERSION.md`.
   2. Update `CHANGELOG.md` with the new version and date.
-  3. (Optional) Sync `pom.xml` and `build.gradle` if a major release.
-  4. Commit with message: "Bump version to X.XX".
+  3. Commit with message: "Bump version to X.XX".
 
 ## Documentation
 - **Roadmap**: Update `ROADMAP.md` immediately upon completing or starting a feature.
@@ -41,11 +41,13 @@ This file contains universal instructions for all AI models working on the JWild
 ## Feature Specifics
 - **Electric Sheep**:
   - Located in `org.jwildfire.sheep`.
-  - Uses `SheepDownloader` (supports Mock/Local) and `SheepRenderer` (wraps `GPURenderer`).
+  - **UI**: `ElectricSheepInternalFrame` (Swing wrapper) -> `electric_sheep.fxml` / `ElectricSheepController` (JavaFX).
+  - **Logic**: `SheepDownloader` (supports Render Job fetching) and `SheepRenderer` (wraps `GPURenderer`).
+  - **Server**: `SheepServer` handles communication with `sheepserver.net`.
 - **Music Visualizer**:
   - Located in `org.jwildfire.visualizer`.
-  - `AudioCapture` handles microphone input.
-  - `Visualizer` interface allows swapping backends (Swing vs OpenGL).
+  - **UI**: `MusicVisualizerInternalFrame` (Swing wrapper) -> `music_visualizer.fxml` / `MusicVisualizerController` (JavaFX).
+  - **Logic**: `AudioCapture` handles microphone input/FFT. `Visualizer` interface allows swapping backends (Swing vs OpenGL).
 
 ## Agent/Model Specifics
 - **Claude**: Focus on architectural consistency and detailed documentation.

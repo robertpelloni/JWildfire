@@ -1,12 +1,12 @@
-# JWildfire Project Structure Dashboard
+# JWildfire Project Dashboard
 
 For a detailed dashboard of components and versions, please see **[DASHBOARD.md](DASHBOARD.md)**.
 
 ## Overview
 This document provides an overview of the JWildfire project structure, including submodules (components) and their locations.
 
-**Current Version**: 9.04
-**Build Date**: 2025-12-25
+**Current Version**: 9.05
+**Build Date**: 2026-02-08
 
 ## Directory Structure
 
@@ -24,9 +24,9 @@ This document provides an overview of the JWildfire project structure, including
   - `org/jwildfire/`: Main package.
     - `base/`: Core utilities (e.g., `Tools.java`).
     - `create/`: Creation logic.
-    - `sheep/`: **[NEW]** Electric Sheep integration (Downloader, Renderer, UI).
+    - `sheep/`: **[MODERNIZED]** Electric Sheep integration (JavaFX UI, Downloader, Renderer).
     - `swing/`: Swing UI components.
-    - `visualizer/`: **[NEW]** Music Visualizer (Audio Capture, Visualizer Interface, UI).
+    - `visualizer/`: **[MODERNIZED]** Music Visualizer (JavaFX UI, Audio Capture, Visualizer Interface).
 - `test/`: Unit tests.
 
 ### Components / "Submodules"
@@ -42,7 +42,7 @@ Although not configured as Git submodules, the following directories represent d
 | **GLSL** | `glsl/` | OpenGL Shading Language shaders. |
 | **Libraries** | `lib/` | External JARs and native libraries. |
 | **Manual** | `manual/` | User documentation and help files. |
-| **Resources** | `resources/` | Assets, icons, default flames, etc. |
+| **Resources** | `resources/` | Assets, FXML, HTML help, default flames. |
 
 ## Build Information
 - **Build System**: Gradle (primary), Maven (supported).

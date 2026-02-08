@@ -1,7 +1,7 @@
 # JWildfire Project Dashboard
 
-**Current Version**: 9.04
-**Build Date**: 2025-12-27
+**Current Version**: 9.05
+**Build Date**: 2026-02-08
 **Build System**: Gradle (Primary), Maven (Legacy/Lib)
 
 ## Project Structure & Components
@@ -11,14 +11,14 @@ This dashboard lists all major components ("submodules") of the JWildfire projec
 ### Core Application
 | Component | Location | Version | Description |
 |-----------|----------|---------|-------------|
-| **JWildfire** | `src/org/jwildfire` | 9.04 | Main application code (Swing UI, Renderers). |
+| **JWildfire** | `src/org/jwildfire` | 9.05 | Main application code (Swing/JavaFX Hybrid UI, Renderers). |
 | **Launcher** | `src/org/jwildfire/swing/JWildfire.java` | - | Main entry point. |
 
 ### Modules & Integrations
 | Component | Location | Status | Description |
 |-----------|----------|--------|-------------|
-| **Electric Sheep** | `src/org/jwildfire/sheep` | Active | Integration with Electric Sheep (Downloader, Renderer). |
-| **Music Visualizer** | `src/org/jwildfire/visualizer` | Active | Audio visualization module (projectM, GLSL). |
+| **Electric Sheep** | `src/org/jwildfire/sheep` | **Modernized** | Integration with Electric Sheep (JavaFX UI, Downloader, Renderer). |
+| **Music Visualizer** | `src/org/jwildfire/visualizer` | **Modernized** | Audio visualization module (JavaFX UI, Audio Capture, GLSL). |
 | **Scripting** | `src/org/jwildfire/base/Tools.java` | Active | Internal scripting and utility tools. |
 
 ### External Components (Non-Git Submodules)
@@ -30,7 +30,7 @@ These directories contain external tools or libraries integrated into the projec
 | **FARender** | `FARenderJWF/` | - | CUDA kernels for Flame rendering. |
 | **GLSL Shaders** | `glsl/` | - | Collection of fragment/vertex shaders. |
 | **CLI Tools** | `cli/` | - | Shell scripts for headless rendering. |
-| **Applet** | `applet/` | Legacy | Web applet resources (deprecated). |
+| **Applet** | `applet/` | Legacy | Web applet resources (deprecated/removed from build). |
 | **Delphi** | `Delphi/` | Legacy | Old Delphi interoperability code. |
 
 ### Key Dependencies (Gradle)
@@ -46,7 +46,7 @@ Versions defined in `build.gradle`.
 | **JOML** | 1.10.5 | Java OpenGL Math Library. |
 | **JSON-IO** | 4.14.0 | JSON serialization. |
 | **Logback** | 1.4.11 | Logging framework. |
-| **SVG Salamander** | 1.1.3 | SVG rendering. |
+| **SVG Salamander** | 1.1.3 | SVG rendering (Local Lib). |
 
 ### Key Dependencies (Maven)
 Versions defined in `pom.xml` (Legacy Build).
@@ -62,13 +62,14 @@ Versions defined in `pom.xml` (Legacy Build).
 - **`src/`**: The heart of the application. Contains all Java source code.
 - **`resources/`**: Non-code assets.
     - `flames/`: Example fractals.
-    - `app-version.txt`: Source of truth for version number.
-- **`lib/`**: Local JAR files not available in Maven Central (or legacy overrides).
+    - `app-version.txt`: Source of truth for version number (generated).
+    - `*.fxml`: JavaFX UI layouts.
+    - `*.html`: Help documentation.
+- **`lib/`**: Local JAR files not available in Maven Central (e.g., legacy SVG Salamander).
 - **`manual/`**: Documentation source files.
 - **`test/`**: Unit and integration tests.
 
 ## Recent Updates
-- **2025-12-27**: Merged upstream dependency updates (Logback 1.2.13).
-- **2025-12-27**: Updated project version to 9.04.
-- **2025-12-27**: Created this Dashboard.
-
+- **2026-02-08**: Fixed CI build by reverting `svg-salamander` to local lib.
+- **2026-02-08**: Modernized Electric Sheep and Music Visualizer UIs (JavaFX).
+- **2026-02-08**: Updated project version to 9.05.
