@@ -188,6 +188,11 @@ public class Prefs extends ManagedObject {
   static final String KEY_IFLAMES_LIBRARY_PATH_IMAGES = "iflames.library_path.images";
   static final String KEY_IFLAMES_LOAD_LIBRARY_AT_STARTUP = "iflames.load_library_at_startup";
 
+  static final String KEY_ELECTRIC_SHEEP_NICKNAME = "electric_sheep.nickname";
+  static final String KEY_ELECTRIC_SHEEP_URL = "electric_sheep.url";
+  static final String KEY_ELECTRIC_SHEEP_CACHE_DIR = "electric_sheep.cache_dir";
+  static final String KEY_ELECTRIC_SHEEP_HIGH_QUALITY = "electric_sheep.high_quality";
+
   public static final String KEY_SEC_BOOKMARK_KEY = "macos.sec.bookmark.key";
   public static final String KEY_SEC_BOOKMARK_VALUE = "macos.sec.bookmark.value";
   public static final String KEY_SEC_BOOKMARK_COUNT = "macos.sec.bookmark.count";
@@ -409,6 +414,19 @@ public class Prefs extends ManagedObject {
   private int tinaQuickMutationBatchSize = 5;
   @Property(description = "Default mutation-type for creating quick mutations in the main editor", category = PropertyCategory.TINA)
   private String tinaQuickMutationDefaultMutationType = "ALL";
+
+  @Property(description = "Nickname for Electric Sheep server", category = PropertyCategory.GENERAL)
+  private String electricSheepNickname = "jwildfire_user";
+
+  @Property(description = "URL for Electric Sheep server", category = PropertyCategory.GENERAL)
+  private String electricSheepUrl = "https://community.sheepserver.net/query.php";
+
+  @Property(description = "Cache directory for Electric Sheep", category = PropertyCategory.GENERAL, editorClass = FolderPropertyEditor.class)
+  private String electricSheepCacheDir = System.getProperty("java.io.tmpdir");
+
+  @Property(description = "Download high quality Electric Sheep videos", category = PropertyCategory.GENERAL)
+  private boolean electricSheepHighQuality = false;
+
   @Property(description = "Sunflow scene file drawer", category = PropertyCategory.SUNFLOW, editorClass = FolderPropertyEditor.class)
   private String sunflowScenePath = null;
   private String lastInputSunflowScenePath = null;
@@ -884,6 +902,11 @@ public class Prefs extends ManagedObject {
 
     tinaQuickMutationBatchSize = pSrc.tinaQuickMutationBatchSize;
     tinaQuickMutationDefaultMutationType = pSrc.tinaQuickMutationDefaultMutationType;
+
+    electricSheepNickname = pSrc.electricSheepNickname;
+    electricSheepUrl = pSrc.electricSheepUrl;
+    electricSheepCacheDir = pSrc.electricSheepCacheDir;
+    electricSheepHighQuality = pSrc.electricSheepHighQuality;
 
     tinaDefaultFadeToWhiteLevel = pSrc.tinaDefaultFadeToWhiteLevel;
     tinaEditorDoubleClickAction = pSrc.tinaEditorDoubleClickAction;
@@ -1899,6 +1922,38 @@ public class Prefs extends ManagedObject {
 
   public void setTinaQuickMutationDefaultMutationType(String tinaQuickMutationDefaultMutationType) {
     this.tinaQuickMutationDefaultMutationType = tinaQuickMutationDefaultMutationType;
+  }
+
+  public String getElectricSheepNickname() {
+    return electricSheepNickname;
+  }
+
+  public void setElectricSheepNickname(String electricSheepNickname) {
+    this.electricSheepNickname = electricSheepNickname;
+  }
+
+  public String getElectricSheepUrl() {
+    return electricSheepUrl;
+  }
+
+  public void setElectricSheepUrl(String electricSheepUrl) {
+    this.electricSheepUrl = electricSheepUrl;
+  }
+
+  public String getElectricSheepCacheDir() {
+    return checkPathAndProvideDefault(electricSheepCacheDir);
+  }
+
+  public void setElectricSheepCacheDir(String electricSheepCacheDir) {
+    this.electricSheepCacheDir = electricSheepCacheDir;
+  }
+
+  public boolean isElectricSheepHighQuality() {
+    return electricSheepHighQuality;
+  }
+
+  public void setElectricSheepHighQuality(boolean electricSheepHighQuality) {
+    this.electricSheepHighQuality = electricSheepHighQuality;
   }
 
   public Map<String, String> getSecurityScopedBookmarks() {

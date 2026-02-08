@@ -75,8 +75,8 @@ public class JWildfire extends JApplet {
     }
     mainInternalFrames.add(new DefaultJFrameHolder<>(HelpFrame.class, this, WindowPrefs.WINDOW_HELP, "Fractal flames: Help"));
     mainInternalFrames.add(new DefaultJFrameHolder<>(IFlamesFrame.class, this, WindowPrefs.WINDOW_IFLAMES, "IFlames"));
-    mainInternalFrames.add(new DefaultJFrameHolder<>(org.jwildfire.visualizer.MusicVisualizerInternalFrame.class, this, WindowPrefs.WINDOW_MUSIC_VISUALIZER, "Music Visualizer"));
-    mainInternalFrames.add(new DefaultJFrameHolder<>(org.jwildfire.sheep.ElectricSheepInternalFrame.class, this, WindowPrefs.WINDOW_ELECTRIC_SHEEP, "Electric Sheep"));
+    mainInternalFrames.add(new DefaultJFrameHolder<>(org.jwildfire.visualizer.MusicVisualizerFrame.class, this, WindowPrefs.WINDOW_MUSIC_VISUALIZER, "Music Visualizer"));
+    mainInternalFrames.add(new DefaultJFrameHolder<>(org.jwildfire.sheep.ElectricSheepFrame.class, this, WindowPrefs.WINDOW_ELECTRIC_SHEEP, "Electric Sheep"));
     mainInternalFrames.add(new DefaultJFrameHolder<>(OperatorsFrame.class, this, WindowPrefs.WINDOW_IMAGEPROCESSING, "Image processing"));
     mainInternalFrames.add(new DefaultJFrameHolder<>(FormulaExplorerFrame.class, this, WindowPrefs.WINDOW_FORMULAEXPLORER, "Formula explorer"));
 
@@ -220,8 +220,8 @@ public class JWildfire extends JApplet {
       MainEditorFrame mainEditorFrame = getJFrame(MainEditorFrame.class);
       tinaController = mainEditorFrame.createController(this, errorHandler, prefs, mutaGenFrame, flameBrowserFrame, easyMovieMakerFrame, dancingFlamesFrame, batchFlameRendererFrame, quiltFlameRendererFrame, meshGenFrame, interactiveRendererFrame, gpuRendererFrame, helpFrame);
 
-      getJFrame(org.jwildfire.visualizer.MusicVisualizerInternalFrame.class); // Initialize Visualizer Frame
-      org.jwildfire.sheep.ElectricSheepInternalFrame esFrame = getJFrame(org.jwildfire.sheep.ElectricSheepInternalFrame.class); // Initialize Electric Sheep Frame
+      getJFrame(org.jwildfire.visualizer.MusicVisualizerFrame.class); // Initialize Visualizer Frame
+      org.jwildfire.sheep.ElectricSheepFrame esFrame = getJFrame(org.jwildfire.sheep.ElectricSheepFrame.class); // Initialize Electric Sheep Frame
       esFrame.setTinaController(tinaController);
 
       flameBrowserFrame.setTinaController(tinaController);

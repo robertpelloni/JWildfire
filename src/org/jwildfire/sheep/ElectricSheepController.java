@@ -55,10 +55,10 @@ public class ElectricSheepController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Load Settings
-        nicknameField.setText(Prefs.getPrefs().get("electric_sheep.nickname", "jwildfire_user"));
-        serverUrlField.setText(Prefs.getPrefs().get("electric_sheep.url", "https://community.sheepserver.net/query.php"));
-        cacheDirField.setText(Prefs.getPrefs().get("electric_sheep.cache_dir", System.getProperty("java.io.tmpdir")));
-        highQualityCheck.setSelected(Prefs.getPrefs().get("electric_sheep.high_quality", "false").equals("true"));
+        nicknameField.setText(Prefs.getPrefs().getElectricSheepNickname());
+        serverUrlField.setText(Prefs.getPrefs().getElectricSheepUrl());
+        cacheDirField.setText(Prefs.getPrefs().getElectricSheepCacheDir());
+        highQualityCheck.setSelected(Prefs.getPrefs().isElectricSheepHighQuality());
 
         // Apply settings to downloader
         downloader.setConfig(nicknameField.getText(), serverUrlField.getText());
@@ -236,10 +236,10 @@ public class ElectricSheepController implements Initializable {
 
     @FXML
     private void saveSettings() {
-        Prefs.getPrefs().put("electric_sheep.nickname", nicknameField.getText());
-        Prefs.getPrefs().put("electric_sheep.url", serverUrlField.getText());
-        Prefs.getPrefs().put("electric_sheep.cache_dir", cacheDirField.getText());
-        Prefs.getPrefs().put("electric_sheep.high_quality", highQualityCheck.isSelected() ? "true" : "false");
+        Prefs.getPrefs().setElectricSheepNickname(nicknameField.getText());
+        Prefs.getPrefs().setElectricSheepUrl(serverUrlField.getText());
+        Prefs.getPrefs().setElectricSheepCacheDir(cacheDirField.getText());
+        Prefs.getPrefs().setElectricSheepHighQuality(highQualityCheck.isSelected());
 
         downloader.setConfig(nicknameField.getText(), serverUrlField.getText());
         statusLabel.setText("Settings saved.");

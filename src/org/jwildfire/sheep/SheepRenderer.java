@@ -82,7 +82,6 @@ public class SheepRenderer {
                     public void initProgress(int maxSteps) {}
                     @Override
                     public void updateProgress(int currentStep) {}
-                    @Override
                     public void cancel() {}
                 },
                 null,
@@ -93,7 +92,6 @@ public class SheepRenderer {
                     public void handleError(Throwable ex) {
                         ex.printStackTrace();
                     }
-                    @Override
                     public void handleError(String msg, Throwable ex) {
                         System.err.println(msg);
                         ex.printStackTrace();
@@ -133,7 +131,6 @@ public class SheepRenderer {
                     public void initProgress(int maxSteps) {}
                     @Override
                     public void updateProgress(int currentStep) {}
-                    @Override
                     public void cancel() {}
                 }, 
                 null, 
@@ -144,7 +141,6 @@ public class SheepRenderer {
                     public void handleError(Throwable ex) {
                         ex.printStackTrace();
                     }
-                    @Override
                     public void handleError(String msg, Throwable ex) {
                         System.err.println(msg);
                         ex.printStackTrace();

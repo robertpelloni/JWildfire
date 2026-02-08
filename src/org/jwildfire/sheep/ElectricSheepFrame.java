@@ -13,14 +13,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
-public class ElectricSheepInternalFrame extends JInternalFrame {
+public class ElectricSheepFrame extends JFrame {
     private final JWildfire desktop;
     private TinaController tinaController;
     private ElectricSheepController controller;
 
-    public ElectricSheepInternalFrame(JWildfire desktop) {
-        super("Electric Sheep", true, true, true, true);
-        this.desktop = desktop;
+    public ElectricSheepFrame() {
+        super("Electric Sheep");
+        this.desktop = JWildfire.getInstance();
         initUI();
     }
 

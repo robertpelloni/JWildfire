@@ -16,7 +16,7 @@
 */
 package org.jwildfire.create.tina.render.gpu.swanrender;
 
-import com.cedarsoftware.io.*;
+import com.cedarsoftware.util.io.*;
 import org.jwildfire.base.Prefs;
 import org.jwildfire.base.Tools;
 import org.jwildfire.create.tina.base.Flame;

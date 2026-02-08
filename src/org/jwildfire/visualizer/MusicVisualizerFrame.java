@@ -12,13 +12,13 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
-public class MusicVisualizerInternalFrame extends JInternalFrame {
+public class MusicVisualizerFrame extends JFrame {
     private final JWildfire desktop;
     private MusicVisualizerController controller;
 
-    public MusicVisualizerInternalFrame(JWildfire desktop) {
-        super("Music Visualizer", true, true, true, true);
-        this.desktop = desktop;
+    public MusicVisualizerFrame() {
+        super("Music Visualizer");
+        this.desktop = JWildfire.getInstance();
         initUI();
     }
 

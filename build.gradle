@@ -96,6 +96,9 @@ dependencies {
     // ControlsFX
     implementation 'org.controlsfx:controlsfx:11.2.1'
 
+    // RichTextFX (Code Editor)
+    implementation 'org.fxmisc.richtext:richtextfx:0.11.0'
+
     // LWJGL Natives (Linux)
     runtimeOnly "org.lwjgl:lwjgl::natives-linux"
     runtimeOnly "org.lwjgl:lwjgl-glfw::natives-linux"
