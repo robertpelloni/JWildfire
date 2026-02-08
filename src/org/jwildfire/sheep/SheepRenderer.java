@@ -24,13 +24,18 @@ public class SheepRenderer {
 
     public SheepRenderer(JPanel outputPanel) {
         this.outputPanel = outputPanel;
-        this.imageLabel = new JLabel();
-        this.imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         if (outputPanel != null) {
+            this.imageLabel = new JLabel();
+            this.imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
             outputPanel.removeAll();
             outputPanel.setLayout(new BorderLayout());
             outputPanel.add(new JScrollPane(imageLabel), BorderLayout.CENTER);
         }
+    }
+
+    // Overload for headless/FX usage
+    public SheepRenderer() {
+        this.outputPanel = null;
     }
 
     public void renderSheep(String flameFilePath) {
@@ -49,20 +54,56 @@ public class SheepRenderer {
         }).start();
     }
 
-    public void renderSheepFromXML(String xml) {
-        if (outputPanel == null) return;
+    public BufferedImage renderSheepToImage(String flameFilePath) {
+        try {
+            FlameReader reader = new FlameReader(Prefs.getPrefs());
+            List<Flame> flames = reader.readFlames(flameFilePath);
+            if (flames.isEmpty()) return null;
+            return renderFlameToImage(flames.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-        new Thread(() -> {
-            try {
-                setStatus("Loading flame from XML...");
-                FlameReader reader = new FlameReader(Prefs.getPrefs());
-                List<Flame> flames = reader.readFlamesfromXML(xml);
-                renderFlames(flames);
-            } catch (Exception e) {
-                e.printStackTrace();
-                setStatus("Error: " + e.getMessage());
-            }
-        }).start();
+    public BufferedImage renderFlameToImage(Flame sheep) {
+        int width = 800;
+        int height = 600;
+
+        if (GPURendererFactory.isAvailable()) {
+            GPURenderer renderer = GPURendererFactory.getGPURenderer();
+            SimpleImage renderedImage = renderer.renderPreview(
+                sheep,
+                width,
+                height,
+                Prefs.getPrefs(),
+                new ProgressUpdater() {
+                    @Override
+                    public void initProgress(int maxSteps) {}
+                    @Override
+                    public void updateProgress(int currentStep) {}
+                    @Override
+                    public void cancel() {}
+                },
+                null,
+                null,
+                new FlamePanelConfig(),
+                new ErrorHandler() {
+                    @Override
+                    public void handleError(Throwable ex) {
+                        ex.printStackTrace();
+                    }
+                    @Override
+                    public void handleError(String msg, Throwable ex) {
+                        System.err.println(msg);
+                        ex.printStackTrace();
+                    }
+                },
+                logger
+            );
+            return renderedImage != null ? renderedImage.getBufferedImg() : null;
+        }
+        return null;
     }
 
     private void renderFlames(List<Flame> flames) {

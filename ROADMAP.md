@@ -27,13 +27,13 @@
 #### Integrations & Visualizers
 - [x] **Electric Sheep**:
     - [x] **Scaffolding**: Created `org.jwildfire.sheep` package with `SheepDownloader` and `SheepRenderer`.
-    - [x] **UI**: Integrated `ElectricSheepInternalFrame` into the main application.
+    - [x] **UI**: Modernized `ElectricSheepInternalFrame` with JavaFX, including settings, browser, and preview tabs.
     - [x] **Logic**: Implemented `SheepRenderer` using `GPURendererFactory`.
     - [x] **Downloader**: Implemented robust mock downloader with sample file support.
     - [x] **API**: Researched protocol and implemented `SheepServer` for list retrieval.
 - [x] **Music Visualization**:
     - [x] **Scaffolding**: Created `org.jwildfire.visualizer` package with `Visualizer` interface.
-    - [x] **UI**: Integrated `MusicVisualizerInternalFrame` with audio capture.
+    - [x] **UI**: Modernized `MusicVisualizerInternalFrame` with JavaFX controls, real-time preview canvas, and external launcher buttons.
     - [x] **Implementation**: Created `SwingVisualizer` with spectrum and waveform rendering.
     - [x] **projectM**: Created `ProjectMBinding` using Java 21 Foreign Function & Memory API (Preview).
     - [x] **OpenGL**: Connect `SimpleGLVisualizer` to a real OpenGL context (via `GLFWVisualizerRunner`).
