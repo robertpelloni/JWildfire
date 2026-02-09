@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jwildfire.create.tina.swing.DancingFlamesController">
+   <top>
+      <VBox spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <Button fx:id="loadProjectBtn" mnemonicParsing="false" onAction="#onLoadProject" text="Load Project" />
+                  <Button fx:id="saveProjectBtn" mnemonicParsing="false" onAction="#onSaveProject" text="Save Project" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.3, 0.7" BorderPane.alignment="CENTER">
+         <items>
+            <VBox spacing="5.0">
+               <children>
+                  <TitledPane collapsible="false" text="Flame Pool" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox spacing="5.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                 <children>
+                                    <Label text="Random Generator" />
+                                    <ComboBox fx:id="randomGenCmb" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                 <children>
+                                    <Label text="Count" />
+                                    <TextField fx:id="randomCountField" prefWidth="50.0" text="12" />
+                                    <Button fx:id="genRandomFlamesBtn" mnemonicParsing="false" onAction="#onGenRandomFlames" text="Gen. Random Flames" />
+                                 </children>
+                              </HBox>
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromEditor" text="From Editor" HBox.hgrow="ALWAYS" />
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromClipboard" text="From Clipboard" HBox.hgrow="ALWAYS" />
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromDisc" text="From Disc" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
+                              <TreeView fx:id="flamePropertiesTree" VBox.vgrow="ALWAYS" />
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#onToEditor" text="To Editor" />
+                                    <Button mnemonicParsing="false" onAction="#onReplaceFromEditor" text="Repl from Editor" />
+                                    <Button mnemonicParsing="false" onAction="#onRenameFlame" text="Rename" />
+                                    <Button mnemonicParsing="false" onAction="#onDeleteFlame" text="Delete" />
+                                 </children>
+                              </HBox>
+                              <StackPane fx:id="poolFlamePreviewPane" prefHeight="150.0" style="-fx-background-color: black;">
+                                 <children>
+                                    <ImageView fx:id="poolFlamePreviewView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+               </children>
+            </VBox>
+            <VBox spacing="5.0">
+               <children>
+                  <TitledPane collapsible="false" text="Preview" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox spacing="5.0">
+                           <children>
+                              <StackPane fx:id="previewPane" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <ImageView fx:id="previewImageView" fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </StackPane>
+                              <StackPane fx:id="graphPane" prefHeight="100.0" style="-fx-border-color: black;" />
+                              <GridPane hgap="5.0" vgap="5.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                       <children>
+                                          <Label text="FPS:" />
+                                          <TextField fx:id="fpsField" prefWidth="50.0" text="12" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <Label text="Border Size:" />
+                                          <Slider fx:id="borderSizeSlider" max="640.0" value="200.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                       <children>
+                                          <CheckBox fx:id="drawTrianglesCbx" mnemonicParsing="false" selected="true" text="Draw Triangles" />
+                                          <CheckBox fx:id="drawFFTCbx" mnemonicParsing="false" selected="true" text="Show FFT" />
+                                          <CheckBox fx:id="drawFPSCbx" mnemonicParsing="false" selected="true" text="Show FPS" />
+                                          <CheckBox fx:id="mutedCbx" mnemonicParsing="false" text="Muted" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" text="Project" VBox.vgrow="NEVER">
+                     <content>
+                        <GridPane hgap="5.0" vgap="5.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoadSound" text="Load Sound" />
+                              <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+                                 <children>
+                                    <Label text="Flame:" />
+                                    <ComboBox fx:id="projectFlameCmb" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                    <Label text="Morph Frames:" />
+                                    <TextField fx:id="morphFramesField" prefWidth="50.0" text="0" />
+                                 </children>
+                              </HBox>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStartShow" text="Start Show" GridPane.rowIndex="1" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStopShow" text="Stop Show" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <CheckBox fx:id="recordShowCbx" mnemonicParsing="false" text="Record Show" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </content>
+                  </TitledPane>
+               </children>
+            </VBox>
+            <VBox spacing="5.0">
+               <children>
+                  <TitledPane collapsible="false" text="Motions" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox spacing="5.0">
+                           <children>
+                              <TableView fx:id="motionTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="Motion" />
+                                  <TableColumn prefWidth="75.0" text="Type" />
+                                </columns>
+                              </TableView>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <HBox spacing="5.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#onAddMotion" text="Add Motion" />
+                                          <ComboBox fx:id="addMotionCmb" prefWidth="150.0" />
+                                          <Button mnemonicParsing="false" onAction="#onRenameMotion" text="Rename" />
+                                          <Button mnemonicParsing="false" onAction="#onDeleteMotion" text="Delete Motion" />
+                                       </children>
+                                    </HBox>
+                                    <HBox spacing="5.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#onCreateMotions" text="Create Motions" />
+                                          <ComboBox fx:id="createMotionsCmb" prefWidth="150.0" />
+                                          <Button mnemonicParsing="false" onAction="#onClearMotions" text="Clear All Motions" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  <TitledPane collapsible="false" text="Motion Links" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox spacing="5.0">
+                           <children>
+                              <TableView fx:id="motionLinksTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="Property" />
+                                  <TableColumn prefWidth="75.0" text="Motion" />
+                                </columns>
+                              </TableView>
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#onAddLink" text="Add Link" />
+                                    <Button mnemonicParsing="false" onAction="#onDeleteLink" text="Delete Link" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+               </children>
+            </VBox>
+         </items>
+      </SplitPane>
+   </center>
+</BorderPane>

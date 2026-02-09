@@ -5872,19 +5872,19 @@ public class MainEditorFrame extends JFrame {
 
     // params.setEasyMovieMakerParams(easyMovieMakerFrame.getSwfAnimatorResolutionProfileCmb(), easyMovieMakerFrame.getSwfAnimatorQualityProfileCmb());
 
-    params.setDancingFlamesParams(dancingFlamesFrame.getRealtimeFlamePnl(), dancingFlamesFrame.getRealtimeGraph1Pnl(), dancingFlamesFrame.getDancingFlamesLoadSoundBtn(),
-        dancingFlamesFrame.getDancingFlamesAddFromClipboardBtn(), dancingFlamesFrame.getDancingFlamesAddFromEditorBtn(), dancingFlamesFrame.getDancingFlamesAddFromDiscBtn(),
-        dancingFlamesFrame.getDancingFlamesRandomCountIEd(), dancingFlamesFrame.getDancingFlamesGenRandFlamesBtn(), dancingFlamesFrame.getDancingFlamesRandomGenCmb(),
-        dancingFlamesFrame.getDancingFlamesPoolFlamePreviewPnl(), dancingFlamesFrame.getDancingFlamesBorderSizeSlider(), dancingFlamesFrame.getDancingFlamesFlameToEditorBtn(),
-        dancingFlamesFrame.getDancingFlamesDeleteFlameBtn(), dancingFlamesFrame.getDancingFlamesFramesPerSecondIEd(), dancingFlamesFrame.getDancingFlamesMorphFrameCountIEd(),
-        dancingFlamesFrame.getDancingFlamesStartShowBtn(), dancingFlamesFrame.getDancingFlamesStopShowBtn(), dancingFlamesFrame.getDancingFlamesDoRecordCBx(),
-        dancingFlamesFrame.getDancingFlamesFlameCmb(), dancingFlamesFrame.getDancingFlamesDrawTrianglesCBx(), dancingFlamesFrame.getDancingFlamesDrawFFTCBx(),
-        dancingFlamesFrame.getDancingFlamesDrawFPSCBx(), dancingFlamesFrame.getDancingFlamesFlamePropertiesTree(), dancingFlamesFrame.getDancingFlamesMotionPropertyPnl(),
-        dancingFlamesFrame.getDancingFlamesMotionTable(), dancingFlamesFrame.getDancingFlamesAddMotionCmb(), dancingFlamesFrame.getDancingFlamesAddMotionBtn(),
-        dancingFlamesFrame.getDancingFlamesDeleteMotionBtn(), dancingFlamesFrame.getDancingFlamesLinkMotionBtn(), dancingFlamesFrame.getDancingFlamesUnlinkMotionBtn(),
-        dancingFlamesFrame.getDancingFlamesCreateMotionsCmb(), dancingFlamesFrame.getDancingFlamesClearMotionsBtn(), dancingFlamesFrame.getDancingFlamesLoadProjectBtn(),
-        dancingFlamesFrame.getDancingFlamesSaveProjectBtn(), dancingFlamesFrame.getDancingFlamesMotionLinksTable(), dancingFlamesFrame.getDancingFlamesReplaceFlameFromEditorBtn(),
-        dancingFlamesFrame.getDancingFlamesRenameFlameBtn(), dancingFlamesFrame.getDancingFlamesRenameMotionBtn(), dancingFlamesFrame.getDancingFlamesMutedCBx());
+    // params.setDancingFlamesParams(dancingFlamesFrame.getRealtimeFlamePnl(), dancingFlamesFrame.getRealtimeGraph1Pnl(), dancingFlamesFrame.getDancingFlamesLoadSoundBtn(),
+    //    dancingFlamesFrame.getDancingFlamesAddFromClipboardBtn(), dancingFlamesFrame.getDancingFlamesAddFromEditorBtn(), dancingFlamesFrame.getDancingFlamesAddFromDiscBtn(),
+    //    dancingFlamesFrame.getDancingFlamesRandomCountIEd(), dancingFlamesFrame.getDancingFlamesGenRandFlamesBtn(), dancingFlamesFrame.getDancingFlamesRandomGenCmb(),
+    //    dancingFlamesFrame.getDancingFlamesPoolFlamePreviewPnl(), dancingFlamesFrame.getDancingFlamesBorderSizeSlider(), dancingFlamesFrame.getDancingFlamesFlameToEditorBtn(),
+    //    dancingFlamesFrame.getDancingFlamesDeleteFlameBtn(), dancingFlamesFrame.getDancingFlamesFramesPerSecondIEd(), dancingFlamesFrame.getDancingFlamesMorphFrameCountIEd(),
+    //    dancingFlamesFrame.getDancingFlamesStartShowBtn(), dancingFlamesFrame.getDancingFlamesStopShowBtn(), dancingFlamesFrame.getDancingFlamesDoRecordCBx(),
+    //    dancingFlamesFrame.getDancingFlamesFlameCmb(), dancingFlamesFrame.getDancingFlamesDrawTrianglesCBx(), dancingFlamesFrame.getDancingFlamesDrawFFTCBx(),
+    //    dancingFlamesFrame.getDancingFlamesDrawFPSCBx(), dancingFlamesFrame.getDancingFlamesFlamePropertiesTree(), dancingFlamesFrame.getDancingFlamesMotionPropertyPnl(),
+    //    dancingFlamesFrame.getDancingFlamesMotionTable(), dancingFlamesFrame.getDancingFlamesAddMotionCmb(), dancingFlamesFrame.getDancingFlamesAddMotionBtn(),
+    //    dancingFlamesFrame.getDancingFlamesDeleteMotionBtn(), dancingFlamesFrame.getDancingFlamesLinkMotionBtn(), dancingFlamesFrame.getDancingFlamesUnlinkMotionBtn(),
+    //    dancingFlamesFrame.getDancingFlamesCreateMotionsCmb(), dancingFlamesFrame.getDancingFlamesClearMotionsBtn(), dancingFlamesFrame.getDancingFlamesLoadProjectBtn(),
+    //    dancingFlamesFrame.getDancingFlamesSaveProjectBtn(), dancingFlamesFrame.getDancingFlamesMotionLinksTable(), dancingFlamesFrame.getDancingFlamesReplaceFlameFromEditorBtn(),
+    //    dancingFlamesFrame.getDancingFlamesRenameFlameBtn(), dancingFlamesFrame.getDancingFlamesRenameMotionBtn(), dancingFlamesFrame.getDancingFlamesMutedCBx());
 
     params.setBatchFlameRendererParams(batchFlameRendererFrame.getRenderBatchJobsTable(), batchFlameRendererFrame.getBatchPreviewRootPanel(),
         batchFlameRendererFrame.getBatchRenderJobProgressBar(), batchFlameRendererFrame.getBatchRenderTotalProgressBar(),
