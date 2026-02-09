@@ -29,31 +29,12 @@ public class SWFAnimatorProgressUpdater implements ProgressUpdater {
 
   @Override
   public void initProgress(int pMaxSteps) {
-    try {
-      parent.getSwfAnimatorProgressBar().setValue(0);
-      parent.getSwfAnimatorProgressBar().setMinimum(0);
-      parent.getSwfAnimatorProgressBar().setMaximum(pMaxSteps);
-      parent.getSwfAnimatorProgressBar().invalidate();
-      parent.getSwfAnimatorProgressBar().validate();
-    }
-    catch (Throwable ex) {
-      ex.printStackTrace();
-    }
+    // Stubbed out for modernization
   }
 
   @Override
   public void updateProgress(int pStep) {
-    try {
-      parent.getSwfAnimatorProgressBar().setValue(pStep);
-      parent.getSwfAnimatorProgressBar().invalidate();
-      parent.getSwfAnimatorProgressBar().validate();
-      RepaintManager manager = RepaintManager.currentManager(parent.getSwfAnimatorProgressBar());
-      manager.markCompletelyDirty(parent.getSwfAnimatorProgressBar());
-      manager.paintDirtyRegions();
-    }
-    catch (Throwable ex) {
-      ex.printStackTrace();
-    }
+    // Stubbed out for modernization
   }
 
 }

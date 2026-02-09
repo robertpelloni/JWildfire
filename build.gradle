@@ -74,7 +74,7 @@ dependencies {
     // Modernized Dependencies (Moved from lib/)
     implementation 'org.codehaus.janino:janino:3.1.10'
     implementation 'org.joml:joml:1.10.5'
-    implementation 'com.cedarsoftware:json-io:4.14.0'
+    // implementation 'com.cedarsoftware:json-io:4.14.0' // Using local jar version 4.54.0
     implementation 'org.slf4j:slf4j-api:2.0.9'
     implementation 'ch.qos.logback:logback-classic:1.4.11'
 
@@ -82,7 +82,7 @@ dependencies {
     // Exclude JARs that are now handled by Maven
     implementation fileTree(dir: 'lib', include: ['*.jar'], exclude: [
         'lwjgl.jar', 'junit*.jar', 'commons-io*.jar',
-        'janino.jar', 'joml*.jar', 'json-io*.jar', 'slf4j*.jar', 'logback*.jar',
+        'janino.jar', 'joml*.jar', 'slf4j*.jar', 'logback*.jar',
         'jtransforms*.jar', 'JTattoo*.jar'
     ])
 
@@ -131,6 +131,7 @@ tasks.withType(JavaExec) {
 
 tasks.withType(Tar) { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
 tasks.withType(Zip) { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
+tasks.withType(Copy) { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
 
 run {
     systemProperty "java.library.path", "lib"

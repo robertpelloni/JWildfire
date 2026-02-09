@@ -103,9 +103,13 @@ public class ScriptEditorController implements Initializable {
     public void setScriptNode(JWFScriptUserNode pScriptNode) {
         this.scriptNode = pScriptNode;
         if (scriptNode != null) {
-            codeArea.replaceText(0, 0, scriptNode.getScript());
-            descriptionArea.setText(scriptNode.getDescription());
-            statusLabel.setText("Editing: " + scriptNode.getUserObject().toString());
+            try {
+                codeArea.replaceText(0, 0, scriptNode.getScript());
+                descriptionArea.setText(scriptNode.getDescription());
+                statusLabel.setText("Editing: " + scriptNode.getUserObject().toString());
+            } catch (Exception ex) {
+                handleError(ex);
+            }
         }
     }
 

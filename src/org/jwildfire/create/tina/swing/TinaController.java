@@ -124,7 +124,7 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   private QuiltRendererController quiltRendererController;
   private TinaInteractiveRendererController interactiveRendererCtrl;
   private FlamesGPURenderController gpuRendererCtrl;
-  private TinaSWFAnimatorController swfAnimatorCtrl;
+  private EasyMovieMakerController swfAnimatorCtrl;
   private JWFScriptController jwfScriptController;
   private FlameBrowserController flameBrowserController;
   private GradientController gradientController;
@@ -4125,11 +4125,11 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
     }
   }
 
-  public TinaSWFAnimatorController getSwfAnimatorCtrl() {
+  public EasyMovieMakerController getSwfAnimatorCtrl() {
     return swfAnimatorCtrl;
   }
 
-  public void setSwfAnimatorCtrl(TinaSWFAnimatorController pSWFAnimatorCtrl) {
+  public void setSwfAnimatorCtrl(EasyMovieMakerController pSWFAnimatorCtrl) {
     swfAnimatorCtrl = pSWFAnimatorCtrl;
   }
 

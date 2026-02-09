@@ -5785,6 +5785,7 @@ public class MainEditorFrame extends JFrame {
       FlameBrowserFrame flameBrowserFrame, EasyMovieMakerFrame easyMovieMakerFrame,
       DancingFlamesFrame dancingFlamesFrame, BatchFlameRendererFrame batchFlameRendererFrame, QuiltFlameRendererFrame quiltFlameRendererFrame,
       MeshGenInternalFrame meshGenFrame, InteractiveRendererFrame interactiveRendererFrame, FlamesGPURenderFrame gpuRendererFrame, HelpFrame helpFrame) {
+    easyMovieMakerFrame.setTinaController(tinaController);
     nonlinearControlsRows = new TinaNonlinearControlsRow[12];
     nonlinearControlsRows[0] = new TinaNonlinearControlsRow(0, getNonlinearVar1Panel(), nonlinearVar1Lbl, getNonlinearVar1Cmb(), getNonlinearParams1Cmb(), getNonlinearVar1REd(),
         getNonlinearParams1REd(), getNonlinearParams1LeftButton(), getNonlinearParams1PreButton(), getNonlinearParams1PostButton(), null,
@@ -5832,7 +5833,7 @@ public class MainEditorFrame extends JFrame {
     initPostSymmetryTypeCmb(getPostSymmetryTypeCmb());
     initRandomGenCmb(getRandomStyleCmb());
     initRandomSymmetryCmb(getRandomSymmetryCmb());
-    initRandomMovieGenCmb(easyMovieMakerFrame.getSwfAnimatorRandGenCmb());
+    // initRandomMovieGenCmb(easyMovieMakerFrame.getSwfAnimatorRandGenCmb());
     initStereo3dModeCmb(getStereo3dModeCmb());
     initStereo3dPreviewCmb(getStereo3dPreviewCmb());
     initStereo3dColorCmb(getStereo3dLeftEyeColorCmb(), Stereo3dColor.RED);
@@ -5869,7 +5870,7 @@ public class MainEditorFrame extends JFrame {
         flameBrowserFrame.getFlameBrowserRenameBtn(), flameBrowserFrame.getFlameBrowserCopyToBtn(), flameBrowserFrame.getFlameBrowserMoveToBtn(),
         flameBrowserFrame.getFlameBrowserToMeshGenBtn());
 
-    params.setEasyMovieMakerParams(easyMovieMakerFrame.getSwfAnimatorResolutionProfileCmb(), easyMovieMakerFrame.getSwfAnimatorQualityProfileCmb());
+    // params.setEasyMovieMakerParams(easyMovieMakerFrame.getSwfAnimatorResolutionProfileCmb(), easyMovieMakerFrame.getSwfAnimatorQualityProfileCmb());
 
     params.setDancingFlamesParams(dancingFlamesFrame.getRealtimeFlamePnl(), dancingFlamesFrame.getRealtimeGraph1Pnl(), dancingFlamesFrame.getDancingFlamesLoadSoundBtn(),
         dancingFlamesFrame.getDancingFlamesAddFromClipboardBtn(), dancingFlamesFrame.getDancingFlamesAddFromEditorBtn(), dancingFlamesFrame.getDancingFlamesAddFromDiscBtn(),
@@ -6174,33 +6175,33 @@ public class MainEditorFrame extends JFrame {
       getChannelMixerModeCmb().addItem(ChannelMixerMode.FULL);
 
       initTriangleStyleCmb(getTriangleStyleCmb(), pPrefs);
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript1Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript2Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript3Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript4Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript5Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript6Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript7Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript8Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript9Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript10Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript11Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript12Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript1Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript2Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript3Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript4Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript5Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript6Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript7Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript8Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript9Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript10Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript11Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript12Cmb());
 
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript1Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript2Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript3Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript4Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript5Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript6Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript7Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript8Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript9Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript10Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript11Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript12Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript1Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript2Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript3Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript4Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript5Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript6Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript7Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript8Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript9Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript10Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript11Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript12Cmb());
 
-      initSequenceOutputType(easyMovieMakerFrame.getSwfAnimatorOutputTypeCmb());
+      // initSequenceOutputType(easyMovieMakerFrame.getSwfAnimatorOutputTypeCmb());
 
       tinaController.setInteractiveRendererCtrl(new TinaInteractiveRendererController(tinaController, pErrorHandler, pPrefs,
           interactiveRendererFrame.getInteractiveLoadFlameButton(), interactiveRendererFrame.getInteractiveLoadFlameFromClipboardButton(),
@@ -6228,50 +6229,9 @@ public class MainEditorFrame extends JFrame {
           gpuRendererFrame.getFlameParamsTextArea(), gpuRendererFrame.getAutoSyncCheckbox(), gpuRendererFrame.getAutoRenderCBx()));
       tinaController.getGpuRendererCtrl().enableControls();
 
-      JComboBox[] globalScriptCmbArray = {
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript1Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript2Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript3Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript4Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript5Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript6Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript7Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript8Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript9Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript10Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript11Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript12Cmb() };
-      JWFNumberField[] globalScriptREdArray = {
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript1REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript2REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript3REd(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript4REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript5REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript6REd(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript7REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript8REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript9REd(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript10REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript11REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript12REd() };
-      JComboBox[] xFormScriptCmbArray = {
-          easyMovieMakerFrame.getSwfAnimatorXFormScript1Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript2Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript3Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript4Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript5Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript6Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript7Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript8Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript9Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript10Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript11Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript12Cmb() };
-      JWFNumberField[] xFormScriptREdArray = {
-          easyMovieMakerFrame.getSwfAnimatorXFormScript1REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript2REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript3REd(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript4REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript5REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript6REd(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript7REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript8REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript9REd(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript10REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript11REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript12REd() };
-
-      tinaController.setSwfAnimatorCtrl(new TinaSWFAnimatorController(tinaController, pErrorHandler, pPrefs,
-          globalScriptCmbArray, globalScriptREdArray,
-          xFormScriptCmbArray, xFormScriptREdArray,
-          easyMovieMakerFrame.getSwfAnimatorFramesREd(), easyMovieMakerFrame.getSwfAnimatorFramesPerSecondREd(),
-          easyMovieMakerFrame.getSwfAnimatorGenerateButton(), easyMovieMakerFrame.getSwfAnimatorResolutionProfileCmb(),
-          easyMovieMakerFrame.getSwfAnimatorLoadFlameFromMainButton(),
-          easyMovieMakerFrame.getSwfAnimatorLoadFlameFromClipboardButton(), easyMovieMakerFrame.getSwfAnimatorLoadFlameButton(),
-          easyMovieMakerFrame.getSwfAnimatorProgressBar(), easyMovieMakerFrame.getSwfAnimatorCancelButton(),
-          new SWFAnimatorProgressUpdater(easyMovieMakerFrame), easyMovieMakerFrame.getSwfAnimatorPreviewRootPanel(),
-          easyMovieMakerFrame.getSwfAnimatorFrameSlider(), easyMovieMakerFrame.getSwfAnimatorFrameREd(),
-          easyMovieMakerFrame.getSwfAnimatorFlamesPanel(), easyMovieMakerFrame.getSwfAnimatorFlamesButtonGroup(),
-          easyMovieMakerFrame.getSwfAnimatorMoveUpButton(), easyMovieMakerFrame.getSwfAnimatorMoveDownButton(),
-          easyMovieMakerFrame.getSwfAnimatorRemoveFlameButton(),
-          easyMovieMakerFrame.getSwfAnimatorRemoveAllFlamesButton(), easyMovieMakerFrame.getSwfAnimatorMovieFromClipboardButton(),
-          easyMovieMakerFrame.getSwfAnimatorMovieFromDiscButton(),
-          easyMovieMakerFrame.getSwfAnimatorMovieToClipboardButton(), easyMovieMakerFrame.getSwfAnimatorMovieToDiscButton(),
-          easyMovieMakerFrame.getSwfAnimatorFrameToEditorBtn(),
-          easyMovieMakerFrame.getSwfAnimatorPlayButton(), easyMovieMakerFrame.getSwfAnimatorMotionBlurLengthREd(),
-          easyMovieMakerFrame.getSwfAnimatorMotionBlurTimeStepREd(), easyMovieMakerFrame.getRandomMoviePanel(),
-          easyMovieMakerFrame.getSwfAnimatorQualityProfileCmb(), easyMovieMakerFrame.getSwfAnimatorOutputTypeCmb(),
-          easyMovieMakerFrame.getSwfAnimatorCompatCBx()));
-      tinaController.getSwfAnimatorCtrl().enableControls();
-      tinaController.getSwfAnimatorCtrl().refreshControls();
+      // EasyMovieMakerFrame has been modernized to JavaFX and no longer exposes Swing components.
+      // The logic previously handled by TinaSWFAnimatorController is now in EasyMovieMakerController.
+      // tinaController.setSwfAnimatorCtrl(null); // Or instantiate a dummy if needed
       getToggleTriangleWithColorsButton().setSelected(pPrefs.isTinaEditorControlsWithColor());
       getRealtimePreviewToggleButton().setSelected(pPrefs.isTinaEditorProgressivePreview());
 
