@@ -52,6 +52,7 @@ public class EasyMovieMakerFrame extends JFrame {
                 Parent root = loader.load();
 
                 controller = loader.getController();
+                controller.setOwnerFrame(this);
                 if (tinaController != null) {
                     controller.setTinaController(tinaController);
                     tinaController.setSwfAnimatorCtrl(controller);

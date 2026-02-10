@@ -16,12 +16,12 @@
 */
 package org.jwildfire.create.tina.swing;
 
-import javax.swing.RepaintManager;
-
+import javafx.application.Platform;
 import org.jwildfire.create.tina.render.ProgressUpdater;
 
 public class SWFAnimatorProgressUpdater implements ProgressUpdater {
   private final EasyMovieMakerFrame parent;
+  private int maxSteps;
 
   public SWFAnimatorProgressUpdater(EasyMovieMakerFrame pParent) {
     parent = pParent;
@@ -29,12 +29,21 @@ public class SWFAnimatorProgressUpdater implements ProgressUpdater {
 
   @Override
   public void initProgress(int pMaxSteps) {
-    // Stubbed out for modernization
+    this.maxSteps = pMaxSteps;
+    Platform.runLater(() -> {
+        if (parent.getController() != null) {
+            parent.getController().getFxProgressBar().setProgress(0.0);
+        }
+    });
   }
 
   @Override
   public void updateProgress(int pStep) {
-    // Stubbed out for modernization
+    Platform.runLater(() -> {
+        if (parent.getController() != null && maxSteps > 0) {
+            parent.getController().getFxProgressBar().setProgress((double) pStep / maxSteps);
+        }
+    });
   }
 
 }

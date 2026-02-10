@@ -10,10 +10,15 @@ import org.jwildfire.create.tina.animate.FlameMovie;
 import org.jwildfire.create.tina.animate.FlameMoviePart;
 import org.jwildfire.create.tina.animate.GlobalScriptType;
 import org.jwildfire.create.tina.animate.SequenceOutputType;
+import org.jwildfire.create.tina.animate.SWFAnimationRenderThreadController;
 import org.jwildfire.create.tina.animate.XFormScriptType;
 import org.jwildfire.create.tina.base.Flame;
 import org.jwildfire.create.tina.randommovie.RandomMovieGeneratorList;
+import org.jwildfire.create.tina.render.ProgressUpdater;
+import org.jwildfire.create.tina.animate.SWFAnimationRenderThread;
+import org.jwildfire.base.Tools;
 
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +36,7 @@ import javafx.scene.control.Label;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Priority;
 
-public class EasyMovieMakerController implements Initializable {
+public class EasyMovieMakerController implements Initializable, SWFAnimationRenderThreadController {
 
     @FXML private Button randomMoviesBtn;
     @FXML private ComboBox<String> randomGenCmb;
@@ -62,6 +67,8 @@ public class EasyMovieMakerController implements Initializable {
 
     private TinaController tinaController;
     private FlameMovie currMovie;
+    private EasyMovieMakerFrame ownerFrame;
+    private SWFAnimatorProgressUpdater progressUpdater;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -94,6 +101,40 @@ public class EasyMovieMakerController implements Initializable {
 
     public void setTinaController(TinaController tinaController) {
         this.tinaController = tinaController;
+    }
+
+    public void setOwnerFrame(EasyMovieMakerFrame ownerFrame) {
+        this.ownerFrame = ownerFrame;
+        this.progressUpdater = new SWFAnimatorProgressUpdater(ownerFrame);
+    }
+
+    public ProgressBar getFxProgressBar() {
+        return progressBar;
+    }
+
+    // SWFAnimationRenderThreadController implementation
+    @Override
+    public void onRenderFinished() {
+        javafx.application.Platform.runLater(() -> {
+            renderBtn.setDisable(false);
+            cancelBtn.setDisable(true);
+            progressBar.setProgress(0);
+        });
+    }
+
+    @Override
+    public javax.swing.JProgressBar getProgressBar() { // Legacy return type
+        return null;
+    }
+
+    @Override
+    public ProgressUpdater getProgressUpdater() {
+        return progressUpdater;
+    }
+
+    @Override
+    public Prefs getPrefs() {
+        return Prefs.getPrefs();
     }
 
     private void setupScriptsUI() {
@@ -134,11 +175,56 @@ public class EasyMovieMakerController implements Initializable {
     }
 
     @FXML private void onRender(ActionEvent event) {
-        // TODO
+        try {
+            updateMovieFields();
+            File file = selectOutputFile();
+            if (file != null) {
+                Prefs.getPrefs().setLastOutputMovieFlamesFile(file);
+                SWFAnimationRenderThread renderThread = new SWFAnimationRenderThread(this, currMovie, file.getAbsolutePath());
+                renderBtn.setDisable(true);
+                cancelBtn.setDisable(false);
+                new Thread(renderThread).start();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML private void onCancel(ActionEvent event) {
-        // TODO
+        // Logic to cancel render thread would require keeping a reference to it
+        // For now, just a placeholder
+    }
+
+    private void updateMovieFields() {
+        ResolutionProfile resProfile = resolutionProfileCmb.getValue();
+        if (resProfile != null) {
+            currMovie.setFrameWidth(resProfile.getWidth());
+            currMovie.setFrameHeight(resProfile.getHeight());
+        }
+
+        QualityProfile qualProfile = qualityProfileCmb.getValue();
+        if (qualProfile != null) {
+            currMovie.setQuality(qualProfile.getQuality());
+        }
+
+        SequenceOutputType outType = outputTypeCmb.getValue();
+        if (outType != null) {
+            currMovie.setSequenceOutputType(outType);
+        }
+    }
+
+    private File selectOutputFile() {
+        if (ownerFrame == null) return null;
+        switch (currMovie.getSequenceOutputType()) {
+            case ANB:
+                return FileDialogTools.selectAnbFileForSave(ownerFrame, ownerFrame);
+            case MP4:
+                return FileDialogTools.selectMp4FileForSave(ownerFrame, ownerFrame);
+            case PNG_IMAGES:
+                return FileDialogTools.selectImageFileForSave(ownerFrame, ownerFrame, Tools.FILEEXT_PNG);
+            default:
+                return FileDialogTools.selectFlameSequenceFileForSave(ownerFrame, ownerFrame);
+        }
     }
 
     @FXML private void onAddFlameFromEditor(ActionEvent event) {
