@@ -1,21 +1,25 @@
-JWildfire is a modern Java-based fractal flame editor and renderer, heavily inspired by the pioneering work of Scott Draves (Electric Sheep) and the Chaos movement.
+# JWildfire Project Vision
 
-## Ultimate Vision
+## Ultimate Goal
+The ultimate goal of JWildfire is to be the premier, open-source, cross-platform software for creating, rendering, and animating flame fractals and other generative art. It aims to bridge the gap between powerful, complex mathematical algorithms and an intuitive, user-friendly artistic workflow.
 
-The goal of JWildfire is to be the premier, cross-platform, open-source tool for creating, exploring, and rendering "Flame" fractals. It aims to bridge the gap between artistic intuition and mathematical precision.
+## Core Philosophy
+1.  **Hybrid Modernization**: We acknowledge the robust legacy of Swing while embracing the modern capabilities of JavaFX. The application will evolve into a hybrid system where heavy lifting and legacy stability are maintained by Swing, while new UI components, interactive previews, and complex controls are built with JavaFX for a superior user experience.
+2.  **No Feature Left Behind**: Every feature, parameter, and option available in the backend or mathematical core must be exposed to the user via the UI. There should be no "hidden" functionality.
+3.  **Comprehensive Documentation**: The software should be self-documenting via tooltips and context-sensitive help, backed by a complete and up-to-date manual.
+4.  **Performance & Quality**: Leveraging modern hardware (GPU via LWJGL/OpenCL) to provide real-time feedback and high-quality final renders.
 
-### Core Pillars
-1.  **Hybrid Architecture**: Leveraging the stability of Swing for legacy compatibility while aggressively modernizing new interfaces with JavaFX for a rich, responsive user experience.
-2.  **Performance**: Utilizing modern hardware acceleration (GPU/OpenCL via LWJGL 3) to render complex fractals in real-time.
-3.  **Extensibility**: Providing a robust plugin system (Variations, Scripts) powered by runtime compilation (Janino) to allow users to define their own mathematical formulas.
-4.  **Integration**: Seamlessly connecting with the wider fractal ecosystem (Electric Sheep distributed rendering, Music Visualization via ProjectM/MilkDrop).
+## Architectural Vision
+-   **UI Layer**: A seamless blend of `JInternalFrame` (window management) hosting `JFXPanel` (content).
+-   **Service Layer**: Decoupled "Services" (e.g., `MutaGenService`, `FlameBrowserService`) that contain business logic, callable by both legacy Swing and new JavaFX controllers.
+-   **Render Layer**: Abstracted rendering interfaces allowing for CPU (Java), GPU (OpenCL), and remote (Network/Cloud) rendering backends.
 
-### Design Philosophy
-- **"Everything is a Parameter"**: Every aspect of the fractal generation process should be exposed to the user, from the core affine transforms to the post-processing filters.
-- **Visual Feedback**: Immediate visual feedback is critical. The UI should prioritize real-time previews (JavaFX Canvas) over static inputs.
-- **Community Driven**: Features like the "Tip of the Day", "Online Gallery", and "Electric Sheep" integration foster a sense of community and sharing.
+## User Experience
+-   **Deep Planning Mode**: All development follows a strict protocol of understanding user requirements, verifying assumptions, and executing with 100% completeness.
+-   **Visual Feedback**: Immediate visual response to parameter changes (Real-time render previews).
+-   **Discovery**: Features should be discoverable through well-organized menus, search functionality, and integrated "Tip of the Day" or "Walkthrough" modes.
 
-### Future Roadmap (High Level)
-- **Full JavaFX Migration**: Eventual replacement of all Swing components with JavaFX.
-- **Cloud Rendering**: Integration with cloud services for massive-scale rendering jobs.
-- **VR/AR Support**: Exploring fractal visualization in immersive environments.
+## Future Roadmap Highlights
+-   **Fully Hybrid Interface**: Complete migration of all major editors (Editor, Batch Renderer, Movie Maker) to JavaFX.
+-   **Cloud Integration**: Seamless sharing of fractal parameters and renders with community servers (e.g., Electric Sheep, JWildfire Community).
+-   **AI Assistance**: Integration of local LLMs or heuristics to suggest mutations, color palettes, or render settings based on user preference.

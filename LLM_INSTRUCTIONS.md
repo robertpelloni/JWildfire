@@ -49,6 +49,12 @@ This file contains universal instructions for all AI models working on the JWild
   - **UI**: `MusicVisualizerInternalFrame` (Swing wrapper) -> `music_visualizer.fxml` / `MusicVisualizerController` (JavaFX).
   - **Logic**: `AudioCapture` handles microphone input/FFT. `Visualizer` interface allows swapping backends (Swing vs OpenGL).
 
+## Deep Planning Protocol
+- **Analyze**: Before starting any task, analyze the requirements in extreme detail.
+- **Verify**: Ask clarifying questions to ensure assumptions are correct.
+- **Complete**: Implement features fully. Do not leave `// TODO` stubs.
+- **Document**: Every new feature must be documented in the Manual and have UI tooltips.
+
 ## Agent/Model Specifics
 - **Claude**: Focus on architectural consistency and detailed documentation.
 - **Gemini**: Leverage large context window for deep code analysis.

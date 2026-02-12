@@ -1,11 +1,31 @@
 # JWildfire Roadmap
 
 ## Current Status
-- **Version**: 9.04
-- **Date**: 2025-12-27
-- **Focus**: Maintenance and Documentation.
+- **Version**: 9.06
+- **Date**: 2026-02-09
+- **Focus**: Deep Planning & Comprehensive Modernization.
 
 ## Planned Features
+
+### Deep Planning Modernization (Current Focus)
+**Goal:** Achieve 100% feature parity and documentation for the following modules, ensuring no "TODO" stubs remain.
+
+- [ ] **Easy Movie Maker**:
+    - [ ] Implement Motion Curve editing UI.
+    - [ ] Complete Movie Render logic.
+    - [ ] Full documentation in Manual.
+- [ ] **Dancing Flames**:
+    - [ ] Complete Project Load/Save logic.
+    - [ ] Implement Random Flame Generation.
+    - [ ] Full documentation in Manual.
+- [ ] **Quilt Flame Renderer**:
+    - [ ] Wire up Render/Cancel/Save logic.
+    - [ ] Connect UI controls to Renderer.
+    - [ ] Full documentation in Manual.
+- [ ] **Mesh Generator**:
+    - [ ] Implement OBJ/Voxel generation logic.
+    - [ ] Wire up File Chooser and Progress UI.
+    - [ ] Full documentation in Manual.
 
 ### Short Term
 - [x] Centralize versioning.

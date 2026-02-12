@@ -26,7 +26,7 @@ import org.jwildfire.image.SimpleImage;
 import org.jwildfire.swing.ImagePanel;
 
 public class RealtimeAnimRenderThread implements Runnable, FlameHolder {
-  private final DancingFractalsController controller;
+  private final DancingFlamesUI controller;
   private final DancingFlameStack flameStack;
   private boolean forceAbort;
   private boolean running;
@@ -41,7 +41,7 @@ public class RealtimeAnimRenderThread implements Runnable, FlameHolder {
   private boolean drawFFT = true;
   private boolean drawFPS = true;
 
-  public RealtimeAnimRenderThread(DancingFractalsController pController, DancingFlameProject pProject) {
+  public RealtimeAnimRenderThread(DancingFlamesUI pController, DancingFlameProject pProject) {
     controller = pController;
     transformer = new DanceFlameTransformer(pProject);
     flameStack = new DancingFlameStack(Prefs.getPrefs());

@@ -70,7 +70,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DancingFractalsController {
+public class DancingFractalsController implements DancingFlamesUI {
   public static final int PAGE_INDEX = 5;
   private final JPanel rootPanel;
   private final ErrorHandler errorHandler;

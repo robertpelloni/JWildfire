@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.06] - 2026-02-09
+
+### Planned (In Progress)
+- **Deep Planning Modernization**:
+    - **Easy Movie Maker**: Complete JavaFX implementation of motion curves and movie rendering.
+    - **Dancing Flames**: Complete JavaFX implementation of project management and random generation.
+    - **Quilt Renderer**: Complete JavaFX implementation of tiling rendering logic.
+    - **Mesh Generator**: Complete JavaFX implementation of voxel/OBJ export.
+- **Documentation**:
+    - Added `VISION.md`.
+    - Updating Manual with new chapters for modernized modules.
+
 ## [9.05] - 2026-02-08
 
 ### Added

@@ -59,12 +59,19 @@
                         <Button mnemonicParsing="false" onAction="#onBrowseFilename" text="..." />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <Label text="Slice Count:" GridPane.rowIndex="6" />
+                  <TextField fx:id="sliceCountField" text="100" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label text="Threshold:" GridPane.rowIndex="7" />
+                  <TextField fx:id="thresholdField" text="0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onGenerate" text="Generate" />
-                        <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+                        <Button fx:id="generateSlicesBtn" mnemonicParsing="false" onAction="#onGenerateSlices" text="Generate Slices" />
+                        <Button fx:id="generateMeshBtn" mnemonicParsing="false" onAction="#onGenerateMesh" text="Generate Mesh" />
+                        <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
                      </children>
                   </HBox>
+                  <Label text="Progress:" GridPane.rowIndex="9" />
+                  <javafx.scene.control.ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                </children>
             </GridPane>
          </children>

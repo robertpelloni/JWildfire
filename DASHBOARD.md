@@ -1,7 +1,7 @@
 # JWildfire Project Dashboard
 
-**Current Version**: 9.05
-**Build Date**: 2026-02-08
+**Current Version**: 9.06
+**Build Date**: 2026-02-09
 **Build System**: Gradle (Primary), Maven (Legacy/Lib)
 
 ## Project Structure & Components
@@ -11,7 +11,7 @@ This dashboard lists all major components ("submodules") of the JWildfire projec
 ### Core Application
 | Component | Location | Version | Description |
 |-----------|----------|---------|-------------|
-| **JWildfire** | `src/org/jwildfire` | 9.05 | Main application code (Swing/JavaFX Hybrid UI, Renderers). |
+| **JWildfire** | `src/org/jwildfire` | 9.06 | Main application code (Swing/JavaFX Hybrid UI, Renderers). |
 | **Launcher** | `src/org/jwildfire/swing/JWildfire.java` | - | Main entry point. |
 
 ### Modules & Integrations
@@ -19,6 +19,10 @@ This dashboard lists all major components ("submodules") of the JWildfire projec
 |-----------|----------|--------|-------------|
 | **Electric Sheep** | `src/org/jwildfire/sheep` | **Modernized** | Integration with Electric Sheep (JavaFX UI, Downloader, Renderer). |
 | **Music Visualizer** | `src/org/jwildfire/visualizer` | **Modernized** | Audio visualization module (JavaFX UI, Audio Capture, GLSL). |
+| **Easy Movie Maker** | `src/org/jwildfire/create/tina/swing` | **In Progress** | Video creation tool (Modernizing to JavaFX). |
+| **Dancing Flames** | `src/org/jwildfire/create/tina/dance` | **In Progress** | Audio-reactive flame animation (Modernizing to JavaFX). |
+| **Quilt Renderer** | `src/org/jwildfire/create/tina/quilt` | **In Progress** | Large-scale tiling renderer (Modernizing to JavaFX). |
+| **Mesh Generator** | `src/org/jwildfire/create/tina/swing` | **In Progress** | 3D Mesh export (Modernizing to JavaFX). |
 | **Scripting** | `src/org/jwildfire/base/Tools.java` | Active | Internal scripting and utility tools. |
 
 ### External Components (Non-Git Submodules)
