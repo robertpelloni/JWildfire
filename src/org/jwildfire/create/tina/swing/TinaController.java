@@ -122,7 +122,6 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   private MeshGenController meshGenController;
   private BatchRendererController batchRendererController;
   private QuiltRendererController quiltRendererController;
-  private TinaInteractiveRendererController interactiveRendererCtrl;
   private FlamesGPURenderController gpuRendererCtrl;
   private EasyMovieMakerController swfAnimatorCtrl;
   private JWFScriptController jwfScriptController;
@@ -6956,7 +6955,6 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   VariationProfilesController variationProfilesController = null;
   public void editVariationProfiles() {
     if (variationProfilesFrame == null) {
-      variationProfilesController = new VariationProfilesController( this );
       variationProfilesFrame = new VariationProfilesFrame( variationProfilesController );
       variationProfilesController.setControls(variationProfilesFrame.getNewProfileBtn(), variationProfilesFrame.getDuplicateProfileBtn(),
         variationProfilesFrame.getDeleteProfileBtn(), variationProfilesFrame.getProfilesTable(), variationProfilesFrame.getProfileNameEdit(),

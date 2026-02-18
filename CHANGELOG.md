@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
     - **Dancing Flames**: Complete JavaFX implementation of project management and random generation.
     - **Quilt Renderer**: Complete JavaFX implementation of tiling rendering logic.
     - **Mesh Generator**: Complete JavaFX implementation of voxel/OBJ export.
+    - **Variation Profiles**: Modernized UI for managing variation sets (JavaFX).
+    - **GPU Renderer**: Modernized UI for controlling FAEngine (JavaFX).
 - **Documentation**:
     - Added `VISION.md`.
     - Updating Manual with new chapters for modernized modules.

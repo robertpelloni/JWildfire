@@ -3256,6 +3256,9 @@ Values in the range of 300 to 2000 are typical.
 [.thumb]
 image::images/gpu_render.jpg[scaledwidth=75%]
 
+The GPU Render module has been modernized with a new JavaFX interface, providing a cleaner and more
+responsive user experience.
+
 GPU rendering in JWildfire is enabled by integrating FAEngine, a GPU-rendering-engine
 created by Steven Brodhead.
 In JWildfire 7.0, GPU-rendering was re-implemented in a fundamental way:

@@ -26,6 +26,14 @@
     - [ ] Implement OBJ/Voxel generation logic.
     - [ ] Wire up File Chooser and Progress UI.
     - [ ] Full documentation in Manual.
+- [ ] **Variation Profiles**:
+    - [x] Modernize to JavaFX.
+    - [x] Implement Add/Remove/Duplicate logic.
+    - [x] Integrate with TinaController.
+- [ ] **GPU Renderer**:
+    - [x] Modernize to JavaFX.
+    - [x] Implement Rendering Logic.
+    - [x] Documentation.
 
 ### Short Term
 - [x] Centralize versioning.
