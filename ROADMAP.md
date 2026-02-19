@@ -34,6 +34,14 @@
     - [x] Modernize to JavaFX.
     - [x] Implement Rendering Logic.
     - [x] Documentation.
+- [ ] **Batch Renderer**:
+    - [x] Modernize to JavaFX.
+    - [x] Implement Job Queue Logic.
+    - [x] Documentation.
+- [ ] **Script Editor**:
+    - [x] Modernize to JavaFX.
+    - [x] Syntax Highlighting.
+    - [x] Documentation.
 
 ### Short Term
 - [x] Centralize versioning.

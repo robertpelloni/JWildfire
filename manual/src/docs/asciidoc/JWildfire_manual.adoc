@@ -3003,6 +3003,9 @@ The recommended way is to use the <<batch_renderer, Batch renderer>> to perform 
 [.thumb]
 image::images/batch_renderer.jpg[scaledwidth=75%]
 
+The Batch Renderer has been modernized with a new JavaFX interface, providing a streamlined workflow
+for queuing and rendering large sets of flames.
+
 The batch renderer is designed to render fractal flames in the background (for example overnight).
 Therefore it is well suited to render frames for animations or images with large resolution,
 which take a while to render.

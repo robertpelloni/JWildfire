@@ -3,79 +3,45 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jwildfire.create.tina.swing.ScriptEditorController">
    <top>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <ToolBar prefHeight="40.0" prefWidth="200.0">
-              <items>
-                <Button mnemonicParsing="false" onAction="#onCompile" text="Compile">
-                     <tooltip>
-                        <Tooltip text="Compile the script to check for errors" />
-                     </tooltip>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onRun" text="Run">
-                     <tooltip>
-                        <Tooltip text="Compile and execute the script immediately" />
-                     </tooltip>
-                  </Button>
-                  <Separator orientation="VERTICAL" />
-                  <Button mnemonicParsing="false" onAction="#onSave" text="Save &amp; Close">
-                     <tooltip>
-                        <Tooltip text="Save changes and close the editor" />
-                     </tooltip>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel">
-                     <tooltip>
-                        <Tooltip text="Discard changes" />
-                     </tooltip>
-                  </Button>
-              </items>
-            </ToolBar>
-            <Label fx:id="statusLabel" maxWidth="1.7976931348623157E308" style="-fx-background-color: #eee; -fx-padding: 5;">
-               <padding>
-                  <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
-               </padding>
-            </Label>
-         </children>
-      </VBox>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button mnemonicParsing="false" onAction="#onCompile" text="Compile" />
+            <Button mnemonicParsing="false" onAction="#onRun" text="Run" />
+            <Button mnemonicParsing="false" onAction="#onSave" text="Save" />
+            <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+        </items>
+      </ToolBar>
    </top>
    <center>
-      <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Script Source">
-               <content>
-                  <StackPane fx:id="editorContainer" prefHeight="150.0" prefWidth="200.0" style="-fx-border-color: #ccc; -fx-border-width: 1 0 0 0;">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </StackPane>
-               </content>
-          </Tab>
-          <Tab text="Description">
-               <content>
-                  <BorderPane>
-                     <center>
-                        <TextArea fx:id="descriptionArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" BorderPane.alignment="CENTER">
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </TextArea>
-                     </center>
-                  </BorderPane>
-               </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <SplitPane dividerPositions="0.8" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <StackPane fx:id="editorContainer" prefHeight="150.0" prefWidth="200.0" />
+          <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <Label text="Description:" />
+                  <TextArea fx:id="descriptionArea" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+        </items>
+      </SplitPane>
    </center>
+   <bottom>
+      <Label fx:id="statusLabel" maxWidth="1.7976931348623157E308" text="Ready" BorderPane.alignment="CENTER_LEFT">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+   </bottom>
 </BorderPane>

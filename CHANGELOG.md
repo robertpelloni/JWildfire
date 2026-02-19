@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
     - **Mesh Generator**: Complete JavaFX implementation of voxel/OBJ export.
     - **Variation Profiles**: Modernized UI for managing variation sets (JavaFX).
     - **GPU Renderer**: Modernized UI for controlling FAEngine (JavaFX).
+    - **Batch Renderer**: Modernized UI for background rendering queues (JavaFX).
+    - **Script Editor**: Modernized UI with syntax highlighting (JavaFX).
 - **Documentation**:
     - Added `VISION.md`.
     - Updating Manual with new chapters for modernized modules.

@@ -120,7 +120,6 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   private DancingFractalsController dancingFractalsController;
   private MutaGenController mutaGenController;
   private MeshGenController meshGenController;
-  private BatchRendererController batchRendererController;
   private QuiltRendererController quiltRendererController;
   private FlamesGPURenderController gpuRendererCtrl;
   private EasyMovieMakerController swfAnimatorCtrl;
