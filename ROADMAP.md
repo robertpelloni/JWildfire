@@ -42,6 +42,10 @@
     - [x] Modernize to JavaFX.
     - [x] Syntax Highlighting.
     - [x] Documentation.
+- [ ] **Main Editor Sub-Panels**:
+    - [x] Modernize Gradient Editor to JavaFX.
+    - [x] Modernize Coloring Tab to JavaFX.
+    - [ ] Modernize Transformations Tab.
 
 ### Short Term
 - [x] Centralize versioning.

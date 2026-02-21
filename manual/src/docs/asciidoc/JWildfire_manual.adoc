@@ -858,6 +858,9 @@ guaranteed to work. Eventually, you will need to convert the image before denois
 At the gradient tab you will find numerous options to create and modify the gradients of your fractals.
 Note: gradients are sometimes also referred as "palette" or "color palette".
 
+The Gradient Editor has been modernized with a new JavaFX interface, providing a more responsive
+preview and controls.
+
 ===== _General controls_ subtab
 [.thumb]
 image::images/gradient_tab_general_controls.jpg[scaledwidth=75%]
