@@ -26,6 +26,7 @@ import org.jwildfire.create.tina.render.RenderInfo;
 import org.jwildfire.create.tina.render.RenderMode;
 import org.jwildfire.create.tina.render.RenderedFlame;
 import org.jwildfire.create.tina.variation.Linear3DFunc;
+import org.jwildfire.create.tina.dance.FlamePreparer;
 import org.jwildfire.image.SimpleImage;
 
 import javafx.application.Platform;

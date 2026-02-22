@@ -120,8 +120,10 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   private DancingFractalsController dancingFractalsController;
   private MutaGenController mutaGenController;
   private MeshGenController meshGenController;
+  private BatchRendererController batchRendererController;
   private QuiltRendererController quiltRendererController;
   private FlamesGPURenderController gpuRendererCtrl;
+  private ITinaInteractiveRendererController interactiveRendererCtrl;
   private EasyMovieMakerController swfAnimatorCtrl;
   private JWFScriptController jwfScriptController;
   private FlameBrowserController flameBrowserController;
@@ -4047,11 +4049,11 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
     }
   }
 
-  public TinaInteractiveRendererController getInteractiveRendererCtrl() {
+  public ITinaInteractiveRendererController getInteractiveRendererCtrl() {
     return interactiveRendererCtrl;
   }
 
-  public void setInteractiveRendererCtrl(TinaInteractiveRendererController interactiveRendererCtrl) {
+  public void setInteractiveRendererCtrl(ITinaInteractiveRendererController interactiveRendererCtrl) {
     this.interactiveRendererCtrl = interactiveRendererCtrl;
   }
 
@@ -6954,7 +6956,7 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   VariationProfilesController variationProfilesController = null;
   public void editVariationProfiles() {
     if (variationProfilesFrame == null) {
-      variationProfilesFrame = new VariationProfilesFrame( variationProfilesController );
+      variationProfilesFrame = new VariationProfilesFrame( this );
       variationProfilesController.setControls(variationProfilesFrame.getNewProfileBtn(), variationProfilesFrame.getDuplicateProfileBtn(),
         variationProfilesFrame.getDeleteProfileBtn(), variationProfilesFrame.getProfilesTable(), variationProfilesFrame.getProfileNameEdit(),
         variationProfilesFrame.getProfileTypeCmb(), variationProfilesFrame.getProfileStatusEdit(), variationProfilesFrame.getDefaultCheckbox(),

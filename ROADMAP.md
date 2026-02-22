@@ -1,7 +1,7 @@
 # JWildfire Roadmap
 
 ## Current Status
-- **Version**: 9.06
+- **Version**: 9.07
 - **Date**: 2026-02-09
 - **Focus**: Deep Planning & Comprehensive Modernization.
 
@@ -10,9 +10,10 @@
 ### Deep Planning Modernization (Current Focus)
 **Goal:** Achieve 100% feature parity and documentation for the following modules, ensuring no "TODO" stubs remain.
 
-- [ ] **Easy Movie Maker**:
-    - [ ] Implement Motion Curve editing UI.
-    - [ ] Complete Movie Render logic.
+- [x] **Easy Movie Maker**:
+    - [x] Modernize UI to JavaFX.
+    - [x] Implement Motion Curve editing UI.
+    - [x] Complete Movie Render logic.
     - [ ] Full documentation in Manual.
 - [ ] **Dancing Flames**:
     - [ ] Complete Project Load/Save logic.
@@ -26,19 +27,19 @@
     - [ ] Implement OBJ/Voxel generation logic.
     - [ ] Wire up File Chooser and Progress UI.
     - [ ] Full documentation in Manual.
-- [ ] **Variation Profiles**:
+- [x] **Variation Profiles**:
     - [x] Modernize to JavaFX.
     - [x] Implement Add/Remove/Duplicate logic.
     - [x] Integrate with TinaController.
-- [ ] **GPU Renderer**:
+- [x] **GPU Renderer**:
     - [x] Modernize to JavaFX.
     - [x] Implement Rendering Logic.
     - [x] Documentation.
-- [ ] **Batch Renderer**:
+- [x] **Batch Renderer**:
     - [x] Modernize to JavaFX.
     - [x] Implement Job Queue Logic.
     - [x] Documentation.
-- [ ] **Script Editor**:
+- [x] **Script Editor**:
     - [x] Modernize to JavaFX.
     - [x] Syntax Highlighting.
     - [x] Documentation.
@@ -46,6 +47,9 @@
     - [x] Modernize Gradient Editor to JavaFX.
     - [x] Modernize Coloring Tab to JavaFX.
     - [ ] Modernize Transformations Tab.
+    - [ ] Modernize Layers Tab.
+    - [ ] Modernize Camera Tab.
+    - [ ] Modernize Shading Tab.
 
 ### Short Term
 - [x] Centralize versioning.

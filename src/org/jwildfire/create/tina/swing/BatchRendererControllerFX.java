@@ -305,15 +305,15 @@ public class BatchRendererControllerFX implements Initializable, JobRenderThread
     public void onJobFinished() {
         Platform.runLater(() -> {
             jobsTable.refresh();
-            if (jobRenderThread != null && jobRenderThread.isDone()) { // Assuming logic to detect total finish
-                 // Actually JobRenderThread calls onJobFinished after the whole batch? No, it looks like it might run once?
-                 // JobRenderThread runs a loop.
-            }
-            if (jobRenderThread == null || jobRenderThread.isDone()) { // We might need to check thread state
-                 jobRenderThread = null;
-                 updateControls(false);
-            }
+            // JobRenderThread finishes after the whole batch
+            jobRenderThread = null;
+            updateControls(false);
         });
+    }
+
+    @Override
+    public javax.swing.JTable getRenderBatchJobsTable() {
+        return null;
     }
 
     @Override

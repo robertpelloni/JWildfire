@@ -54,7 +54,9 @@ public class VariationProfilesFrame extends JFrame {
                 Parent root = loader.load();
 
                 controller = loader.getController();
-                controller.setTinaController(tinaController);
+                if (tinaController != null) {
+                    controller.setTinaController(tinaController);
+                }
 
                 Scene scene = new Scene(root);
                 jfxPanel.setScene(scene);
@@ -66,4 +68,22 @@ public class VariationProfilesFrame extends JFrame {
             }
         });
     }
+
+    public void setTinaController(TinaController tinaController) {
+        this.tinaController = tinaController;
+        if (controller != null) {
+            controller.setTinaController(tinaController);
+        }
+    }
+
+    // Dummy getters for legacy controller
+    public javax.swing.JButton getNewProfileBtn() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getDuplicateProfileBtn() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getDeleteProfileBtn() { return new javax.swing.JButton(); }
+    public javax.swing.JTable getProfilesTable() { return new javax.swing.JTable(); }
+    public javax.swing.JTextField getProfileNameEdit() { return new javax.swing.JTextField(); }
+    public javax.swing.JComboBox getProfileTypeCmb() { return new javax.swing.JComboBox(); }
+    public javax.swing.JTextField getProfileStatusEdit() { return new javax.swing.JTextField(); }
+    public javax.swing.JCheckBox getDefaultCheckbox() { return new javax.swing.JCheckBox(); }
+    public javax.swing.JScrollPane getVariationsScrollPane() { return new javax.swing.JScrollPane(); }
 }

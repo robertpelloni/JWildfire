@@ -23,3 +23,5 @@ The ultimate goal of JWildfire is to be the premier, open-source, cross-platform
 -   **Fully Hybrid Interface**: Complete migration of all major editors (Editor, Batch Renderer, Movie Maker) to JavaFX.
 -   **Cloud Integration**: Seamless sharing of fractal parameters and renders with community servers (e.g., Electric Sheep, JWildfire Community).
 -   **AI Assistance**: Integration of local LLMs or heuristics to suggest mutations, color palettes, or render settings based on user preference.
+-   **Complete Documentation**: Every single parameter and feature must be documented in the manual and tooltips.
+-   **100% Feature Coverage**: Ensure all theoretical features of the fractal flame algorithm are implemented and exposed.

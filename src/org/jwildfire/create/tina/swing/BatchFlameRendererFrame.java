@@ -26,6 +26,11 @@ public class BatchFlameRendererFrame extends JFrame {
     private TinaController tinaController;
     private BatchRendererControllerFX controller;
 
+    public BatchFlameRendererFrame() {
+        super();
+        initialize();
+    }
+
     public BatchFlameRendererFrame(TinaController tinaController) {
         super();
         this.tinaController = tinaController;
@@ -54,7 +59,9 @@ public class BatchFlameRendererFrame extends JFrame {
                 Parent root = loader.load();
 
                 controller = loader.getController();
-                controller.setTinaController(tinaController);
+                if (tinaController != null) {
+                    controller.setTinaController(tinaController);
+                }
 
                 Scene scene = new Scene(root);
                 jfxPanel.setScene(scene);
@@ -67,15 +74,36 @@ public class BatchFlameRendererFrame extends JFrame {
         });
     }
 
+    public void setTinaController(TinaController tinaController) {
+        this.tinaController = tinaController;
+        if (controller != null) {
+            controller.setTinaController(tinaController);
+        }
+    }
+
     public BatchRendererControllerFX getController() {
         return controller;
     }
 
-    // Legacy support methods for JobProgressUpdater
-    public javax.swing.JProgressBar getBatchRenderJobProgressBar() {
-        if (controller != null) {
-            return controller.getJobProgressBar();
-        }
-        return null;
-    }
+    // Legacy support methods
+    public javax.swing.JTable getRenderBatchJobsTable() { return new javax.swing.JTable(); }
+    public javax.swing.JPanel getBatchPreviewRootPanel() { return new javax.swing.JPanel(); }
+    public javax.swing.JProgressBar getBatchRenderTotalProgressBar() { return new javax.swing.JProgressBar(); }
+    public javax.swing.JProgressBar getBatchRenderJobProgressBar() { return new javax.swing.JProgressBar(); } // Duplicate? Check below
+
+    public javax.swing.JButton getBatchRenderAddFilesButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getBatchRenderFilesMoveDownButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getBatchRenderFilesMoveUpButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getBatchRenderFilesRemoveButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getBatchRenderFilesRemoveAllButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getBatchRenderStartButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getBatchRenderShowImageBtn() { return new javax.swing.JButton(); }
+
+    public javax.swing.JComboBox getBatchQualityProfileCmb() { return new javax.swing.JComboBox(); }
+    public javax.swing.JComboBox getBatchResolutionProfileCmb() { return new javax.swing.JComboBox(); }
+
+    public javax.swing.JCheckBox getBatchRenderOverrideCBx() { return new javax.swing.JCheckBox(); }
+    public javax.swing.JToggleButton getEnableOpenClBtn() { return new javax.swing.JToggleButton(); }
+    public javax.swing.JToggleButton getDisablePostDenoiserBtn() { return new javax.swing.JToggleButton(); }
+
 }

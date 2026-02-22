@@ -82,14 +82,16 @@ public class EasyMovieMakerController implements Initializable, SWFAnimationRend
     private TinaController tinaController;
     private FlameMovie currMovie;
     private EasyMovieMakerFrame ownerFrame;
-    private SWFAnimatorProgressUpdater progressUpdater;
+    private JavaFXSWFProgressUpdater progressUpdater;
     private FlameMoviePart selectedPart;
     private SWFAnimationRenderThread renderThread;
+    private Prefs prefs;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        prefs = Prefs.getPrefs();
         currMovie = new FlameMovie(Prefs.getPrefs());
-        progressUpdater = new SWFAnimatorProgressUpdater(null); // Fallback
+        progressUpdater = new JavaFXSWFProgressUpdater();
 
         setupListListeners();
 
@@ -162,20 +164,7 @@ public class EasyMovieMakerController implements Initializable, SWFAnimationRend
 
     @Override
     public ProgressUpdater getProgressUpdater() {
-        return new ProgressUpdater() {
-            @Override
-            public void initProgress(int maxSteps) {
-                Platform.runLater(() -> progressBar.setProgress(0));
-            }
-            @Override
-            public void updateProgress(int step) {
-                 // Hack: maxSteps isn't passed here.
-                 // Assuming maxSteps was set in initProgress or we treat step as percent if < 100?
-                 // Legacy code usually passes actual step count.
-                 // I'll ignore precise progress for now or map it if I knew the max.
-                 // Actually SWFAnimationRenderThread calls initProgress(totalFrames).
-            }
-        };
+        return progressUpdater;
     }
 
     // Better progress updater that captures max
@@ -339,13 +328,7 @@ public class EasyMovieMakerController implements Initializable, SWFAnimationRend
             if (file != null) {
                 Prefs.getPrefs().setLastOutputMovieFlamesFile(file);
 
-                // Override progress updater in controller to use JavaFX one
-                renderThread = new SWFAnimationRenderThread(this, currMovie, file.getAbsolutePath()) {
-                     @Override
-                    public ProgressUpdater getProgressUpdater() {
-                        return new JavaFXSWFProgressUpdater();
-                    }
-                };
+                renderThread = new SWFAnimationRenderThread(this, currMovie, file.getAbsolutePath());
 
                 renderBtn.setDisable(true);
                 cancelBtn.setDisable(false);

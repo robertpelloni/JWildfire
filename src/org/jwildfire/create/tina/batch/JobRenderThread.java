@@ -77,9 +77,11 @@ public class JobRenderThread implements Runnable {
     try {
       try {
         cancelSignalled = false;
-        controller.getTotalProgressBar().setMinimum(0);
-        controller.getTotalProgressBar().setValue(0);
-        controller.getTotalProgressBar().setMaximum(activeJobList.size());
+        if (controller.getTotalProgressBar() != null) {
+          controller.getTotalProgressBar().setMinimum(0);
+          controller.getTotalProgressBar().setValue(0);
+          controller.getTotalProgressBar().setMaximum(activeJobList.size());
+        }
 
         for (Job job : activeJobList) {
           if (cancelSignalled) {
@@ -140,8 +142,12 @@ public class JobRenderThread implements Runnable {
           }
         }
         try {
-          controller.getTotalProgressBar().setValue(controller.getTotalProgressBar().getMaximum());
-          controller.getJobProgressBar().setValue(0);
+          if (controller.getTotalProgressBar() != null) {
+            controller.getTotalProgressBar().setValue(controller.getTotalProgressBar().getMaximum());
+          }
+          if (controller.getJobProgressBar() != null) {
+            controller.getJobProgressBar().setValue(0);
+          }
         } catch (Throwable ex) {
           // ex.printStackTrace();
         }
@@ -262,17 +268,21 @@ public class JobRenderThread implements Runnable {
     try {
       {
         controller.refreshRenderBatchJobsTable();
-        controller.getRenderBatchJobsTable().invalidate();
-        controller.getRenderBatchJobsTable().validate();
+        if (controller.getRenderBatchJobsTable() != null) {
+          controller.getRenderBatchJobsTable().invalidate();
+          controller.getRenderBatchJobsTable().validate();
+        }
         //                  Graphics g = controller.getRenderBatchJobsTable().getParent().getGraphics();
         //                  if (g != null) {
         //                    controller.getRenderBatchJobsTable().getParent().paint(g);
         //                  }
       }
       {
-        controller.getTotalProgressBar().setValue(controller.getTotalProgressBar().getValue() + 1);
-        controller.getTotalProgressBar().invalidate();
-        controller.getTotalProgressBar().validate();
+        if (controller.getTotalProgressBar() != null) {
+          controller.getTotalProgressBar().setValue(controller.getTotalProgressBar().getValue() + 1);
+          controller.getTotalProgressBar().invalidate();
+          controller.getTotalProgressBar().validate();
+        }
         //                  Graphics g = controller.getTotalProgressBar().getGraphics();
         //                  if (g != null) {
         //                    controller.getTotalProgressBar().paint(g);

@@ -26,6 +26,11 @@ public class FlamesGPURenderFrame extends JFrame {
     private TinaController tinaController;
     private FlamesGPURenderControllerFX controller;
 
+    public FlamesGPURenderFrame() {
+        super();
+        initialize();
+    }
+
     public FlamesGPURenderFrame(TinaController tinaController) {
         super();
         this.tinaController = tinaController;
@@ -54,7 +59,9 @@ public class FlamesGPURenderFrame extends JFrame {
                 Parent root = loader.load();
 
                 controller = loader.getController();
-                controller.setTinaController(tinaController);
+                if (tinaController != null) {
+                    controller.setTinaController(tinaController);
+                }
 
                 Scene scene = new Scene(root);
                 jfxPanel.setScene(scene);
@@ -66,4 +73,38 @@ public class FlamesGPURenderFrame extends JFrame {
             }
         });
     }
+
+    public void setTinaController(TinaController tinaController) {
+        this.tinaController = tinaController;
+        if (controller != null) {
+            controller.setTinaController(tinaController);
+        }
+    }
+
+    // Dummy components for legacy controller compatibility
+    public javax.swing.JButton getInteractiveLoadFlameFromMainButton() { return new javax.swing.JButton(); }
+    public javax.swing.JCheckBox getAiPostDenoiserDisableCheckbox() { return new javax.swing.JCheckBox(); }
+    public javax.swing.JTextArea getFlameParamsTextArea() { return new javax.swing.JTextArea(); }
+    public javax.swing.JCheckBox getAutoSyncCheckbox() { return new javax.swing.JCheckBox(); }
+    public javax.swing.JCheckBox getAutoRenderCBx() { return new javax.swing.JCheckBox(); }
+
+    public javax.swing.JButton getInteractiveLoadFlameButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getInteractiveLoadFlameFromClipboardButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getInteractiveFlameToClipboardButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getInteractiveSaveImageButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getInteractiveSaveFlameButton() { return new javax.swing.JButton(); }
+    public javax.swing.JButton getInteractiveFlameToEditorButton() { return new javax.swing.JButton(); }
+
+    public javax.swing.JPanel getInteractiveCenterTopPanel() { return new javax.swing.JPanel(); }
+    public javax.swing.JTextArea getInteractiveStatsTextArea() { return new javax.swing.JTextArea(); }
+
+    public javax.swing.JToggleButton getInteractiveHalveSizeButton() { return new javax.swing.JToggleButton(); }
+    public javax.swing.JToggleButton getInteractiveQuarterSizeButton() { return new javax.swing.JToggleButton(); }
+    public javax.swing.JToggleButton getInteractiveFullSizeButton() { return new javax.swing.JToggleButton(); }
+
+    public javax.swing.JComboBox getInteractiveResolutionProfileCmb() { return new javax.swing.JComboBox(); }
+    public javax.swing.JComboBox getInteractiveQualityProfileCmb() { return new javax.swing.JComboBox(); }
+
+    public javax.swing.JLabel getLblGpuRenderInfo() { return new javax.swing.JLabel(); }
+    public javax.swing.JPanel getProgressIndicatorPnl() { return new javax.swing.JPanel(); }
 }

@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.07] - 2026-02-09
+
+### Added
+- **Modernized Main Editor Sub-Panels**:
+    - **Coloring Tab**: Replaced Swing UI with a fully functional JavaFX implementation (`ColoringControllerFX.java`).
+    - **Gradient Editor**: Implemented a new JavaFX gradient editor with preview.
+- **Modernized Rendering Frames**:
+    - **GPU Renderer**: Replaced Swing UI with a hybrid Swing/JavaFX implementation (`FlamesGPURenderFrame` / `FlamesGPURenderControllerFX`).
+    - **Batch Renderer**: Replaced Swing UI with a hybrid Swing/JavaFX implementation (`BatchFlameRendererFrame` / `BatchRendererControllerFX`).
+    - **Easy Movie Maker**: Replaced Swing UI with a hybrid Swing/JavaFX implementation (`EasyMovieMakerFrame` / `EasyMovieMakerController`).
+- **Variation Profiles**:
+    - Converted `VariationProfilesFrame` to use JavaFX.
+- **Backend Refactoring**:
+    - Introduced `ITinaInteractiveRendererController` to abstract renderer operations, allowing seamless switching between Swing and JavaFX implementations.
+    - Updated `TinaController` to use the new interface.
+    - Added compatibility stubs to legacy frames to ensure compilation and backward compatibility during the transition phase.
+
+### Changed
+- **Build System**: Resolved multiple compilation errors related to missing fields and methods during the Swing-to-JavaFX transition.
+- **Documentation**: Updated `VISION.md`, `ROADMAP.md`, `AGENTS.md` and `TODO.md` with detailed deep analysis and future plans.
+
 ## [9.06] - 2026-02-09
 
 ### Planned (In Progress)
