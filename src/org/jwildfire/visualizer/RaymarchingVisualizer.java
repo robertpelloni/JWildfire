@@ -96,6 +96,7 @@ public class RaymarchingVisualizer implements Visualizer {
 
     public static final String SHADER_SPHERE = 
         "#version 120\n" +
+        "// Sphere Distance Estimator\n" +
         "uniform float time;\n" +
         "uniform vec2 resolution;\n" +
         "float DE(vec3 p) { return length(p) - 1.0; }\n" +
