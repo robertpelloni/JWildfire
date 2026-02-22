@@ -13,8 +13,8 @@
 
 ## Medium Term - Feature Completion
 - [ ] **Dancing Flames**: Complete the JavaFX modernization. Currently, it's in a hybrid state.
-- [ ] **Quilt Renderer**: Complete the JavaFX modernization.
-- [ ] **Mesh Generator**: Complete the JavaFX modernization.
+- [x] **Quilt Renderer**: Complete the JavaFX modernization.
+- [x] **Mesh Generator**: Complete the JavaFX modernization.
 - [ ] **Main Editor Tabs**: Migrate the remaining tabs (Transformations, Layers, Camera, Shading) to JavaFX.
 
 ## Long Term - Architecture

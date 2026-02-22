@@ -19,14 +19,14 @@
     - [ ] Complete Project Load/Save logic.
     - [ ] Implement Random Flame Generation.
     - [ ] Full documentation in Manual.
-- [ ] **Quilt Flame Renderer**:
-    - [ ] Wire up Render/Cancel/Save logic.
-    - [ ] Connect UI controls to Renderer.
-    - [ ] Full documentation in Manual.
-- [ ] **Mesh Generator**:
-    - [ ] Implement OBJ/Voxel generation logic.
-    - [ ] Wire up File Chooser and Progress UI.
-    - [ ] Full documentation in Manual.
+- [x] **Quilt Flame Renderer**:
+    - [x] Wire up Render/Cancel/Save logic.
+    - [x] Connect UI controls to Renderer.
+    - [x] Full documentation in Manual.
+- [x] **Mesh Generator**:
+    - [x] Implement OBJ/Voxel generation logic.
+    - [x] Wire up File Chooser and Progress UI.
+    - [x] Full documentation in Manual.
 - [x] **Variation Profiles**:
     - [x] Modernize to JavaFX.
     - [x] Implement Add/Remove/Duplicate logic.

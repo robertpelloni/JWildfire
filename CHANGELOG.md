@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.08] - 2026-02-09
+
+### Added
+- **Modernized Quilt Flame Renderer**:
+    - Complete JavaFX implementation of UI (`QuiltFlameRendererController`, `quilt_flame_renderer.fxml`).
+    - Implemented rendering logic with progress tracking and cancellation.
+- **Modernized Mesh Generator**:
+    - Complete JavaFX implementation of UI (`MeshGenInternalControllerFX`, `mesh_gen_internal.fxml`).
+    - Implemented "Generate Slices" and "Generate Mesh" workflows.
+    - Added "Slices Per Pass" configuration to UI.
+
+### Changed
+- **Documentation**: Updated `ROADMAP.md` and `TODO.md` to reflect completion of Quilt Renderer and Mesh Generator.
+
 ## [9.07] - 2026-02-09
 
 ### Added

@@ -43,6 +43,7 @@ public class MeshGenInternalControllerFX implements Initializable {
     @FXML private ComboBox<PreFilterType> preFilter2Cmb;
     @FXML private TextField filenameField;
     @FXML private TextField sliceCountField;
+    @FXML private TextField slicesPerPassField;
     @FXML private TextField thresholdField;
     @FXML private ProgressBar progressBar;
     @FXML private Button generateSlicesBtn;
@@ -75,6 +76,7 @@ public class MeshGenInternalControllerFX implements Initializable {
         resolutionYField.setText("512");
         qualityField.setText("100");
         sliceCountField.setText("100");
+        slicesPerPassField.setText("32");
 
         enableControls();
     }
@@ -148,12 +150,13 @@ public class MeshGenInternalControllerFX implements Initializable {
                 int width = Integer.parseInt(resolutionXField.getText());
                 int height = Integer.parseInt(resolutionYField.getText());
                 int slices = Integer.parseInt(sliceCountField.getText());
+                int slicesPerPass = Integer.parseInt(slicesPerPassField.getText());
                 int quality = Integer.parseInt(qualityField.getText());
 
                 renderSlicesThread = new RenderSlicesThread(
                     prefs, grayFlame, outfilenamePattern, finishEvent,
                     new JavaFXProgressUpdater(progressBar),
-                    width, height, slices, 32, quality, 0.0, 1.0 // Z-min, Z-max hardcoded for now or add fields
+                    width, height, slices, slicesPerPass, quality, 0.0, 1.0 // Z-min, Z-max hardcoded for now or add fields
                 );
                 lastRenderedSequenceOutFilePattern = outfilenamePattern;
             } else {
@@ -253,6 +256,7 @@ public class MeshGenInternalControllerFX implements Initializable {
             resolutionYField.setDisable(rendering);
             qualityField.setDisable(rendering);
             sliceCountField.setDisable(rendering);
+            slicesPerPassField.setDisable(rendering);
             thresholdField.setDisable(rendering);
             outputTypeCmb.setDisable(rendering);
             filenameField.setDisable(rendering);

@@ -60,7 +60,13 @@
                      </children>
                   </HBox>
                   <Label text="Slice Count:" GridPane.rowIndex="6" />
-                  <TextField fx:id="sliceCountField" text="100" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <children>
+                        <TextField fx:id="sliceCountField" prefWidth="80.0" text="100" />
+                        <Label text="Slices/Pass:" />
+                        <TextField fx:id="slicesPerPassField" prefWidth="80.0" text="32" />
+                     </children>
+                  </HBox>
                   <Label text="Threshold:" GridPane.rowIndex="7" />
                   <TextField fx:id="thresholdField" text="0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="8">

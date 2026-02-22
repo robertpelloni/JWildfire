@@ -23,9 +23,9 @@
          <children>
             <HBox spacing="10.0" alignment="CENTER_LEFT">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onOpenFlame" text="Open Flame..." />
-                  <Button mnemonicParsing="false" onAction="#onFromEditor" text="From Editor" />
-                  <Button mnemonicParsing="false" onAction="#onFromClipboard" text="From Clipboard" />
+                  <Button fx:id="openFlameBtn" mnemonicParsing="false" onAction="#onOpenFlame" text="Open Flame..." />
+                  <Button fx:id="importFromEditorBtn" mnemonicParsing="false" onAction="#onFromEditor" text="From Editor" />
+                  <Button fx:id="importFromClipboardBtn" mnemonicParsing="false" onAction="#onFromClipboard" text="From Clipboard" />
                </children>
             </HBox>
             <GridPane hgap="10.0" vgap="5.0">
