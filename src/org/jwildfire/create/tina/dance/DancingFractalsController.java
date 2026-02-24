@@ -409,7 +409,16 @@ public class DancingFractalsController implements DancingFlamesUI {
     actionRecorder = new ActionRecorder(renderThread);
     renderThread.setFFTData(project.getFFT());
     renderThread.setMusicPlayer(jLayer);
-    renderThread.setFFTPanel(getGraph1Panel());
+    renderThread.setFFTVisualizer(new FFTVisualizer() {
+      @Override
+      public void updateFFT(short[] fftData) {
+        if (getGraph1Panel() != null) {
+          SimpleImage img = getGraph1Panel().getImage();
+          drawFFT(img, fftData);
+          getGraph1Panel().repaint();
+        }
+      }
+    });
     renderThread.setFramesPerSecond(Integer.parseInt(framesPerSecondIEd.getText()));
     renderThread.setDrawTriangles(drawTrianglesCbx.isSelected());
     renderThread.setDrawFFT(drawFFTCbx.isSelected());
@@ -1135,6 +1144,30 @@ public class DancingFractalsController implements DancingFlamesUI {
   public void mutedCBx_changed() {
     if (jLayer != null) {
       jLayer.setMuted(mutedCbx.isSelected());
+    }
+  }
+
+  private void drawFFT(SimpleImage img, short[] buffer) {
+    final double hScale = 1.75;
+    final int imgWidth = img.getImageWidth();
+    final int imgHeight = img.getImageHeight();
+    int blockSize = imgWidth / (buffer.length + 1);
+    img.fillBackground(0, 0, 0);
+    for (int i = 0; i < buffer.length; i++) {
+      short val = buffer[i];
+      int iVal = (int) ((double) val / (double) Short.MAX_VALUE * (double) imgHeight * hScale + 0.5);
+      if (iVal < 0)
+        iVal = 0;
+      else if (iVal >= imgHeight)
+        iVal = imgHeight - 1;
+
+      for (int y = 0; y < iVal; y++) {
+        img.setARGB(i * blockSize, imgHeight - 1 - y, 255, 255, 0, 0);
+        img.setARGB((i + 1) * blockSize, imgHeight - 1 - y, 255, 255, 0, 0);
+      }
+      for (int x = i * blockSize; x < (i + 1) * blockSize; x++) {
+        img.setARGB(x, imgHeight - 1 - iVal, 255, 255, 0, 0);
+      }
     }
   }
 }

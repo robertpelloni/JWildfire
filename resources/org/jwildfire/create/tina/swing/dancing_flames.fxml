@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -30,8 +31,16 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <children>
-                  <Button fx:id="loadProjectBtn" mnemonicParsing="false" onAction="#onLoadProject" text="Load Project" />
-                  <Button fx:id="saveProjectBtn" mnemonicParsing="false" onAction="#onSaveProject" text="Save Project" />
+                  <Button fx:id="loadProjectBtn" mnemonicParsing="false" onAction="#onLoadProject" text="Load Project">
+                     <tooltip>
+                        <Tooltip text="Load a saved Dancing Flames project (*.jwfdance)" />
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="saveProjectBtn" mnemonicParsing="false" onAction="#onSaveProject" text="Save Project">
+                     <tooltip>
+                        <Tooltip text="Save the current project to disk" />
+                     </tooltip>
+                  </Button>
                </children>
             </HBox>
          </children>
@@ -49,30 +58,70 @@
                               <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Random Generator" />
-                                    <ComboBox fx:id="randomGenCmb" prefWidth="150.0" />
+                                    <ComboBox fx:id="randomGenCmb" prefWidth="150.0">
+                                       <tooltip>
+                                          <Tooltip text="Select the algorithm for random flame generation" />
+                                       </tooltip>
+                                    </ComboBox>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" spacing="5.0">
                                  <children>
                                     <Label text="Count" />
-                                    <TextField fx:id="randomCountField" prefWidth="50.0" text="12" />
-                                    <Button fx:id="genRandomFlamesBtn" mnemonicParsing="false" onAction="#onGenRandomFlames" text="Gen. Random Flames" />
+                                    <TextField fx:id="randomCountField" prefWidth="50.0" text="12">
+                                       <tooltip>
+                                          <Tooltip text="Number of random flames to generate" />
+                                       </tooltip>
+                                    </TextField>
+                                    <Button fx:id="genRandomFlamesBtn" mnemonicParsing="false" onAction="#onGenRandomFlames" text="Gen. Random Flames">
+                                       <tooltip>
+                                          <Tooltip text="Generate random flames and add them to the pool" />
+                                       </tooltip>
+                                    </Button>
                                  </children>
                               </HBox>
                               <HBox spacing="5.0">
                                  <children>
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromEditor" text="From Editor" HBox.hgrow="ALWAYS" />
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromClipboard" text="From Clipboard" HBox.hgrow="ALWAYS" />
-                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromDisc" text="From Disc" HBox.hgrow="ALWAYS" />
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromEditor" text="From Editor" HBox.hgrow="ALWAYS">
+                                       <tooltip>
+                                          <Tooltip text="Add the current flame from the Main Editor to the pool" />
+                                       </tooltip>
+                                    </Button>
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromClipboard" text="From Clipboard" HBox.hgrow="ALWAYS">
+                                       <tooltip>
+                                          <Tooltip text="Import flame(s) from the system clipboard" />
+                                       </tooltip>
+                                    </Button>
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAddFromDisc" text="From Disc" HBox.hgrow="ALWAYS">
+                                       <tooltip>
+                                          <Tooltip text="Load flame(s) from a file (*.flame)" />
+                                       </tooltip>
+                                    </Button>
                                  </children>
                               </HBox>
                               <TreeView fx:id="flamePropertiesTree" VBox.vgrow="ALWAYS" />
                               <HBox spacing="5.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#onToEditor" text="To Editor" />
-                                    <Button mnemonicParsing="false" onAction="#onReplaceFromEditor" text="Repl from Editor" />
-                                    <Button mnemonicParsing="false" onAction="#onRenameFlame" text="Rename" />
-                                    <Button mnemonicParsing="false" onAction="#onDeleteFlame" text="Delete" />
+                                    <Button mnemonicParsing="false" onAction="#onToEditor" text="To Editor">
+                                       <tooltip>
+                                          <Tooltip text="Send the selected flame to the Main Editor" />
+                                       </tooltip>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#onReplaceFromEditor" text="Repl from Editor">
+                                       <tooltip>
+                                          <Tooltip text="Replace the selected flame with the one from the Main Editor" />
+                                       </tooltip>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#onRenameFlame" text="Rename">
+                                       <tooltip>
+                                          <Tooltip text="Rename the selected flame" />
+                                       </tooltip>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#onDeleteFlame" text="Delete">
+                                       <tooltip>
+                                          <Tooltip text="Delete the selected flame from the project" />
+                                       </tooltip>
+                                    </Button>
                                  </children>
                               </HBox>
                               <StackPane fx:id="poolFlamePreviewPane" prefHeight="150.0" style="-fx-background-color: black;">
@@ -97,7 +146,11 @@
                                     <ImageView fx:id="previewImageView" fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </StackPane>
-                              <StackPane fx:id="graphPane" prefHeight="100.0" style="-fx-border-color: black;" />
+                              <StackPane fx:id="graphPane" prefHeight="100.0" style="-fx-border-color: black;">
+                                 <tooltip>
+                                    <Tooltip text="FFT / Sound Wave Visualization" />
+                                 </tooltip>
+                              </StackPane>
                               <GridPane hgap="5.0" vgap="5.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -111,21 +164,45 @@
                                     <HBox alignment="CENTER_LEFT" spacing="5.0">
                                        <children>
                                           <Label text="FPS:" />
-                                          <TextField fx:id="fpsField" prefWidth="50.0" text="12" />
+                                          <TextField fx:id="fpsField" prefWidth="50.0" text="12">
+                                             <tooltip>
+                                                <Tooltip text="Target Frames Per Second for the preview" />
+                                             </tooltip>
+                                          </TextField>
                                        </children>
                                     </HBox>
                                     <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1">
                                        <children>
                                           <Label text="Border Size:" />
-                                          <Slider fx:id="borderSizeSlider" max="640.0" value="200.0" />
+                                          <Slider fx:id="borderSizeSlider" max="640.0" value="200.0">
+                                             <tooltip>
+                                                <Tooltip text="Adjust the border size for the preview" />
+                                             </tooltip>
+                                          </Slider>
                                        </children>
                                     </HBox>
                                     <HBox spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                        <children>
-                                          <CheckBox fx:id="drawTrianglesCbx" mnemonicParsing="false" selected="true" text="Draw Triangles" />
-                                          <CheckBox fx:id="drawFFTCbx" mnemonicParsing="false" selected="true" text="Show FFT" />
-                                          <CheckBox fx:id="drawFPSCbx" mnemonicParsing="false" selected="true" text="Show FPS" />
-                                          <CheckBox fx:id="mutedCbx" mnemonicParsing="false" text="Muted" />
+                                          <CheckBox fx:id="drawTrianglesCbx" mnemonicParsing="false" selected="true" text="Draw Triangles">
+                                             <tooltip>
+                                                <Tooltip text="Draw transformation triangles on the preview" />
+                                             </tooltip>
+                                          </CheckBox>
+                                          <CheckBox fx:id="drawFFTCbx" mnemonicParsing="false" selected="true" text="Show FFT">
+                                             <tooltip>
+                                                <Tooltip text="Show the FFT frequency graph" />
+                                             </tooltip>
+                                          </CheckBox>
+                                          <CheckBox fx:id="drawFPSCbx" mnemonicParsing="false" selected="true" text="Show FPS">
+                                             <tooltip>
+                                                <Tooltip text="Show the current FPS counter" />
+                                             </tooltip>
+                                          </CheckBox>
+                                          <CheckBox fx:id="mutedCbx" mnemonicParsing="false" text="Muted">
+                                             <tooltip>
+                                                <Tooltip text="Mute sound playback" />
+                                             </tooltip>
+                                          </CheckBox>
                                        </children>
                                     </HBox>
                                  </children>
@@ -147,18 +224,42 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoadSound" text="Load Sound" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoadSound" text="Load Sound">
+                                 <tooltip>
+                                    <Tooltip text="Load an MP3 file for the soundtrack" />
+                                 </tooltip>
+                              </Button>
                               <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
                                  <children>
                                     <Label text="Flame:" />
-                                    <ComboBox fx:id="projectFlameCmb" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                    <ComboBox fx:id="projectFlameCmb" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                       <tooltip>
+                                          <Tooltip text="Select the active flame to preview/switch to" />
+                                       </tooltip>
+                                    </ComboBox>
                                     <Label text="Morph Frames:" />
-                                    <TextField fx:id="morphFramesField" prefWidth="50.0" text="0" />
+                                    <TextField fx:id="morphFramesField" prefWidth="50.0" text="0">
+                                       <tooltip>
+                                          <Tooltip text="Number of frames to morph to this flame when switching" />
+                                       </tooltip>
+                                    </TextField>
                                  </children>
                               </HBox>
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStartShow" text="Start Show" GridPane.rowIndex="1" />
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStopShow" text="Stop Show" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <CheckBox fx:id="recordShowCbx" mnemonicParsing="false" text="Record Show" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStartShow" text="Start Show" GridPane.rowIndex="1">
+                                 <tooltip>
+                                    <Tooltip text="Start the real-time preview/show" />
+                                 </tooltip>
+                              </Button>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onStopShow" text="Stop Show" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <tooltip>
+                                    <Tooltip text="Stop the preview" />
+                                 </tooltip>
+                              </Button>
+                              <CheckBox fx:id="recordShowCbx" mnemonicParsing="false" text="Record Show" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <tooltip>
+                                    <Tooltip text="Record the show to a sequence of flame files (prompted on stop)" />
+                                 </tooltip>
+                              </CheckBox>
                            </children>
                         </GridPane>
                      </content>
@@ -173,29 +274,53 @@
                            <children>
                               <TableView fx:id="motionTable" VBox.vgrow="ALWAYS">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="Motion" />
-                                  <TableColumn prefWidth="75.0" text="Type" />
+                                  <TableColumn fx:id="motionNameCol" prefWidth="75.0" text="Motion" />
+                                  <TableColumn fx:id="motionTypeCol" prefWidth="75.0" text="Type" />
                                 </columns>
+                                 <tooltip>
+                                    <Tooltip text="List of defined motions in the project" />
+                                 </tooltip>
                               </TableView>
                               <VBox spacing="5.0">
                                  <children>
                                     <HBox spacing="5.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#onAddMotion" text="Add Motion" />
+                                          <Button mnemonicParsing="false" onAction="#onAddMotion" text="Add Motion">
+                                             <tooltip>
+                                                <Tooltip text="Add a new motion of the selected type" />
+                                             </tooltip>
+                                          </Button>
                                           <ComboBox fx:id="addMotionCmb" prefWidth="150.0" />
-                                          <Button mnemonicParsing="false" onAction="#onRenameMotion" text="Rename" />
-                                          <Button mnemonicParsing="false" onAction="#onDeleteMotion" text="Delete Motion" />
+                                          <Button mnemonicParsing="false" onAction="#onRenameMotion" text="Rename">
+                                             <tooltip>
+                                                <Tooltip text="Rename the selected motion" />
+                                             </tooltip>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#onDeleteMotion" text="Delete Motion">
+                                             <tooltip>
+                                                <Tooltip text="Delete the selected motion" />
+                                             </tooltip>
+                                          </Button>
                                        </children>
                                     </HBox>
                                     <HBox spacing="5.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#onCreateMotions" text="Create Motions" />
+                                          <Button mnemonicParsing="false" onAction="#onCreateMotions" text="Create Motions">
+                                             <tooltip>
+                                                <Tooltip text="Automatically create motions based on the selected pattern" />
+                                             </tooltip>
+                                          </Button>
                                           <ComboBox fx:id="createMotionsCmb" prefWidth="150.0" />
-                                          <Button mnemonicParsing="false" onAction="#onClearMotions" text="Clear All Motions" />
+                                          <Button mnemonicParsing="false" onAction="#onClearMotions" text="Clear All Motions">
+                                             <tooltip>
+                                                <Tooltip text="Remove all motions from the project" />
+                                             </tooltip>
+                                          </Button>
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
+                              <VBox fx:id="motionPropertiesPane" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
                      </content>
@@ -206,14 +331,25 @@
                            <children>
                               <TableView fx:id="motionLinksTable" VBox.vgrow="ALWAYS">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="Property" />
-                                  <TableColumn prefWidth="75.0" text="Motion" />
+                                  <TableColumn fx:id="linkPropertyCol" prefWidth="75.0" text="Property" />
+                                  <TableColumn fx:id="linkFlameCol" prefWidth="75.0" text="Flame" />
                                 </columns>
+                                 <tooltip>
+                                    <Tooltip text="List of parameters linked to the selected motion" />
+                                 </tooltip>
                               </TableView>
                               <HBox spacing="5.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#onAddLink" text="Add Link" />
-                                    <Button mnemonicParsing="false" onAction="#onDeleteLink" text="Delete Link" />
+                                    <Button mnemonicParsing="false" onAction="#onAddLink" text="Add Link">
+                                       <tooltip>
+                                          <Tooltip text="Link the selected flame property to the selected motion" />
+                                       </tooltip>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#onDeleteLink" text="Delete Link">
+                                       <tooltip>
+                                          <Tooltip text="Remove the selected link" />
+                                       </tooltip>
+                                    </Button>
                                  </children>
                               </HBox>
                            </children>

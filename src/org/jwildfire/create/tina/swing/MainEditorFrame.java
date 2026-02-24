@@ -31,6 +31,12 @@ import java.awt.SystemColor;
 import java.awt.event.*;
 import java.net.URI;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -3557,6 +3563,25 @@ public class MainEditorFrame extends JFrame {
       affineRotateEditMotionCurveBtn.setFont(Prefs.getPrefs().getFont("Dialog", Font.BOLD, 10));
       affineRotateEditMotionCurveBtn.setBounds(0, 50, 22, 24);
       tinaAffineTransformationPanel.add(affineRotateEditMotionCurveBtn);
+
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaAffineTransformationPanel.removeAll();
+        tinaAffineTransformationPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaAffineTransformationPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_affine.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsAffineController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsAffineController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
     }
     return tinaAffineTransformationPanel;
   }

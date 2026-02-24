@@ -50,6 +50,7 @@ public class Prefs extends ManagedObject {
   static final String KEY_GENERAL_SPECIAL_MAC_OS_FILE_HANDLING = "general.special_mac_os_file_handling.1";
   static final String KEY_GENERAL_MAC_OS_SEC_BOOKMARKS = "general.mac_os_sec_bookmarks";
   static final String KEY_GENERAL_SHOW_TIPS_AT_STARTUP = "general.show_tips_at_startup";
+  static final String KEY_GENERAL_USE_JAVAFX = "general.use_javafx";
 
   static final String KEY_GENERAL_SKIP_PATH_CHECK_AT_STARTUP = "general.skip_path_check_at_startup";
   static final String KEY_GENERAL_LAST_TIP = "general.last_tip";
@@ -230,6 +231,9 @@ public class Prefs extends ManagedObject {
 
   @Property(description = "Show tips at startup", category = PropertyCategory.GENERAL)
   private boolean showTipsAtStartup = true;
+
+  @Property(description = "Use JavaFX for UI components where available", category = PropertyCategory.GENERAL)
+  private boolean useJavaFX = true;
 
   @Property(description = "Skip the check for path validity at program startup. Not recommended, only for backwards compatiblity", category = PropertyCategory.GENERAL)
   private boolean skipPathCheckAtStartup = false;
@@ -1748,6 +1752,14 @@ public class Prefs extends ManagedObject {
 
   public void setShowTipsAtStartup(boolean showTipsAtStartup) {
     this.showTipsAtStartup = showTipsAtStartup;
+  }
+
+  public boolean isUseJavaFX() {
+    return useJavaFX;
+  }
+
+  public void setUseJavaFX(boolean useJavaFX) {
+    this.useJavaFX = useJavaFX;
   }
 
   public boolean isSkipPathCheckAtStartup() {
