@@ -3589,6 +3589,31 @@ public class MainEditorFrame extends JFrame {
   
   private JPanel getTinaVariationPanel() {
     if (tinaVariationPanel == null) {
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaVariationPanel = new JPanel();
+        tinaVariationPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaVariationPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_nonlinear.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsNonlinearController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsNonlinearController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+        // Still need to initialize legacy components to avoid NPEs if they are referenced
+        // But since we return the panel here, we can perhaps just initialize them but not add them?
+        // Let's rely on the fact that existing fields are null and TinaController checks for null or lazily initializes.
+        // Actually, TinaController.NonlinearControlsDelegate likely accesses them.
+        // So we should probably let the legacy code run to init components, then replace content?
+        // Yes, let's fall through to legacy init, then replace if FX.
+      }
+
       nonlinearParams1Lbl = new JLabel();
       nonlinearParams1Lbl.setPreferredSize(new Dimension(50, 22));
       nonlinearParams1Lbl.setText("Params");
@@ -3659,6 +3684,26 @@ public class MainEditorFrame extends JFrame {
   
   private JPanel getTinaTransformationColorPanel() {
     if (tinaTransformationColorPanel == null) {
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaTransformationColorPanel = new JPanel();
+        tinaTransformationColorPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaTransformationColorPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_color.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsColorController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsColorController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+        // Legacy fall-through for initialization
+      }
+
       xFormDrawModeLbl = new JLabel();
       xFormDrawModeLbl.addMouseListener(new MouseAdapter() {
         @Override
@@ -3936,6 +3981,25 @@ public class MainEditorFrame extends JFrame {
         }
       });
       tinaTransformationColorPanel.add(xFormMaterialSpeedSlider);
+
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaTransformationColorPanel.removeAll();
+        tinaTransformationColorPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaTransformationColorPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_color.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsColorController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsColorController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
     }
     return tinaTransformationColorPanel;
   }

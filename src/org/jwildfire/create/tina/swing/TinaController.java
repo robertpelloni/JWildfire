@@ -131,6 +131,8 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   private AnimationController animationController;
   private LeapMotionMainEditorController leapMotionMainEditorController;
   private TransformationsAffineController transformationsAffineController;
+  private TransformationsNonlinearController transformationsNonlinearController;
+  private TransformationsColorController transformationsColorController;
 
   private FlameControlsDelegate flameControls;
   private GradientControlsDelegate gradientControls;
@@ -2415,6 +2417,12 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
         refreshXFormUI(xForm);
         if (transformationsAffineController != null) {
           transformationsAffineController.refresh();
+        }
+        if (transformationsNonlinearController != null) {
+          transformationsNonlinearController.refresh();
+        }
+        if (transformationsColorController != null) {
+          transformationsColorController.refresh();
         }
         xFormControls.enableControls(xForm);
         nonlinearControls.resizeNonlinearParamsPanel();
@@ -7031,6 +7039,14 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
 
   public void setTransformationsAffineController(TransformationsAffineController transformationsAffineController) {
     this.transformationsAffineController = transformationsAffineController;
+  }
+
+  public void setTransformationsNonlinearController(TransformationsNonlinearController transformationsNonlinearController) {
+    this.transformationsNonlinearController = transformationsNonlinearController;
+  }
+
+  public void setTransformationsColorController(TransformationsColorController transformationsColorController) {
+    this.transformationsColorController = transformationsColorController;
   }
 }
 
