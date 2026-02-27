@@ -23,16 +23,15 @@ import org.jwildfire.create.tina.base.Flame;
 import org.jwildfire.create.tina.dance.motion.DanceFlameTransformer;
 import org.jwildfire.create.tina.swing.FlameHolder;
 import org.jwildfire.image.SimpleImage;
-import org.jwildfire.swing.ImagePanel;
 
 public class RealtimeAnimRenderThread implements Runnable, FlameHolder {
-  private final DancingFractalsController controller;
+  private final DancingFlamesUI controller;
   private final DancingFlameStack flameStack;
   private boolean forceAbort;
   private boolean running;
   private RecordedFFT fftData;
   private JLayerInterface musicPlayer;
-  private ImagePanel fftPanel;
+  private FFTVisualizer fftVisualizer;
   private int framesPerSecond = 12;
   private long timeRenderStarted = 0;
   private final DanceFlameTransformer transformer;
@@ -41,7 +40,7 @@ public class RealtimeAnimRenderThread implements Runnable, FlameHolder {
   private boolean drawFFT = true;
   private boolean drawFPS = true;
 
-  public RealtimeAnimRenderThread(DancingFractalsController pController, DancingFlameProject pProject) {
+  public RealtimeAnimRenderThread(DancingFlamesUI pController, DancingFlameProject pProject) {
     controller = pController;
     transformer = new DanceFlameTransformer(pProject);
     flameStack = new DancingFlameStack(Prefs.getPrefs());
@@ -74,10 +73,8 @@ public class RealtimeAnimRenderThread implements Runnable, FlameHolder {
         short currFFT[];
         if (fftData != null) {
           currFFT = fftData.getData(musicPlayer.getPosition());
-          if (drawFFT && fftPanel != null) {
-            SimpleImage img = fftPanel.getImage();
-            drawFFT(img, currFFT);
-            fftPanel.repaint();
+          if (drawFFT && fftVisualizer != null && currFFT != null) {
+            fftVisualizer.updateFFT(currFFT);
           }
         }
         else {
@@ -125,32 +122,8 @@ public class RealtimeAnimRenderThread implements Runnable, FlameHolder {
     musicPlayer = pMusicPlayer;
   }
 
-  public void setFFTPanel(ImagePanel pFFTPanel) {
-    fftPanel = pFFTPanel;
-  }
-
-  private void drawFFT(SimpleImage img, short[] buffer) {
-    final double hScale = 1.75;
-    final int imgWidth = img.getImageWidth();
-    final int imgHeight = img.getImageHeight();
-    int blockSize = imgWidth / (buffer.length + 1);
-    img.fillBackground(0, 0, 0);
-    for (int i = 0; i < buffer.length; i++) {
-      short val = buffer[i];
-      int iVal = (int) ((double) val / (double) Short.MAX_VALUE * (double) imgHeight * hScale + 0.5);
-      if (iVal < 0)
-        iVal = 0;
-      else if (iVal >= imgHeight)
-        iVal = imgHeight - 1;
-
-      for (int y = 0; y < iVal; y++) {
-        img.setARGB(i * blockSize, imgHeight - 1 - y, 255, 255, 0, 0);
-        img.setARGB((i + 1) * blockSize, imgHeight - 1 - y, 255, 255, 0, 0);
-      }
-      for (int x = i * blockSize; x < (i + 1) * blockSize; x++) {
-        img.setARGB(x, imgHeight - 1 - iVal, 255, 255, 0, 0);
-      }
-    }
+  public void setFFTVisualizer(FFTVisualizer pFFTVisualizer) {
+    fftVisualizer = pFFTVisualizer;
   }
 
   public void setFramesPerSecond(int pFPS) {

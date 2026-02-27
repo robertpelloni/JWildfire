@@ -16,12 +16,12 @@
 */
 package org.jwildfire.create.tina.swing;
 
-import javax.swing.RepaintManager;
-
+import javafx.application.Platform;
 import org.jwildfire.create.tina.render.ProgressUpdater;
 
 public class SWFAnimatorProgressUpdater implements ProgressUpdater {
   private final EasyMovieMakerFrame parent;
+  private int maxSteps;
 
   public SWFAnimatorProgressUpdater(EasyMovieMakerFrame pParent) {
     parent = pParent;
@@ -29,31 +29,21 @@ public class SWFAnimatorProgressUpdater implements ProgressUpdater {
 
   @Override
   public void initProgress(int pMaxSteps) {
-    try {
-      parent.getSwfAnimatorProgressBar().setValue(0);
-      parent.getSwfAnimatorProgressBar().setMinimum(0);
-      parent.getSwfAnimatorProgressBar().setMaximum(pMaxSteps);
-      parent.getSwfAnimatorProgressBar().invalidate();
-      parent.getSwfAnimatorProgressBar().validate();
-    }
-    catch (Throwable ex) {
-      ex.printStackTrace();
-    }
+    this.maxSteps = pMaxSteps;
+    Platform.runLater(() -> {
+        if (parent.getController() != null) {
+            parent.getController().getFxProgressBar().setProgress(0.0);
+        }
+    });
   }
 
   @Override
   public void updateProgress(int pStep) {
-    try {
-      parent.getSwfAnimatorProgressBar().setValue(pStep);
-      parent.getSwfAnimatorProgressBar().invalidate();
-      parent.getSwfAnimatorProgressBar().validate();
-      RepaintManager manager = RepaintManager.currentManager(parent.getSwfAnimatorProgressBar());
-      manager.markCompletelyDirty(parent.getSwfAnimatorProgressBar());
-      manager.paintDirtyRegions();
-    }
-    catch (Throwable ex) {
-      ex.printStackTrace();
-    }
+    Platform.runLater(() -> {
+        if (parent.getController() != null && maxSteps > 0) {
+            parent.getController().getFxProgressBar().setProgress((double) pStep / maxSteps);
+        }
+    });
   }
 
 }

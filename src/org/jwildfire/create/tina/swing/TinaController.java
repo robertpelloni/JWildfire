@@ -122,14 +122,17 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   private MeshGenController meshGenController;
   private BatchRendererController batchRendererController;
   private QuiltRendererController quiltRendererController;
-  private TinaInteractiveRendererController interactiveRendererCtrl;
   private FlamesGPURenderController gpuRendererCtrl;
-  private TinaSWFAnimatorController swfAnimatorCtrl;
+  private ITinaInteractiveRendererController interactiveRendererCtrl;
+  private EasyMovieMakerController swfAnimatorCtrl;
   private JWFScriptController jwfScriptController;
   private FlameBrowserController flameBrowserController;
   private GradientController gradientController;
   private AnimationController animationController;
   private LeapMotionMainEditorController leapMotionMainEditorController;
+  private TransformationsAffineController transformationsAffineController;
+  private TransformationsNonlinearController transformationsNonlinearController;
+  private TransformationsColorController transformationsColorController;
 
   private FlameControlsDelegate flameControls;
   private GradientControlsDelegate gradientControls;
@@ -2412,6 +2415,15 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
           xForm.notifyCoeffChange();
         }
         refreshXFormUI(xForm);
+        if (transformationsAffineController != null) {
+          transformationsAffineController.refresh();
+        }
+        if (transformationsNonlinearController != null) {
+          transformationsNonlinearController.refresh();
+        }
+        if (transformationsColorController != null) {
+          transformationsColorController.refresh();
+        }
         xFormControls.enableControls(xForm);
         nonlinearControls.resizeNonlinearParamsPanel();
         refreshFlameImage(true, pMouseDown, 1, pReRender, false);
@@ -4049,11 +4061,11 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
     }
   }
 
-  public TinaInteractiveRendererController getInteractiveRendererCtrl() {
+  public ITinaInteractiveRendererController getInteractiveRendererCtrl() {
     return interactiveRendererCtrl;
   }
 
-  public void setInteractiveRendererCtrl(TinaInteractiveRendererController interactiveRendererCtrl) {
+  public void setInteractiveRendererCtrl(ITinaInteractiveRendererController interactiveRendererCtrl) {
     this.interactiveRendererCtrl = interactiveRendererCtrl;
   }
 
@@ -4125,11 +4137,11 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
     }
   }
 
-  public TinaSWFAnimatorController getSwfAnimatorCtrl() {
+  public EasyMovieMakerController getSwfAnimatorCtrl() {
     return swfAnimatorCtrl;
   }
 
-  public void setSwfAnimatorCtrl(TinaSWFAnimatorController pSWFAnimatorCtrl) {
+  public void setSwfAnimatorCtrl(EasyMovieMakerController pSWFAnimatorCtrl) {
     swfAnimatorCtrl = pSWFAnimatorCtrl;
   }
 
@@ -6956,8 +6968,7 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   VariationProfilesController variationProfilesController = null;
   public void editVariationProfiles() {
     if (variationProfilesFrame == null) {
-      variationProfilesController = new VariationProfilesController( this );
-      variationProfilesFrame = new VariationProfilesFrame( variationProfilesController );
+      variationProfilesFrame = new VariationProfilesFrame( this );
       variationProfilesController.setControls(variationProfilesFrame.getNewProfileBtn(), variationProfilesFrame.getDuplicateProfileBtn(),
         variationProfilesFrame.getDeleteProfileBtn(), variationProfilesFrame.getProfilesTable(), variationProfilesFrame.getProfileNameEdit(),
         variationProfilesFrame.getProfileTypeCmb(), variationProfilesFrame.getProfileStatusEdit(), variationProfilesFrame.getDefaultCheckbox(),
@@ -7026,5 +7037,16 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
     }
   }
 
+  public void setTransformationsAffineController(TransformationsAffineController transformationsAffineController) {
+    this.transformationsAffineController = transformationsAffineController;
+  }
+
+  public void setTransformationsNonlinearController(TransformationsNonlinearController transformationsNonlinearController) {
+    this.transformationsNonlinearController = transformationsNonlinearController;
+  }
+
+  public void setTransformationsColorController(TransformationsColorController transformationsColorController) {
+    this.transformationsColorController = transformationsColorController;
+  }
 }
 

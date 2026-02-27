@@ -1,17 +1,21 @@
 package org.jwildfire.sheep;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -19,7 +23,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class SheepServer {
-    private static final String REDIRECT_URL = "https://community.sheepserver.net/query.php";
+    private static final String DEFAULT_REDIRECT_URL = "https://community.sheepserver.net/query.php";
     private static final String CLIENT_VERSION = "JWildfire_9.03";
     private static final String DEFAULT_NICKNAME = "jwildfire_user";
     
@@ -28,15 +32,42 @@ public class SheepServer {
     private String renderServer;
     private String voteServer;
 
+    private String redirectUrl = DEFAULT_REDIRECT_URL;
+    private String nickname = DEFAULT_NICKNAME;
+    private String uniqueId = "0000000000000000"; // Should be persistent
+
     public SheepServer() {
-        this.client = HttpClient.newHttpClient();
+        this.client = HttpClient.newBuilder()
+                .sslContext(getUnsafeSslContext()) // Use unsafe context to handle community server certs
+                .build();
     }
 
+    private SSLContext getUnsafeSslContext() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() { return null; }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+                }
+            };
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            return sc;
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            throw new RuntimeException("Failed to create unsafe SSL context", e);
+        }
+    }
+
+    public void setConfig(String nickname, String redirectUrl) {
+        if (nickname != null && !nickname.isEmpty()) this.nickname = nickname;
+        if (redirectUrl != null && !redirectUrl.isEmpty()) this.redirectUrl = redirectUrl;
+    }
+
+    public String getNickname() { return nickname; }
+    public String getRedirectUrl() { return redirectUrl; }
+
     public void authenticate() throws Exception {
-        // Generate a random ID if we don't have one (mock for now)
-        String uniqueId = "0000000000000000"; 
-        String nickname = DEFAULT_NICKNAME;
-        
         StringBuilder query = new StringBuilder();
         query.append("q=redir");
         query.append("&u=").append(URLEncoder.encode(nickname, StandardCharsets.UTF_8));
@@ -44,7 +75,7 @@ public class SheepServer {
         query.append("&i=").append(uniqueId);
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(REDIRECT_URL + "?" + query.toString()))
+                .uri(URI.create(redirectUrl + "?" + query.toString()))
                 .GET()
                 .build();
 
@@ -68,11 +99,6 @@ public class SheepServer {
             this.hostServer = element.getAttribute("host");
             this.renderServer = element.getAttribute("render");
             this.voteServer = element.getAttribute("vote");
-            
-            System.out.println("Sheep Servers Discovered:");
-            System.out.println("Host: " + hostServer);
-            System.out.println("Render: " + renderServer);
-            System.out.println("Vote: " + voteServer);
         } else {
             throw new RuntimeException("Invalid response from redirect server");
         }
@@ -94,7 +120,6 @@ public class SheepServer {
             throw new RuntimeException("Failed to download flock list: " + response.statusCode());
         }
 
-        // The list is gzipped
         try (GZIPInputStream gzipIn = new GZIPInputStream(response.body())) {
             return parseFlockList(gzipIn);
         }
@@ -111,8 +136,6 @@ public class SheepServer {
             Element sheep = (Element) sheepList.item(i);
             String id = sheep.getAttribute("id");
             String gen = sheep.getAttribute("gen");
-            // We'll store ID -> Gen for now, or maybe ID -> URL if available
-            // The summary said 'url' attribute exists
             String url = sheep.getAttribute("url"); 
             
             sheepMap.put(id, "Gen: " + gen + " | " + url);
@@ -120,45 +143,9 @@ public class SheepServer {
         return sheepMap;
     }
     
-    // Placeholder for fetching a specific genome
-    // Since we don't have a direct "get genome by ID" endpoint confirmed, 
-    // we might need to rely on the 'url' from the list or the /cgi/get endpoint.
-    public String getGenome(String id) throws Exception {
-        if (renderServer == null) authenticate();
-
-        // Note: The standard client typically downloads genomes as part of a "job" to render them.
-        // However, we can try to fetch a specific sheep if we know the generation and ID, 
-        // or we might have to rely on the video URL to find the corresponding flame file if hosted.
-        //
-        // Research suggests the server might not expose a simple "get by ID" for arbitrary sheep 
-        // without being part of the render farm logic.
-        //
-        // For now, we will implement the standard "get work" endpoint which returns a genome to render.
-        // If we want a specific ID, we might need to parse the flock list for a URL ending in .xml 
-        // (though the list usually points to .avi).
-        
-        // Let's try to construct a URL based on common patterns if the ID is known.
-        // Pattern: http://v2d7c.sheepserver.net/gen/244/123/sheep-244-12345-12340.xml (Hypothetical)
-        
-        // Fallback: Use the fetchRenderingJob logic if no ID is provided or if we just want "a sheep".
-        if (id == null || id.isEmpty()) {
-            return fetchRenderingJob();
-        }
-        
-        throw new UnsupportedOperationException("Fetching specific sheep by ID is not yet fully reverse-engineered.");
-    }
-
-    /**
-     * Fetches a genome to render from the server (for distributed rendering).
-     * @return The flame XML content.
-     */
     public String fetchRenderingJob() throws Exception {
         if (renderServer == null) authenticate();
 
-        // Parameters: n=<nickname>, w=<user_url>, v=<client_version>, u=<unique_id>
-        String uniqueId = "0000000000000000"; 
-        String nickname = DEFAULT_NICKNAME;
-        
         StringBuilder query = new StringBuilder();
         query.append("n=").append(URLEncoder.encode(nickname, StandardCharsets.UTF_8));
         query.append("&u=").append(uniqueId);

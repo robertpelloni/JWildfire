@@ -858,6 +858,9 @@ guaranteed to work. Eventually, you will need to convert the image before denois
 At the gradient tab you will find numerous options to create and modify the gradients of your fractals.
 Note: gradients are sometimes also referred as "palette" or "color palette".
 
+The Gradient Editor has been modernized with a new JavaFX interface, providing a more responsive
+preview and controls.
+
 ===== _General controls_ subtab
 [.thumb]
 image::images/gradient_tab_general_controls.jpg[scaledwidth=75%]
@@ -2790,6 +2793,12 @@ or _Bank_-parameter of the flame
 
 By changing the numerical value (to the right of each script slot) you change the strength of the effect.
 
+==== Motion Curve Editor
+For even more control, you can define a *Motion Curve* for each script.
+Click the *Curve* button next to the script value to open the Motion Curve Editor.
+Here you can define keyframes (Frame, Value) to vary the strength of the effect over time.
+For example, you can make the camera rotate slowly at first, then speed up, and then stop.
+
 === _XForm (animation) scripts_
 Lets you apply up to 12 flame transformations to the whole movie, i.e. those scripts are applied to
 each individual flame in the form of a post-effect. They override motions of the same type, in case
@@ -2997,6 +3006,9 @@ The recommended way is to use the <<batch_renderer, Batch renderer>> to perform 
 [.thumb]
 image::images/batch_renderer.jpg[scaledwidth=75%]
 
+The Batch Renderer has been modernized with a new JavaFX interface, providing a streamlined workflow
+for queuing and rendering large sets of flames.
+
 The batch renderer is designed to render fractal flames in the background (for example overnight).
 Therefore it is well suited to render frames for animations or images with large resolution,
 which take a while to render.
@@ -3082,6 +3094,9 @@ which is more optimized to handle large images.
 Images with a size up to 32K (30720x17280) were tested without any problems so far.
 
 You can cancel/resume the rendering-process at tile-level.
+The Quilt Renderer features a modernized JavaFX interface that automatically detects existing tiles.
+If a render is interrupted, simply start it again with the same settings, and it will automatically
+resume where it left off, skipping already rendered tiles.
 
 Please note: Due to the nature of the fractal-flame-algorithm, the rendering of each tile may take as long as rendering the entire image.
 So, this method is not efficient, but it is effective.
@@ -3108,6 +3123,10 @@ because they have both a fixed resolution (like picture elements or pixels in a 
 So each slice contains pixels with a depth, which are three-dimensional pixels, called Volume elements, or _Voxels_.
 And these slices stacked together build a representation of the object, hence the name _Voxel stack_.)
 - building a _polygonal mesh_ from all these slices using the popular _Marching Cubes Algorithm_.
+
+The new modernized interface separates these steps clearly:
+1.  **Generate Slices**: Creates the voxel stack images.
+2.  **Generate Mesh**: Converts the generated images into a 3D mesh.
 
 ==== _Total number of slices_
 Sets the number of slices to be rendered which represents the voxel resolution in the z-direction.
@@ -3242,6 +3261,9 @@ Values in the range of 300 to 2000 are typical.
 == _GPU render_ module
 [.thumb]
 image::images/gpu_render.jpg[scaledwidth=75%]
+
+The GPU Render module has been modernized with a new JavaFX interface, providing a cleaner and more
+responsive user experience.
 
 GPU rendering in JWildfire is enabled by integrating FAEngine, a GPU-rendering-engine
 created by Steven Brodhead.

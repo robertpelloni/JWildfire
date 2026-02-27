@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: sans-serif; padding: 20px; color: #333; }
+        h1 { color: #cc3300; border-bottom: 2px solid #cc3300; padding-bottom: 5px; }
+        h2 { color: #cc3300; margin-top: 20px; }
+        p { line-height: 1.6; }
+        code { background-color: #f0f0f0; padding: 2px 4px; border-radius: 4px; }
+        .warning { background-color: #fff3cd; border: 1px solid #ffeeba; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Music Visualizer</h1>
+
+    <p>This module transforms audio input into real-time graphical visualizations. It supports multiple rendering engines, from simple spectrum analysis to complex 3D raymarching.</p>
+
+    <h2>Controls</h2>
+    <ul>
+        <li><strong>Start/Stop Capture:</strong> Toggles audio input processing. Ensure you have selected a valid device.</li>
+        <li><strong>Device:</strong> Select the audio input source (e.g., Microphone, Line-In, or "Stereo Mix" for system audio).</li>
+        <li><strong>Sensitivity:</strong> Adjusts how responsive the visualization is to sound levels. Higher values make it more reactive to quiet sounds.</li>
+        <li><strong>Gain:</strong> digital amplification of the input signal.</li>
+    </ul>
+
+    <h2>Visualizer Engines</h2>
+    <p>The integrated canvas shows a basic spectrum/waveform preview. For full-screen, high-performance visuals, use the Launch buttons:</p>
+    <ul>
+        <li><strong>OpenGL:</strong> Launches a hardware-accelerated window using custom OpenGL shaders.</li>
+        <li><strong>projectM:</strong> Integration with the open-source implementation of MilkDrop. Supports `.milk` presets.</li>
+        <li><strong>Raymarching:</strong> Uses advanced raymarching techniques to render 3D fractals (Mandelbulb, Spheres) that react to music.</li>
+    </ul>
+
+    <div class="warning">
+        <strong>Performance Note:</strong> Running multiple visualizers simultaneously or alongside heavy rendering tasks may impact system performance. Raymarching requires a capable GPU.
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <p>If no audio is detected, check your OS sound settings and ensure JWildfire has permission to access the microphone. On Linux, ALSA/PulseAudio configuration may be required.</p>
+</body>
+</html>

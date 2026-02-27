@@ -16,6 +16,9 @@
 */
 package org.jwildfire.create.tina.animate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jwildfire.create.tina.base.Flame;
 
 public class FlameMoviePart {
@@ -23,6 +26,8 @@ public class FlameMoviePart {
   private int frameCount;
   private int frameMorphCount;
   private FlameMorphType flameMorphType = FlameMorphType.FADE;
+  private List<GlobalScript> globalScripts = new ArrayList<GlobalScript>();
+  private List<XFormScript> xFormScripts = new ArrayList<XFormScript>();
 
   public Flame getFlame() {
     return flame;
@@ -54,6 +59,22 @@ public class FlameMoviePart {
 
   public void setFlameMorphType(FlameMorphType pFlameMorphType) {
     flameMorphType = pFlameMorphType;
+  }
+
+  public List<GlobalScript> getGlobalScripts() {
+    return globalScripts;
+  }
+
+  public void setGlobalScripts(List<GlobalScript> globalScripts) {
+    this.globalScripts = globalScripts;
+  }
+
+  public List<XFormScript> getXFormScripts() {
+    return xFormScripts;
+  }
+
+  public void setXFormScripts(List<XFormScript> xFormScripts) {
+    this.xFormScripts = xFormScripts;
   }
 
 }

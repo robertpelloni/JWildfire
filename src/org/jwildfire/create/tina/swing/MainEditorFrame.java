@@ -31,6 +31,12 @@ import java.awt.SystemColor;
 import java.awt.event.*;
 import java.net.URI;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -3557,6 +3563,25 @@ public class MainEditorFrame extends JFrame {
       affineRotateEditMotionCurveBtn.setFont(Prefs.getPrefs().getFont("Dialog", Font.BOLD, 10));
       affineRotateEditMotionCurveBtn.setBounds(0, 50, 22, 24);
       tinaAffineTransformationPanel.add(affineRotateEditMotionCurveBtn);
+
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaAffineTransformationPanel.removeAll();
+        tinaAffineTransformationPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaAffineTransformationPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_affine.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsAffineController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsAffineController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
     }
     return tinaAffineTransformationPanel;
   }
@@ -3564,6 +3589,31 @@ public class MainEditorFrame extends JFrame {
   
   private JPanel getTinaVariationPanel() {
     if (tinaVariationPanel == null) {
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaVariationPanel = new JPanel();
+        tinaVariationPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaVariationPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_nonlinear.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsNonlinearController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsNonlinearController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+        // Still need to initialize legacy components to avoid NPEs if they are referenced
+        // But since we return the panel here, we can perhaps just initialize them but not add them?
+        // Let's rely on the fact that existing fields are null and TinaController checks for null or lazily initializes.
+        // Actually, TinaController.NonlinearControlsDelegate likely accesses them.
+        // So we should probably let the legacy code run to init components, then replace content?
+        // Yes, let's fall through to legacy init, then replace if FX.
+      }
+
       nonlinearParams1Lbl = new JLabel();
       nonlinearParams1Lbl.setPreferredSize(new Dimension(50, 22));
       nonlinearParams1Lbl.setText("Params");
@@ -3634,6 +3684,26 @@ public class MainEditorFrame extends JFrame {
   
   private JPanel getTinaTransformationColorPanel() {
     if (tinaTransformationColorPanel == null) {
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaTransformationColorPanel = new JPanel();
+        tinaTransformationColorPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaTransformationColorPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_color.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsColorController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsColorController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+        // Legacy fall-through for initialization
+      }
+
       xFormDrawModeLbl = new JLabel();
       xFormDrawModeLbl.addMouseListener(new MouseAdapter() {
         @Override
@@ -3911,6 +3981,25 @@ public class MainEditorFrame extends JFrame {
         }
       });
       tinaTransformationColorPanel.add(xFormMaterialSpeedSlider);
+
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaTransformationColorPanel.removeAll();
+        tinaTransformationColorPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaTransformationColorPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_color.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsColorController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsColorController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
     }
     return tinaTransformationColorPanel;
   }
@@ -5785,6 +5874,7 @@ public class MainEditorFrame extends JFrame {
       FlameBrowserFrame flameBrowserFrame, EasyMovieMakerFrame easyMovieMakerFrame,
       DancingFlamesFrame dancingFlamesFrame, BatchFlameRendererFrame batchFlameRendererFrame, QuiltFlameRendererFrame quiltFlameRendererFrame,
       MeshGenInternalFrame meshGenFrame, InteractiveRendererFrame interactiveRendererFrame, FlamesGPURenderFrame gpuRendererFrame, HelpFrame helpFrame) {
+    easyMovieMakerFrame.setTinaController(tinaController);
     nonlinearControlsRows = new TinaNonlinearControlsRow[12];
     nonlinearControlsRows[0] = new TinaNonlinearControlsRow(0, getNonlinearVar1Panel(), nonlinearVar1Lbl, getNonlinearVar1Cmb(), getNonlinearParams1Cmb(), getNonlinearVar1REd(),
         getNonlinearParams1REd(), getNonlinearParams1LeftButton(), getNonlinearParams1PreButton(), getNonlinearParams1PostButton(), null,
@@ -5832,7 +5922,7 @@ public class MainEditorFrame extends JFrame {
     initPostSymmetryTypeCmb(getPostSymmetryTypeCmb());
     initRandomGenCmb(getRandomStyleCmb());
     initRandomSymmetryCmb(getRandomSymmetryCmb());
-    initRandomMovieGenCmb(easyMovieMakerFrame.getSwfAnimatorRandGenCmb());
+    // initRandomMovieGenCmb(easyMovieMakerFrame.getSwfAnimatorRandGenCmb());
     initStereo3dModeCmb(getStereo3dModeCmb());
     initStereo3dPreviewCmb(getStereo3dPreviewCmb());
     initStereo3dColorCmb(getStereo3dLeftEyeColorCmb(), Stereo3dColor.RED);
@@ -5869,21 +5959,21 @@ public class MainEditorFrame extends JFrame {
         flameBrowserFrame.getFlameBrowserRenameBtn(), flameBrowserFrame.getFlameBrowserCopyToBtn(), flameBrowserFrame.getFlameBrowserMoveToBtn(),
         flameBrowserFrame.getFlameBrowserToMeshGenBtn());
 
-    params.setEasyMovieMakerParams(easyMovieMakerFrame.getSwfAnimatorResolutionProfileCmb(), easyMovieMakerFrame.getSwfAnimatorQualityProfileCmb());
+    // params.setEasyMovieMakerParams(easyMovieMakerFrame.getSwfAnimatorResolutionProfileCmb(), easyMovieMakerFrame.getSwfAnimatorQualityProfileCmb());
 
-    params.setDancingFlamesParams(dancingFlamesFrame.getRealtimeFlamePnl(), dancingFlamesFrame.getRealtimeGraph1Pnl(), dancingFlamesFrame.getDancingFlamesLoadSoundBtn(),
-        dancingFlamesFrame.getDancingFlamesAddFromClipboardBtn(), dancingFlamesFrame.getDancingFlamesAddFromEditorBtn(), dancingFlamesFrame.getDancingFlamesAddFromDiscBtn(),
-        dancingFlamesFrame.getDancingFlamesRandomCountIEd(), dancingFlamesFrame.getDancingFlamesGenRandFlamesBtn(), dancingFlamesFrame.getDancingFlamesRandomGenCmb(),
-        dancingFlamesFrame.getDancingFlamesPoolFlamePreviewPnl(), dancingFlamesFrame.getDancingFlamesBorderSizeSlider(), dancingFlamesFrame.getDancingFlamesFlameToEditorBtn(),
-        dancingFlamesFrame.getDancingFlamesDeleteFlameBtn(), dancingFlamesFrame.getDancingFlamesFramesPerSecondIEd(), dancingFlamesFrame.getDancingFlamesMorphFrameCountIEd(),
-        dancingFlamesFrame.getDancingFlamesStartShowBtn(), dancingFlamesFrame.getDancingFlamesStopShowBtn(), dancingFlamesFrame.getDancingFlamesDoRecordCBx(),
-        dancingFlamesFrame.getDancingFlamesFlameCmb(), dancingFlamesFrame.getDancingFlamesDrawTrianglesCBx(), dancingFlamesFrame.getDancingFlamesDrawFFTCBx(),
-        dancingFlamesFrame.getDancingFlamesDrawFPSCBx(), dancingFlamesFrame.getDancingFlamesFlamePropertiesTree(), dancingFlamesFrame.getDancingFlamesMotionPropertyPnl(),
-        dancingFlamesFrame.getDancingFlamesMotionTable(), dancingFlamesFrame.getDancingFlamesAddMotionCmb(), dancingFlamesFrame.getDancingFlamesAddMotionBtn(),
-        dancingFlamesFrame.getDancingFlamesDeleteMotionBtn(), dancingFlamesFrame.getDancingFlamesLinkMotionBtn(), dancingFlamesFrame.getDancingFlamesUnlinkMotionBtn(),
-        dancingFlamesFrame.getDancingFlamesCreateMotionsCmb(), dancingFlamesFrame.getDancingFlamesClearMotionsBtn(), dancingFlamesFrame.getDancingFlamesLoadProjectBtn(),
-        dancingFlamesFrame.getDancingFlamesSaveProjectBtn(), dancingFlamesFrame.getDancingFlamesMotionLinksTable(), dancingFlamesFrame.getDancingFlamesReplaceFlameFromEditorBtn(),
-        dancingFlamesFrame.getDancingFlamesRenameFlameBtn(), dancingFlamesFrame.getDancingFlamesRenameMotionBtn(), dancingFlamesFrame.getDancingFlamesMutedCBx());
+    // params.setDancingFlamesParams(dancingFlamesFrame.getRealtimeFlamePnl(), dancingFlamesFrame.getRealtimeGraph1Pnl(), dancingFlamesFrame.getDancingFlamesLoadSoundBtn(),
+    //    dancingFlamesFrame.getDancingFlamesAddFromClipboardBtn(), dancingFlamesFrame.getDancingFlamesAddFromEditorBtn(), dancingFlamesFrame.getDancingFlamesAddFromDiscBtn(),
+    //    dancingFlamesFrame.getDancingFlamesRandomCountIEd(), dancingFlamesFrame.getDancingFlamesGenRandFlamesBtn(), dancingFlamesFrame.getDancingFlamesRandomGenCmb(),
+    //    dancingFlamesFrame.getDancingFlamesPoolFlamePreviewPnl(), dancingFlamesFrame.getDancingFlamesBorderSizeSlider(), dancingFlamesFrame.getDancingFlamesFlameToEditorBtn(),
+    //    dancingFlamesFrame.getDancingFlamesDeleteFlameBtn(), dancingFlamesFrame.getDancingFlamesFramesPerSecondIEd(), dancingFlamesFrame.getDancingFlamesMorphFrameCountIEd(),
+    //    dancingFlamesFrame.getDancingFlamesStartShowBtn(), dancingFlamesFrame.getDancingFlamesStopShowBtn(), dancingFlamesFrame.getDancingFlamesDoRecordCBx(),
+    //    dancingFlamesFrame.getDancingFlamesFlameCmb(), dancingFlamesFrame.getDancingFlamesDrawTrianglesCBx(), dancingFlamesFrame.getDancingFlamesDrawFFTCBx(),
+    //    dancingFlamesFrame.getDancingFlamesDrawFPSCBx(), dancingFlamesFrame.getDancingFlamesFlamePropertiesTree(), dancingFlamesFrame.getDancingFlamesMotionPropertyPnl(),
+    //    dancingFlamesFrame.getDancingFlamesMotionTable(), dancingFlamesFrame.getDancingFlamesAddMotionCmb(), dancingFlamesFrame.getDancingFlamesAddMotionBtn(),
+    //    dancingFlamesFrame.getDancingFlamesDeleteMotionBtn(), dancingFlamesFrame.getDancingFlamesLinkMotionBtn(), dancingFlamesFrame.getDancingFlamesUnlinkMotionBtn(),
+    //    dancingFlamesFrame.getDancingFlamesCreateMotionsCmb(), dancingFlamesFrame.getDancingFlamesClearMotionsBtn(), dancingFlamesFrame.getDancingFlamesLoadProjectBtn(),
+    //    dancingFlamesFrame.getDancingFlamesSaveProjectBtn(), dancingFlamesFrame.getDancingFlamesMotionLinksTable(), dancingFlamesFrame.getDancingFlamesReplaceFlameFromEditorBtn(),
+    //    dancingFlamesFrame.getDancingFlamesRenameFlameBtn(), dancingFlamesFrame.getDancingFlamesRenameMotionBtn(), dancingFlamesFrame.getDancingFlamesMutedCBx());
 
     params.setBatchFlameRendererParams(batchFlameRendererFrame.getRenderBatchJobsTable(), batchFlameRendererFrame.getBatchPreviewRootPanel(),
         batchFlameRendererFrame.getBatchRenderJobProgressBar(), batchFlameRendererFrame.getBatchRenderTotalProgressBar(),
@@ -5894,39 +5984,39 @@ public class MainEditorFrame extends JFrame {
         batchFlameRendererFrame.getBatchRenderOverrideCBx(), batchFlameRendererFrame.getBatchRenderShowImageBtn(),
         batchFlameRendererFrame.getEnableOpenClBtn(), batchFlameRendererFrame.getDisablePostDenoiserBtn());
 
-    params.setQuiltFlameRendererParams(quiltFlameRendererFrame.getOpenFlameButton(), quiltFlameRendererFrame.getImportFlameFromEditorButton(),
-        quiltFlameRendererFrame.getImportFlameFromClipboardButton(),
-        quiltFlameRendererFrame.getQualityEdit(), quiltFlameRendererFrame.getXSegmentationLevelEdit(), quiltFlameRendererFrame.getYSegmentationLevelEdit(),
-        quiltFlameRendererFrame.getResolution4KButton(), quiltFlameRendererFrame.getResolution8KButton(), quiltFlameRendererFrame.getResolution16KButton(),
-        quiltFlameRendererFrame.getResolution32KButton(), quiltFlameRendererFrame.getRenderWidthEdit(),
-        quiltFlameRendererFrame.getRenderHeightEdit(), quiltFlameRendererFrame.getSegmentWidthEdit(), quiltFlameRendererFrame.getSegmentHeightEdit(),
-        quiltFlameRendererFrame.getOutputFilenameEdit(), quiltFlameRendererFrame.getSegmentProgressBar(), quiltFlameRendererFrame.getTotalProgressBar(),
-        quiltFlameRendererFrame.getRenderButton(), quiltFlameRendererFrame.getPreviewRootPanel());
+    // params.setQuiltFlameRendererParams(quiltFlameRendererFrame.getOpenFlameButton(), quiltFlameRendererFrame.getImportFlameFromEditorButton(),
+    //    quiltFlameRendererFrame.getImportFlameFromClipboardButton(),
+    //    quiltFlameRendererFrame.getQualityEdit(), quiltFlameRendererFrame.getXSegmentationLevelEdit(), quiltFlameRendererFrame.getYSegmentationLevelEdit(),
+    //    quiltFlameRendererFrame.getResolution4KButton(), quiltFlameRendererFrame.getResolution8KButton(), quiltFlameRendererFrame.getResolution16KButton(),
+    //    quiltFlameRendererFrame.getResolution32KButton(), quiltFlameRendererFrame.getRenderWidthEdit(),
+    //    quiltFlameRendererFrame.getRenderHeightEdit(), quiltFlameRendererFrame.getSegmentWidthEdit(), quiltFlameRendererFrame.getSegmentHeightEdit(),
+    //    quiltFlameRendererFrame.getOutputFilenameEdit(), quiltFlameRendererFrame.getSegmentProgressBar(), quiltFlameRendererFrame.getTotalProgressBar(),
+    //    quiltFlameRendererFrame.getRenderButton(), quiltFlameRendererFrame.getPreviewRootPanel());
 
-    params.setMeshGenParams(meshGenFrame.getMeshGenFromEditorBtn(), meshGenFrame.getMeshGenFromClipboardBtn(), meshGenFrame.getMeshGenLoadFlameBtn(),
-        meshGenFrame.getMeshGenSliceCountREd(), meshGenFrame.getMeshGenSlicesPerRenderREd(), meshGenFrame.getMeshGenRenderWidthREd(),
-        meshGenFrame.getMeshGenRenderHeightREd(), meshGenFrame.getMeshGenRenderQualityREd(), meshGenFrame.getMeshGenProgressbar(),
-        meshGenFrame.getMeshGenGenerateBtn(), meshGenFrame.getMeshGenTopViewRootPnl(), meshGenFrame.getMeshGenFrontViewRootPnl(),
-        meshGenFrame.getMeshGenPerspectiveViewRootPnl(), meshGenFrame.getMeshGenCentreXREd(),
-        meshGenFrame.getMeshGenCentreXSlider(), meshGenFrame.getMeshGenCentreYREd(), meshGenFrame.getMeshGenCentreYSlider(),
-        meshGenFrame.getMeshGenZoomREd(), meshGenFrame.getMeshGenZoomSlider(), meshGenFrame.getMeshGenZMinREd(),
-        meshGenFrame.getMeshGenZMinSlider(), meshGenFrame.getMeshGenZMaxREd(), meshGenFrame.getMeshGenZMaxSlider(),
-        meshGenFrame.getMeshGenCellSizeREd(), meshGenFrame.getMeshGenTopViewRenderBtn(), meshGenFrame.getMeshGenFrontViewRenderBtn(),
-        meshGenFrame.getMeshGenPerspectiveViewRenderBtn(), meshGenFrame.getMeshGenTopViewToEditorBtn(), meshGenFrame.getMeshGenLoadSequenceBtn(),
-        meshGenFrame.getMeshGenSequenceWidthREd(), meshGenFrame.getMeshGenSequenceHeightREd(), meshGenFrame.getMeshGenSequenceSlicesREd(),
-        meshGenFrame.getMeshGenSequenceDownSampleREd(), meshGenFrame.getMeshGenSequenceFilterRadiusREd(), meshGenFrame.getMeshGenGenerateMeshProgressbar(),
-        meshGenFrame.getMeshGenGenerateMeshBtn(), meshGenFrame.getMeshGenSequenceFromRendererBtn(), meshGenFrame.getMeshGenSequenceThresholdREd(),
-        meshGenFrame.getMeshGenSequenceLbl(), meshGenFrame.getMeshGenPreviewRootPanel(), meshGenFrame.getMeshGenAutoPreviewCBx(),
-        meshGenFrame.getMeshGenPreviewImportLastGeneratedMeshBtn(), meshGenFrame.getMeshGenPreviewImportFromFileBtn(),
-        meshGenFrame.getMeshGenClearPreviewBtn(), meshGenFrame.getMeshGenPreviewPositionXREd(), meshGenFrame.getMeshGenPreviewPositionYREd(),
-        meshGenFrame.getMeshGenPreviewSizeREd(), meshGenFrame.getMeshGenPreviewScaleZREd(), meshGenFrame.getMeshGenPreviewRotateAlphaREd(),
-        meshGenFrame.getMeshGenPreviewRotateBetaREd(), meshGenFrame.getMeshGenPreviewPointsREd(), meshGenFrame.getMeshGenPreviewPolygonsREd(),
-        meshGenFrame.getMeshGenRefreshPreviewBtn(), meshGenFrame.getMeshGenPreviewSunflowExportBtn(), meshGenFrame.getMeshGenPreFilter1Cmb(),
-        meshGenFrame.getMeshGenPreFilter2Cmb(), meshGenFrame.getMeshGenImageStepREd(), meshGenFrame.getMeshGenOutputTypeCmb(),
-        meshGenFrame.getMeshGenTaubinSmoothCbx(), meshGenFrame.getMeshGenSmoothPassesREd(), meshGenFrame.getMeshGenSmoothLambdaREd(),
-        meshGenFrame.getMeshGenSmoothMuREd());
+    // params.setMeshGenParams(meshGenFrame.getMeshGenFromEditorBtn(), meshGenFrame.getMeshGenFromClipboardBtn(), meshGenFrame.getMeshGenLoadFlameBtn(),
+    // params.setMeshGenParams(meshGenFrame.getMeshGenMeshWidthREd(), meshGenFrame.getMeshGenMeshHeightREd(), meshGenFrame.getMeshGenMeshDepthREd(),
+    //    meshGenFrame.getMeshGenQualityREd(), meshGenFrame.getMeshGenFilenameEdit(), meshGenFrame.getMeshGenFilenameBrowseBtn(),
+    //    meshGenFrame.getMeshGenGenerateBtn(), meshGenFrame.getMeshGenTopViewRootPnl(), meshGenFrame.getMeshGenFrontViewRootPnl(),
+    //    meshGenFrame.getMeshGenPerspectiveViewRootPnl(), meshGenFrame.getMeshGenCentreXREd(),
+    //    meshGenFrame.getMeshGenCentreXSlider(), meshGenFrame.getMeshGenCentreYREd(), meshGenFrame.getMeshGenCentreYSlider(),
+    //    meshGenFrame.getMeshGenZoomREd(), meshGenFrame.getMeshGenZoomSlider(), meshGenFrame.getMeshGenZMinREd(),
+    //    meshGenFrame.getMeshGenZMinSlider(), meshGenFrame.getMeshGenZMaxREd(), meshGenFrame.getMeshGenZMaxSlider(),
+    //    meshGenFrame.getMeshGenCellSizeREd(), meshGenFrame.getMeshGenTopViewRenderBtn(), meshGenFrame.getMeshGenFrontViewRenderBtn(),
+    //    meshGenFrame.getMeshGenPerspectiveViewRenderBtn(), meshGenFrame.getMeshGenTopViewToEditorBtn(), meshGenFrame.getMeshGenLoadSequenceBtn(),
+    //    meshGenFrame.getMeshGenSequenceWidthREd(), meshGenFrame.getMeshGenSequenceHeightREd(), meshGenFrame.getMeshGenSequenceSlicesREd(),
+    //    meshGenFrame.getMeshGenSequenceDownSampleREd(), meshGenFrame.getMeshGenSequenceFilterRadiusREd(), meshGenFrame.getMeshGenGenerateMeshProgressbar(),
+    //    meshGenFrame.getMeshGenGenerateMeshBtn(), meshGenFrame.getMeshGenSequenceFromRendererBtn(), meshGenFrame.getMeshGenSequenceThresholdREd(),
+    //    meshGenFrame.getMeshGenSequenceLbl(), meshGenFrame.getMeshGenPreviewRootPanel(), meshGenFrame.getMeshGenAutoPreviewCBx(),
+    //    meshGenFrame.getMeshGenPreviewImportLastGeneratedMeshBtn(), meshGenFrame.getMeshGenPreviewImportFromFileBtn(),
+    //    meshGenFrame.getMeshGenClearPreviewBtn(), meshGenFrame.getMeshGenPreviewPositionXREd(), meshGenFrame.getMeshGenPreviewPositionYREd(),
+    //    meshGenFrame.getMeshGenPreviewSizeREd(), meshGenFrame.getMeshGenPreviewScaleZREd(), meshGenFrame.getMeshGenPreviewRotateAlphaREd(),
+    //    meshGenFrame.getMeshGenPreviewRotateBetaREd(), meshGenFrame.getMeshGenPreviewPointsREd(), meshGenFrame.getMeshGenPreviewPolygonsREd(),
+    //    meshGenFrame.getMeshGenRefreshPreviewBtn(), meshGenFrame.getMeshGenPreviewSunflowExportBtn(), meshGenFrame.getMeshGenPreFilter1Cmb(),
+    //    meshGenFrame.getMeshGenPreFilter2Cmb(), meshGenFrame.getMeshGenImageStepREd(), meshGenFrame.getMeshGenOutputTypeCmb(),
+    //    meshGenFrame.getMeshGenTaubinSmoothCbx(), meshGenFrame.getMeshGenSmoothPassesREd(), meshGenFrame.getMeshGenSmoothLambdaREd(),
+    //    meshGenFrame.getMeshGenSmoothMuREd());
 
-    params.setHelpParams(helpFrame.getMeshGenHintPane(), helpFrame.getHelpPane(), helpFrame.getApophysisHintsPane(), helpFrame.getColorTypesPane());
+    // params.setHelpParams(helpFrame.getMeshGenHintPane(), helpFrame.getHelpPane(), helpFrame.getApophysisHintsPane(), helpFrame.getColorTypesPane());
 
     params.setGradientCurveEditorParams(getGradientCurveEditorSaveBtn(), getGradientCurveEditorHueRootPanel(),
         getGradientCurveEditorSaturationRootPanel(), getGradientCurveEditorLuminosityRootPanel());
@@ -6174,33 +6264,33 @@ public class MainEditorFrame extends JFrame {
       getChannelMixerModeCmb().addItem(ChannelMixerMode.FULL);
 
       initTriangleStyleCmb(getTriangleStyleCmb(), pPrefs);
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript1Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript2Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript3Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript4Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript5Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript6Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript7Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript8Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript9Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript10Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript11Cmb());
-      initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript12Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript1Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript2Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript3Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript4Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript5Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript6Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript7Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript8Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript9Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript10Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript11Cmb());
+      // initGlobalScriptCmb(easyMovieMakerFrame.getSwfAnimatorGlobalScript12Cmb());
 
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript1Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript2Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript3Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript4Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript5Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript6Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript7Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript8Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript9Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript10Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript11Cmb());
-      initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript12Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript1Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript2Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript3Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript4Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript5Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript6Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript7Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript8Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript9Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript10Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript11Cmb());
+      // initXFormScriptCmb(easyMovieMakerFrame.getSwfAnimatorXFormScript12Cmb());
 
-      initSequenceOutputType(easyMovieMakerFrame.getSwfAnimatorOutputTypeCmb());
+      // initSequenceOutputType(easyMovieMakerFrame.getSwfAnimatorOutputTypeCmb());
 
       tinaController.setInteractiveRendererCtrl(new TinaInteractiveRendererController(tinaController, pErrorHandler, pPrefs,
           interactiveRendererFrame.getInteractiveLoadFlameButton(), interactiveRendererFrame.getInteractiveLoadFlameFromClipboardButton(),
@@ -6228,50 +6318,9 @@ public class MainEditorFrame extends JFrame {
           gpuRendererFrame.getFlameParamsTextArea(), gpuRendererFrame.getAutoSyncCheckbox(), gpuRendererFrame.getAutoRenderCBx()));
       tinaController.getGpuRendererCtrl().enableControls();
 
-      JComboBox[] globalScriptCmbArray = {
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript1Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript2Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript3Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript4Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript5Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript6Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript7Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript8Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript9Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript10Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript11Cmb(), easyMovieMakerFrame.getSwfAnimatorGlobalScript12Cmb() };
-      JWFNumberField[] globalScriptREdArray = {
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript1REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript2REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript3REd(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript4REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript5REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript6REd(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript7REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript8REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript9REd(),
-          easyMovieMakerFrame.getSwfAnimatorGlobalScript10REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript11REd(), easyMovieMakerFrame.getSwfAnimatorGlobalScript12REd() };
-      JComboBox[] xFormScriptCmbArray = {
-          easyMovieMakerFrame.getSwfAnimatorXFormScript1Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript2Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript3Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript4Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript5Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript6Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript7Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript8Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript9Cmb(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript10Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript11Cmb(), easyMovieMakerFrame.getSwfAnimatorXFormScript12Cmb() };
-      JWFNumberField[] xFormScriptREdArray = {
-          easyMovieMakerFrame.getSwfAnimatorXFormScript1REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript2REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript3REd(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript4REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript5REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript6REd(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript7REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript8REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript9REd(),
-          easyMovieMakerFrame.getSwfAnimatorXFormScript10REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript11REd(), easyMovieMakerFrame.getSwfAnimatorXFormScript12REd() };
-
-      tinaController.setSwfAnimatorCtrl(new TinaSWFAnimatorController(tinaController, pErrorHandler, pPrefs,
-          globalScriptCmbArray, globalScriptREdArray,
-          xFormScriptCmbArray, xFormScriptREdArray,
-          easyMovieMakerFrame.getSwfAnimatorFramesREd(), easyMovieMakerFrame.getSwfAnimatorFramesPerSecondREd(),
-          easyMovieMakerFrame.getSwfAnimatorGenerateButton(), easyMovieMakerFrame.getSwfAnimatorResolutionProfileCmb(),
-          easyMovieMakerFrame.getSwfAnimatorLoadFlameFromMainButton(),
-          easyMovieMakerFrame.getSwfAnimatorLoadFlameFromClipboardButton(), easyMovieMakerFrame.getSwfAnimatorLoadFlameButton(),
-          easyMovieMakerFrame.getSwfAnimatorProgressBar(), easyMovieMakerFrame.getSwfAnimatorCancelButton(),
-          new SWFAnimatorProgressUpdater(easyMovieMakerFrame), easyMovieMakerFrame.getSwfAnimatorPreviewRootPanel(),
-          easyMovieMakerFrame.getSwfAnimatorFrameSlider(), easyMovieMakerFrame.getSwfAnimatorFrameREd(),
-          easyMovieMakerFrame.getSwfAnimatorFlamesPanel(), easyMovieMakerFrame.getSwfAnimatorFlamesButtonGroup(),
-          easyMovieMakerFrame.getSwfAnimatorMoveUpButton(), easyMovieMakerFrame.getSwfAnimatorMoveDownButton(),
-          easyMovieMakerFrame.getSwfAnimatorRemoveFlameButton(),
-          easyMovieMakerFrame.getSwfAnimatorRemoveAllFlamesButton(), easyMovieMakerFrame.getSwfAnimatorMovieFromClipboardButton(),
-          easyMovieMakerFrame.getSwfAnimatorMovieFromDiscButton(),
-          easyMovieMakerFrame.getSwfAnimatorMovieToClipboardButton(), easyMovieMakerFrame.getSwfAnimatorMovieToDiscButton(),
-          easyMovieMakerFrame.getSwfAnimatorFrameToEditorBtn(),
-          easyMovieMakerFrame.getSwfAnimatorPlayButton(), easyMovieMakerFrame.getSwfAnimatorMotionBlurLengthREd(),
-          easyMovieMakerFrame.getSwfAnimatorMotionBlurTimeStepREd(), easyMovieMakerFrame.getRandomMoviePanel(),
-          easyMovieMakerFrame.getSwfAnimatorQualityProfileCmb(), easyMovieMakerFrame.getSwfAnimatorOutputTypeCmb(),
-          easyMovieMakerFrame.getSwfAnimatorCompatCBx()));
-      tinaController.getSwfAnimatorCtrl().enableControls();
-      tinaController.getSwfAnimatorCtrl().refreshControls();
+      // EasyMovieMakerFrame has been modernized to JavaFX and no longer exposes Swing components.
+      // The logic previously handled by TinaSWFAnimatorController is now in EasyMovieMakerController.
+      // tinaController.setSwfAnimatorCtrl(null); // Or instantiate a dummy if needed
       getToggleTriangleWithColorsButton().setSelected(pPrefs.isTinaEditorControlsWithColor());
       getRealtimePreviewToggleButton().setSelected(pPrefs.isTinaEditorProgressivePreview());
 

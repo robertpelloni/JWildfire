@@ -50,7 +50,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class TinaInteractiveRendererController implements IterationObserver {
+public class TinaInteractiveRendererController implements IterationObserver, ITinaInteractiveRendererController {
   private enum State {
     IDLE, RENDER
   }

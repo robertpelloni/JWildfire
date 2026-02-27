@@ -18,7 +18,7 @@ public class GLFWVisualizerRunner implements Runnable {
 
     @Override
     public void run() {
-        GLFWErrorCallback.createPrint(System.err).set();
+        // org.lwjgl.glfw.GLFWErrorCallback.createPrint(System.err).set();
 
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");

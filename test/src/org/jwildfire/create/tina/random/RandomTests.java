@@ -74,8 +74,7 @@ public class RandomTests
 			for (int i=0;i<20;i++)
 				Assert.assertTrue(gr.getClass().getSimpleName(),gr.random(100)<100);
 			gr.randomize(16L);
-			if(!(gr instanceof MarsagliaOpenCLRandomGenerator))
-				gr.cleanup();
+			gr.cleanup();
 		}
 	}
 	@Test

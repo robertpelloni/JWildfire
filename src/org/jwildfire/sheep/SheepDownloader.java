@@ -1,10 +1,8 @@
 package org.jwildfire.sheep;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -21,19 +19,21 @@ public class SheepDownloader {
         this.server = new SheepServer();
     }
 
+    public void setConfig(String nickname, String serverUrl) {
+        server.setConfig(nickname, serverUrl);
+    }
+
+    public String getNickname() { return server.getNickname(); }
+    public String getServerUrl() { return server.getRedirectUrl(); }
+
     public void downloadSheep(String sheepId, String destinationPath) throws IOException {
-        // Mock implementation for now
         if (sheepId.startsWith("Mock")) {
-            System.out.println("Simulating download for " + sheepId);
+            // Mock download
             try { Thread.sleep(500); } catch (InterruptedException e) {}
-            
-            // Copy sample file
             File sampleFile = new File("resources/sheep/sample.flame");
             if (sampleFile.exists()) {
                 Files.copy(sampleFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
             } else {
-                // Fallback if resource not found (e.g. running from jar)
-                // Create a dummy file
                 try (FileOutputStream out = new FileOutputStream(destinationPath)) {
                     String dummyXml = "<flame name='Dummy'></flame>";
                     out.write(dummyXml.getBytes());
@@ -42,7 +42,7 @@ public class SheepDownloader {
             return;
         }
 
-        if (sheepId.equals("RENDER_JOB")) {
+        if (sheepId.trim().equals("RENDER_JOB")) {
             try {
                 String xml = server.fetchRenderingJob();
                 try (FileOutputStream out = new FileOutputStream(destinationPath)) {
@@ -54,18 +54,13 @@ public class SheepDownloader {
             }
         }
 
-        // TODO: Implement real genome download by ID.
-        // Currently, the API for fetching a specific genome by ID is not fully clear.
-        // We might need to use the render server's /cgi/get endpoint or similar.
-        System.err.println("Real genome download not yet implemented for ID: " + sheepId);
+        throw new IOException("Downloading specific sheep by ID '" + sheepId + "' is not supported yet. Please use RENDER_JOB.");
     }
     
     public List<String> listAvailableSheep() {
         try {
             Map<String, String> flock = server.getFlockList();
             List<String> list = new ArrayList<>();
-            
-            // Add special item for fetching a job
             list.add("RENDER_JOB (Fetch new work)");
             
             for (Map.Entry<String, String> entry : flock.entrySet()) {
@@ -73,15 +68,11 @@ public class SheepDownloader {
             }
             return list;
         } catch (Exception e) {
-            System.err.println("Failed to fetch flock list: " + e.getMessage());
-            e.printStackTrace();
-            
-            // Fallback to mock
+            // Fallback to mock if server fails
             List<String> list = new ArrayList<>();
+            list.add("Error: " + e.getMessage());
             list.add("Mock Sheep 1 (Gold)");
             list.add("Mock Sheep 2 (Blue)");
-            list.add("Mock Sheep 3 (Fractal)");
-            list.add("Error fetching real list: " + e.getMessage());
             return list;
         }
     }
