@@ -52,6 +52,15 @@ Analysis of the `vocrev.htm` history reveals a heavy shift towards:
 - **Tool Consolidation**: Adding "favorties" menus, mode searching, and high-DPI/Windows 11 theme support.
 - **3D Export**: Widespread support for exporting 3D CA, fractals, and attractors to OBJ/MTL for external rendering in C4D, Blender, or via Mitsuba/RenderMan.
 
+## Local Reference Installation
+A full local installation of Visions of Chaos is located in the root `VoC/` directory of this workspace. This directory contains:
+- `Chaos.exe`: The primary orchestrator.
+- `ffmpeg.exe`, `yt-dlp.exe`, `convert.exe`: Native media processing utilities.
+- `MachineLearning/`: Local Python virtual environments and model weights.
+- `Chaos.ini`: Current session configuration (useful for mapping JWildfire UI parameters to VoC equivalents).
+
+This local installation serves as the **Gold Standard** for benchmarking our Java-based CA/ABM implementations and testing the RPC/CLI bridge for Phase C.
+
 ## Strategic Integration Path for JWildfire
 As specified in our integration mandate, the focus is on porting the **ML, CA, and ABM libraries** into JWildfire.
 
