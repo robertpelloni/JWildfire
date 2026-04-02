@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.10] - 2026-04-02
+
+### Added
+- **Visions of Chaos (VoC) Integration Architecture**:
+    - Conducted an exhaustive analysis of VoC's mathematical and AI/ML capabilities, documented in `VOC_ANALYSIS.md`.
+    - **CA & ABM Expansion**: Designed the implementation path for porting VoC's 1D-5D Cellular Automata, Boids flocking, and Physarum simulations into `org.jwildfire.ca`.
+    - **Fluid Dynamics**: Mapped the D2Q9 Lattice Boltzmann Method (LBM) and Smoothed-Particle Hydrodynamics (SPH) solvers for integration into `org.jwildfire.ca.fluid`.
+    - **ML Orchestration**: Designed a "Hybrid Native Orchestration" strategy using ONNX Runtime and Python RPC bridges to leverage VoC's massive library of local AI models (Stable Diffusion, MusicGen, etc.).
+    - **3D Visualization Hub**: Integrated Phase 4 into the `INTEGRATION_PLAN.md` to enable high-quality OBJ/MTL export for all JWildfire generative outputs, matching VoC's professional workflow.
+
 ## [9.09] - 2026-04-01
 
 ### Added
