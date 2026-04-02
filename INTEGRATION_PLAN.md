@@ -1,7 +1,7 @@
 # Omni-Workspace Integration Plan: JWildfire as the Universal Visualizer Hub
 
 ## Objective
-To achieve 100% feature and function parity by integrating all standalone visualizers (`apophysis-j`, `BeatDrop`, `electricsheep`, `geiss`, `MilkDrop3`, `projectm`) into the `JWildfire` platform, transforming it into the ultimate "Bobsaver" suite.
+To achieve 100% feature and function parity by integrating all standalone visualizers (`apophysis-j`, `BeatDrop`, `electricsheep`, `geiss`, `MilkDrop3`, `projectm`, and the full suite of **Visions of Chaos**) into the `JWildfire` platform, transforming it into the ultimate "Bobsaver" suite.
 
 ## Strategic Approach: Hybrid Native Orchestration
 Rewriting decades of optimized C++ graphics code (e.g., MilkDrop, Geiss) into pure Java is mathematically and computationally unfeasible without severe performance loss. Instead, JWildfire will serve as a **Universal Orchestrator**, utilizing Java 21's **Foreign Function & Memory (FFM) API (Project Panama)** to securely and performantly bind to the native engines.
@@ -15,7 +15,13 @@ We will compile the C/C++ visualizers as dynamic shared libraries (`.dll`, `.so`
 ### Phase 2: Algorithm & Logic Merging (Java Projects)
 *   **apophysis-j**: Since Apophysis-J is also Java-based, we will perform a direct source-level integration. We will map Apophysis's unique fractal formulas, variations, and mutation logic directly into JWildfire's `org.jwildfire.transform` and `org.jwildfire.base` packages, ensuring no mathematical capability is lost.
 
-### Phase 3: The Unified "Omni-Viz" Architecture
+### Phase 3: Visions of Chaos Integration
+Based on our comprehensive analysis of Softology's **Visions of Chaos** (detailed in `VOC_ANALYSIS.md`), JWildfire will systematically assimilate its massive catalog of chaos theory, math, and ML tools. Focus areas:
+*   **Cellular Automata (CA) & Agent-Based Modeling (ABM)**: Porting 1D-5D CA, Flocking (Boids), Physarum, Particle Life, and Reaction-Diffusion algorithms into `org.jwildfire.ca`.
+*   **Fluid Dynamics & Physics**: Migrating LBM, SPH, and Strange Attractors.
+*   **Machine Learning (ML)**: Establishing an ONNX Runtime or local Python RPC bridge to execute local AI models (Stable Diffusion, MusicGen, Audio separation, etc.) seamlessly from within JWildfire's UI.
+
+### Phase 4: The Unified "Omni-Viz" Architecture
 1.  **Unified Audio Pipeline**: JWildfire will implement a centralized audio loopback capture service. This service will compute FFT and PCM streams once and distribute the data to all active visualizer plugins (Java or Native) simultaneously.
 2.  **Shared Render Context**: Use LWJGL (Lightweight Java Game Library) to create a master OpenGL/Vulkan context within JWildfire's JavaFX UI. The native libraries will be handed this context (or shared textures) to render directly onto JWildfire's canvases.
 3.  **100% UI Parity**: JWildfire's JavaFX dashboard will dynamically generate control panels for each visualizer based on a standardized parameter schema. Every shader parameter, configuration tweak, and preset list from the original projects will be exposed.
@@ -25,5 +31,6 @@ Given the massive scope, the immediate next steps involve scaffolding the core a
 1.  **Finalize the FFM Pipeline**: Solidify `ProjectMBinding` to ensure we can successfully initialize a native visualizer and send audio data.
 2.  **Audio Capture Engine**: Build the unified audio capture service in JWildfire.
 3.  **Apophysis-J Analysis**: Map the specific formulas in `apophysis-j/src` that are missing from JWildfire.
+4.  **Visions of Chaos Assimilation**: Implement new classes in `org.jwildfire.ca` for CA, ABM, and fluid modules.
 
-**Status**: Ready for approval to proceed with Phase 1 and Phase 2 foundations.
+**Status**: Ready for approval to proceed with Phase 1, Phase 2, and Phase 3 foundations.
