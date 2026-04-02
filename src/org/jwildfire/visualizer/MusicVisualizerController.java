@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MusicVisualizerController implements Initializable {
+public class MusicVisualizerController implements Initializable, AudioListener {
     @FXML private Button startStopBtn;
     @FXML private ComboBox<Mixer.Info> deviceCombo;
     @FXML private Slider sensitivitySlider;
@@ -33,8 +33,19 @@ public class MusicVisualizerController implements Initializable {
     private final AudioCapture audioCapture;
     private AnimationTimer visualizerLoop;
 
+    private volatile float[] latestPcm;
+    private volatile float[] latestSpectrum;
+
     public MusicVisualizerController() {
         this.audioCapture = new AudioCapture();
+        this.audioCapture.addListener(this);
+    }
+
+    @Override
+    public void onAudioData(float[] pcmData, float[] spectrumData) {
+        // We make defensive copies to avoid race conditions during UI rendering
+        this.latestPcm = pcmData.clone();
+        this.latestSpectrum = spectrumData.clone();
     }
 
     @Override
@@ -129,7 +140,7 @@ public class MusicVisualizerController implements Initializable {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width, height);
 
-        float[] spectrum = audioCapture.getSpectrumData();
+        float[] spectrum = latestSpectrum;
         if (spectrum == null) return;
 
         int bands = spectrum.length; // usually 512
@@ -152,7 +163,7 @@ public class MusicVisualizerController implements Initializable {
         }
 
         // Draw waveform overlay (optional)
-        float[] pcm = audioCapture.getPcmData();
+        float[] pcm = latestPcm;
         if (pcm != null) {
             gc.setStroke(Color.WHITE);
             gc.setLineWidth(1.0);
