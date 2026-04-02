@@ -22,9 +22,9 @@ public class ProjectMVisualizer implements Visualizer {
 
     @Override
     public void updateAudio(float[] pcmData, float[] spectrum) {
-        if (!initialized) return;
-        // TODO: Implement audio data passing in ProjectMBinding
-        // ProjectMBinding.addPCM(instance, pcmData);
+        if (!initialized || instance == null) return;
+        // Assuming mono audio for now. Channels = 1
+        ProjectMBinding.addPCM(instance, pcmData, 1);
     }
 
     @Override
@@ -32,16 +32,16 @@ public class ProjectMVisualizer implements Visualizer {
         if (!initialized) return;
         
         if (instance == null) {
-             // instance = ProjectMBinding.create(width, height);
+             instance = ProjectMBinding.create(width, height);
         }
         
-        // ProjectMBinding.renderFrame(instance);
+        ProjectMBinding.renderFrame(instance);
     }
 
     @Override
     public void dispose() {
         if (instance != null) {
-            // ProjectMBinding.destroy(instance);
+            ProjectMBinding.destroy(instance);
             instance = null;
         }
     }

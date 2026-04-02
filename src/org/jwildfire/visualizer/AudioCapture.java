@@ -21,6 +21,16 @@ public class AudioCapture {
     private float sensitivity = 1.0f;
     private float gain = 1.0f; // Not used directly on line gain, but post-processing scaling
 
+    private final List<AudioListener> listeners = new java.util.concurrent.CopyOnWriteArrayList<>();
+
+    public void addListener(AudioListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(AudioListener listener) {
+        listeners.remove(listener);
+    }
+
     public List<Mixer.Info> getCaptureDevices() {
         List<Mixer.Info> devices = new ArrayList<>();
         Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
@@ -96,6 +106,11 @@ public class AudioCapture {
                         float re = fftData[2 * k];
                         float im = fftData[2 * k + 1];
                         spectrumData[k] = (float) Math.sqrt(re * re + im * im) * sensitivity; // Apply sensitivity to spectrum too
+                    }
+                    
+                    // Notify listeners
+                    for (AudioListener listener : listeners) {
+                        listener.onAudioData(pcmData, spectrumData);
                     }
                 }
             }

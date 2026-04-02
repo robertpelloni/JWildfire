@@ -20,6 +20,7 @@ public class ProjectMBinding {
     private static MethodHandle projectM_create;
     private static MethodHandle projectM_render_frame;
     private static MethodHandle projectM_destroy;
+    private static MethodHandle projectM_pcm_add_float;
 
     public static void init(String libraryPath) {
         System.load(libraryPath); // Load the DLL/SO
@@ -43,6 +44,12 @@ public class ProjectMBinding {
             projectMLib.find("projectM_destroy").orElseThrow(),
             FunctionDescriptor.ofVoid(ValueLayout.ADDRESS)
         );
+
+        // void projectm_pcm_add_float(projectm_handle instance, const float* samples, unsigned int count, projectm_channels channels)
+        projectM_pcm_add_float = linker.downcallHandle(
+            projectMLib.find("projectm_pcm_add_float").orElseThrow(),
+            FunctionDescriptor.ofVoid(ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
+        );
     }
 
     public static MemorySegment create(int width, int height) {
@@ -61,6 +68,15 @@ public class ProjectMBinding {
         }
     }
     
+    public static void addPCM(MemorySegment instance, float[] pcmData, int channels) {
+        try (Arena arena = Arena.ofConfined()) {
+            MemorySegment pcmSegment = arena.allocateArray(ValueLayout.JAVA_FLOAT, pcmData);
+            projectM_pcm_add_float.invokeExact(instance, pcmSegment, pcmData.length / channels, channels);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void destroy(MemorySegment instance) {
         try {
             projectM_destroy.invokeExact(instance);

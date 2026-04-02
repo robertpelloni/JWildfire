@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.09] - 2026-04-01
+
+### Added
+- **Omni-Workspace Architecture**:
+    - Created `INTEGRATION_PLAN.md` mapping out the comprehensive integration of apophysis-j, BeatDrop, electricsheep, geiss, MilkDrop3, projectm, and Visions of Chaos into JWildfire.
+    - **Unified Audio Pipeline**:
+        - Added `AudioListener.java` interface for universal audio data distribution.
+        - Refactored `AudioCapture.java` into a Pub/Sub event emitter, broadcasting real-time `pcmData` and `spectrumData` to all subscribed modules.
+    - **FFM Native Bindings**:
+        - Extended `ProjectMBinding.java` with Java 21 FFM API to marshal Java `float[]` arrays to native C `projectm_pcm_add_float`.
+        - Wired `ProjectMVisualizer.java` to push real-time audio data into the native renderer context.
+
 ## [9.08] - 2026-02-09
 
 ### Added
