@@ -383,14 +383,33 @@ public class BatchRendererController implements JobRenderThreadController {
     if (batchRenderList.size() > 0) data.renderBatchJobsTable.setRowSelectionInterval(0, 0);
   }
 
-  @Override
   public JProgressBar getTotalProgressBar() {
     return data.batchRenderTotalProgressBar;
   }
 
+  private final ProgressUpdater totalProgressUpdater = new ProgressUpdater() {
+    @Override
+    public void initProgress(int pMaxSteps) {
+      JProgressBar bar = getTotalProgressBar();
+      if (bar != null) {
+        bar.setMinimum(0);
+        bar.setMaximum(pMaxSteps);
+        bar.setValue(0);
+      }
+    }
+
+    @Override
+    public void updateProgress(int pStep) {
+      JProgressBar bar = getTotalProgressBar();
+      if (bar != null) {
+        bar.setValue(pStep);
+      }
+    }
+  };
+
   @Override
-  public JProgressBar getJobProgressBar() {
-    return data.batchRenderJobProgressBar;
+  public ProgressUpdater getTotalProgressUpdater() {
+    return totalProgressUpdater;
   }
 
   @Override

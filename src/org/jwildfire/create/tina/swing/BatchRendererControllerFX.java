@@ -86,6 +86,7 @@ public class BatchRendererControllerFX implements Initializable, JobRenderThread
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         prefs = Prefs.getPrefs();
+        totalProgressUpdater = new FXProgressUpdater(totalProgressBar);
 
         // Init table
         jobsTable.setItems(jobList);
@@ -322,33 +323,8 @@ public class BatchRendererControllerFX implements Initializable, JobRenderThread
     }
 
     @Override
-    public javax.swing.JProgressBar getTotalProgressBar() {
-        // Legacy code expects a Swing ProgressBar. We can't provide one.
-        // We must ensure JobRenderThread doesn't crash.
-        // Option 1: Return null and hope it checks.
-        // Option 2: Return a dummy off-screen Swing ProgressBar.
-        return new javax.swing.JProgressBar() {
-            @Override
-            public void setValue(int n) {
-                super.setValue(n); // maintain internal state
-                Platform.runLater(() -> totalProgressBar.setProgress(getMaximum() > 0 ? (double) n / getMaximum() : 0));
-            }
-            @Override
-            public void setMaximum(int n) {
-                super.setMaximum(n);
-            }
-        };
-    }
-
-    @Override
-    public javax.swing.JProgressBar getJobProgressBar() {
-        return new javax.swing.JProgressBar() {
-            @Override
-            public void setValue(int n) {
-                super.setValue(n);
-                Platform.runLater(() -> jobProgressBar.setProgress(getMaximum() > 0 ? (double) n / getMaximum() : 0));
-            }
-        };
+    public ProgressUpdater getTotalProgressUpdater() {
+        return totalProgressUpdater;
     }
 
     @Override

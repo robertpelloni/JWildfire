@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [9.11] - 2026-05-19
+
+### Deep Planning Modernization
+- **Batch Renderer Refactoring**: Refactored `JobRenderThread` and related batch rendering controllers to remove heavy Swing UI dependencies (`JProgressBar`) from the backend logic, fully decoupling it and resolving compatibility issues with JavaFX implementations.
+
 ## [9.10] - 2026-04-02
 
 ### Added

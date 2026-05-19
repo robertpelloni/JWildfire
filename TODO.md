@@ -1,10 +1,10 @@
 # JWildfire TODO
 
 ## Immediate Tasks
-- [ ] **Fix Missing Imports in `QuiltFlameRendererController`**: The `FlamePreparer` import is failing. Verify if the class was moved or renamed.
-- [ ] **Verify `VariationProfilesFrame` Implementation**: Ensure that the getter methods (e.g., `getNewProfileBtn`) return valid objects or dummy objects that don't cause runtime null pointers if called by legacy code.
+- [x] **Fix Missing Imports in `QuiltFlameRendererController`**: The `FlamePreparer` import is failing. Verify if the class was moved or renamed.
+- [x] **Verify `VariationProfilesFrame` Implementation**: Ensure that the getter methods (e.g., `getNewProfileBtn`) return valid objects or dummy objects that don't cause runtime null pointers if called by legacy code.
 - [ ] **Implement `TinaInteractiveRendererControllerFX`**: Currently, it contains stub methods. The logic from the Swing controller needs to be ported or adapted to JavaFX.
-- [ ] **Resolve `BatchRendererControllerFX` Progress Bar Issue**: The legacy `JobRenderThread` expects a `JProgressBar`. The current implementation returns a dummy or null. This needs a cleaner abstraction.
+- [x] **Resolve `BatchRendererControllerFX` Progress Bar Issue**: The legacy `JobRenderThread` expects a `JProgressBar`. The current implementation returns a dummy or null. This needs a cleaner abstraction.
 
 ## Short Term - Documentation & Cleanup
 - [ ] **Update User Manual**: Add a new chapter on the modernized JavaFX interface components.

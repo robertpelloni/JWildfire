@@ -23,9 +23,7 @@ import org.jwildfire.create.tina.render.ProgressUpdater;
 
 public interface JobRenderThreadController {
 
-  public JProgressBar getTotalProgressBar();
-
-  public JProgressBar getJobProgressBar();
+  public ProgressUpdater getTotalProgressUpdater();
 
   public ProgressUpdater getJobProgressUpdater();
 

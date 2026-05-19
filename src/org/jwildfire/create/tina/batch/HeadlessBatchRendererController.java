@@ -50,9 +50,16 @@ public class HeadlessBatchRendererController implements JobRenderThreadControlle
     System.out.println("Done");
   }
 
+  private final ProgressUpdater totalProgressUpdater = new ProgressUpdater() {
+    @Override
+    public void initProgress(int pMaxSteps) {}
+    @Override
+    public void updateProgress(int pStep) {}
+  };
+
   @Override
-  public JProgressBar getTotalProgressBar() {
-    return pro;
+  public ProgressUpdater getTotalProgressUpdater() {
+    return totalProgressUpdater;
   }
 
   @Override
@@ -72,11 +79,6 @@ public class HeadlessBatchRendererController implements JobRenderThreadControlle
       public void initProgress(int pMaxSteps) {
       }
     };
-  }
-
-  @Override
-  public JProgressBar getJobProgressBar() {
-    return pro;
   }
 
   public static void main(String args[]) throws Exception

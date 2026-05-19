@@ -112,7 +112,6 @@ public class QuiltFlameRendererFrame extends JFrame {
   public JWFNumberField getSegmentHeightEdit() { return null; }
   public JTextField getOutputFilenameEdit() { return null; }
   public JProgressBar getSegmentProgressBar() { return null; }
-  public JProgressBar getTotalProgressBar() { return null; }
   public JButton getRenderButton() { return null; }
   public javax.swing.JPanel getPreviewRootPanel() { return null; }
   public JButton getResolution4KButton() { return null; }

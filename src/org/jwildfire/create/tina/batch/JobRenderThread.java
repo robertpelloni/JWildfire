@@ -60,6 +60,7 @@ public class JobRenderThread implements Runnable {
   private FlameRenderer renderer;
   private final boolean useGPU;
   private final boolean disablePostDenoiser;
+  private int totalJobsCompleted = 0;
 
   public JobRenderThread(TinaController pParentCtrl, JobRenderThreadController pController, List<Job> pActiveJobList, ResolutionProfile pResolutionProfile, QualityProfile pQualityProfile, boolean pDoOverwriteExisting, boolean pUseGPU, boolean pDisablePostDenoiser) {
     parentCtrl = pParentCtrl;
@@ -76,11 +77,10 @@ public class JobRenderThread implements Runnable {
   public void run() {
     try {
       try {
+        totalJobsCompleted = 0;
         cancelSignalled = false;
-        if (controller.getTotalProgressBar() != null) {
-          controller.getTotalProgressBar().setMinimum(0);
-          controller.getTotalProgressBar().setValue(0);
-          controller.getTotalProgressBar().setMaximum(activeJobList.size());
+        if (controller.getTotalProgressUpdater() != null) {
+          controller.getTotalProgressUpdater().initProgress(activeJobList.size());
         }
 
         for (Job job : activeJobList) {
@@ -142,11 +142,11 @@ public class JobRenderThread implements Runnable {
           }
         }
         try {
-          if (controller.getTotalProgressBar() != null) {
-            controller.getTotalProgressBar().setValue(controller.getTotalProgressBar().getMaximum());
+          if (controller.getTotalProgressUpdater() != null) {
+            controller.getTotalProgressUpdater().updateProgress(activeJobList.size());
           }
-          if (controller.getJobProgressBar() != null) {
-            controller.getJobProgressBar().setValue(0);
+          if (controller.getJobProgressUpdater() != null) {
+            controller.getJobProgressUpdater().updateProgress(0);
           }
         } catch (Throwable ex) {
           // ex.printStackTrace();
@@ -278,15 +278,10 @@ public class JobRenderThread implements Runnable {
         //                  }
       }
       {
-        if (controller.getTotalProgressBar() != null) {
-          controller.getTotalProgressBar().setValue(controller.getTotalProgressBar().getValue() + 1);
-          controller.getTotalProgressBar().invalidate();
-          controller.getTotalProgressBar().validate();
+        if (controller.getTotalProgressUpdater() != null) {
+          totalJobsCompleted++;
+          controller.getTotalProgressUpdater().updateProgress(totalJobsCompleted);
         }
-        //                  Graphics g = controller.getTotalProgressBar().getGraphics();
-        //                  if (g != null) {
-        //                    controller.getTotalProgressBar().paint(g);
-        //                  }
       }
     } catch (Throwable ex) {
       // ex.printStackTrace();
