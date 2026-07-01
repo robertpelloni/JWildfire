@@ -7045,8 +7045,32 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
     this.transformationsNonlinearController = transformationsNonlinearController;
   }
 
+  private TransformationsXaosControllerFX transformationsXaosController;
+
+  public void setTransformationsXaosController(TransformationsXaosControllerFX transformationsXaosController) {
+    this.transformationsXaosController = transformationsXaosController;
+  }
+
+  private TransformationsGammaControllerFX transformationsGammaController;
+
+  public void setTransformationsGammaController(TransformationsGammaControllerFX transformationsGammaController) {
+    this.transformationsGammaController = transformationsGammaController;
+  }
+
+  private TransformationsWFieldControllerFX transformationsWFieldController;
+
+  public void setTransformationsWFieldController(TransformationsWFieldControllerFX transformationsWFieldController) {
+    this.transformationsWFieldController = transformationsWFieldController;
+  }
+
   public void setTransformationsColorController(TransformationsColorController transformationsColorController) {
     this.transformationsColorController = transformationsColorController;
+  }
+
+  private ShadingTabControllerFX shadingTabController;
+
+  public void setShadingTabController(ShadingTabControllerFX shadingTabController) {
+    this.shadingTabController = shadingTabController;
   }
 }
 

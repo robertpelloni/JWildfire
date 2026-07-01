@@ -3677,6 +3677,25 @@ public class MainEditorFrame extends JFrame {
         }
       });
       panel_1.add(xaosViewAsFromBtn);
+
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaModifiedWeightsPanel.removeAll();
+        tinaModifiedWeightsPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaModifiedWeightsPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_xaos.fxml"));
+            Parent root = loader.load();
+            TransformationsXaosControllerFX controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsXaosController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
     }
     return tinaModifiedWeightsPanel;
   }
@@ -16600,6 +16619,41 @@ public class MainEditorFrame extends JFrame {
     if (tabbedPane_3 == null) {
       tabbedPane_3 = new JTabbedPane(JTabbedPane.TOP);
       tabbedPane_3.setFont(Prefs.getPrefs().getFont("Dialog", Font.BOLD, 10));
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        JFXPanel jfxPanel = new JFXPanel();
+        tabbedPane_3.addTab("Shading", null, jfxPanel, null);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/shading_tab.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.ShadingTabControllerFX controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setShadingTabController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+        // Dummy initialize legacy components to prevent NPEs
+        postBokehSettingsPnl = new JPanel();
+        postBokehFilterKernelCmb = new JComboBox();
+        postBokehIntensityREd = new JWFNumberField();
+        postBokehIntensitySlider = new JSlider();
+        postBokehSizeREd = new JWFNumberField();
+        postBokehSizeSlider = new JSlider();
+        postBokehBrightnessREd = new JWFNumberField();
+        postBokehBrightnessSlider = new JSlider();
+        postBokehActivationREd = new JWFNumberField();
+        postBokehActivationSlider = new JSlider();
+        resetPostBokehSettingsBtn = new JButton();
+        postBlurRadiusREd = new JWFNumberField();
+        postBlurRadiusSlider = new JSlider();
+        postBlurFadeREd = new JWFNumberField();
+        postBlurFadeSlider = new JSlider();
+        postBlurFallOffREd = new JWFNumberField();
+        postBlurFallOffSlider = new JSlider();
+        resetPostBlurSettingsBtn = new JButton();
+      } else {
       tabbedPane_3.addTab("DOF", null, tinaDOFPanel, null);
       tabbedPane_3.addTab("Bokeh", new ImageIcon(MainEditorFrame.class.getResource("/org/jwildfire/swing/icons/new/distributions-parsix_linux.png")), getBokehSettingsPnl(), null);
 
@@ -16897,6 +16951,7 @@ public class MainEditorFrame extends JFrame {
       panel_1.add(getPostBlurFallOffREd(), null);
       panel_1.add(getPostBlurFallOffSlider(), null);
       panel_1.add(getResetPostBlurSettingsBtn());
+      }
     }
     return tabbedPane_3;
   }

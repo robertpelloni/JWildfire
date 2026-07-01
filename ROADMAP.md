@@ -14,11 +14,11 @@
     - [x] Modernize UI to JavaFX.
     - [x] Implement Motion Curve editing UI.
     - [x] Complete Movie Render logic.
-    - [ ] Full documentation in Manual.
-- [ ] **Dancing Flames**:
-    - [ ] Complete Project Load/Save logic.
-    - [ ] Implement Random Flame Generation.
-    - [ ] Full documentation in Manual.
+    - [x] Full documentation in Manual.
+- [x] **Dancing Flames**:
+    - [x] Complete Project Load/Save logic.
+    - [x] Implement Random Flame Generation.
+    - [x] Full documentation in Manual.
 - [x] **Quilt Flame Renderer**:
     - [x] Wire up Render/Cancel/Save logic.
     - [x] Connect UI controls to Renderer.
@@ -43,13 +43,13 @@
     - [x] Modernize to JavaFX.
     - [x] Syntax Highlighting.
     - [x] Documentation.
-- [ ] **Main Editor Sub-Panels**:
+- [x] **Main Editor Sub-Panels**:
     - [x] Modernize Gradient Editor to JavaFX.
     - [x] Modernize Coloring Tab to JavaFX.
-    - [ ] Modernize Transformations Tab.
-    - [ ] Modernize Layers Tab.
-    - [ ] Modernize Camera Tab.
-    - [ ] Modernize Shading Tab.
+    - [x] Modernize Transformations Tab.
+    - [x] Modernize Layers Tab.
+    - [x] Modernize Camera Tab.
+    - [x] Modernize Shading Tab.
 
 ### Short Term
 - [x] Centralize versioning.

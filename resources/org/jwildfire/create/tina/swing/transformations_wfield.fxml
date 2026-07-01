@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jwildfire.create.tina.swing.TransformationsWFieldControllerFX">
+  <columnConstraints>
+    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label onMouseClicked="#resetWFieldType" style="-fx-cursor: hand;" text="WField type" />
+      <ComboBox fx:id="typeCmb" prefWidth="150.0" GridPane.columnIndex="1" />
+
+      <Label onMouseClicked="#resetInput" style="-fx-cursor: hand;" text="Input" GridPane.columnIndex="2" />
+      <ComboBox fx:id="inputCmb" prefWidth="150.0" GridPane.columnIndex="3" />
+
+      <Label text="Color Intensity" GridPane.rowIndex="1" />
+      <TextField fx:id="colorIntensityField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+      <Label text="Variation Int." GridPane.rowIndex="2" />
+      <TextField fx:id="variationIntensityField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+      <Label text="Jitter Intensity" GridPane.rowIndex="3" />
+      <TextField fx:id="jitterIntensityField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+      <Label onMouseClicked="#resetParam01" style="-fx-cursor: hand;" text="Param 01" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <TextField fx:id="param01Field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+      <Label onMouseClicked="#resetParam02" style="-fx-cursor: hand;" text="Param 02" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <TextField fx:id="param02Field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+      <Label onMouseClicked="#resetParam03" style="-fx-cursor: hand;" text="Param 03" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <TextField fx:id="param03Field" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+
+      <Label text="Param 04" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <ComboBox fx:id="param04Cmb" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+
+      <Label onMouseClicked="#resetParam05" style="-fx-cursor: hand;" text="Param 05" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <TextField fx:id="param05Field" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+
+      <Label onMouseClicked="#resetParam06" style="-fx-cursor: hand;" text="Param 06" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <TextField fx:id="param06Field" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+
+      <Label onMouseClicked="#resetParam07" style="-fx-cursor: hand;" text="Param 07" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+      <TextField fx:id="param07Field" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+
+      <Label text="Param 08" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+      <ComboBox fx:id="param08Cmb" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+
+      <Label text="Var Param 1" GridPane.rowIndex="5" />
+      <ComboBox fx:id="varParam1Cmb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="varParam1Field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+      <Label text="Var Param 2" GridPane.rowIndex="7" />
+      <ComboBox fx:id="varParam2Cmb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <TextField fx:id="varParam2Field" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+      <Label text="Var Param 3" GridPane.rowIndex="9" />
+      <ComboBox fx:id="varParam3Cmb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="varParam3Field" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+
+      <Label onMouseClicked="#resetImageFile" style="-fx-cursor: hand;" text="Image file" GridPane.rowIndex="4" />
+      <Button fx:id="selectImageBtn" mnemonicParsing="false" onAction="#selectImageBtnClicked" text="Select image..." GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+      <Button fx:id="randomizeAllBtn" mnemonicParsing="false" onAction="#randomizeAllBtnClicked" text="Randomize all" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <Button fx:id="resetAllBtn" mnemonicParsing="false" onAction="#resetAllBtnClicked" text="Reset all" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>

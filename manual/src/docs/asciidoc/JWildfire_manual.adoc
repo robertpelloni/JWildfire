@@ -2699,6 +2699,20 @@ These are the options:
  - *Rotating Mandelbrots*: generates a random fractal of type _Mandelbrot_ and applies a random rotation-motion to it
 - *All*: randomly selects one of the random-movie-generators mentioned above to generate a random movie
 
+==== _Easy Movie Maker UI (JavaFX Modernization)_
+The Easy Movie Maker interface has been completely modernized to JavaFX to provide a smoother, more responsive experience.
+
+===== _Motion Curve Editing_
+A core feature of the new interface is the Motion Curve editor. This visual editor allows you to precisely control how animations progress over time.
+ - Click the **Edit Curve** button next to a motion to open the `CurveEditorDialog`.
+ - You can add, move, and delete control points to shape the animation curve.
+ - Double-clicking a point toggles its interpolation mode (e.g., Smooth, Linear).
+
+===== _Movie Rendering_
+The rendering logic has been fully integrated into the new controller, replacing the deprecated `TinaSWFAnimatorController`.
+ - Use the **Render Movie** button to configure and start the final rendering process.
+ - The rendering uses the central JWildfire render engines (CPU or GPU, depending on your settings) to produce high-quality image sequences.
+
 ==== _From clipboard_
 Loads a movie-file from the clipboard and appends it to the _thumbnail ribbon_.
 
@@ -2882,6 +2896,20 @@ and contains four building blocks:
  - *flame properties*
  - *motion links*
  - *motion hierarchies*.
+
+=== Dancing Flames UI (JavaFX Modernization)
+The Dancing Flames module has been updated to use JavaFX, bringing performance and workflow improvements.
+
+==== Project Management
+You can now save and load your Dancing Flames setups as projects.
+ - Click **Load Project** to restore a `.jwfdance` project file, keeping all your mapped motions and loaded flames intact.
+ - Click **Save Project** to dump your current setup to a `.jwfdance` project file for later editing.
+
+==== Random Flame Generation
+Instead of manually creating flames to dance, you can auto-generate a pool of them:
+ 1. Pick a base generator style from the **Generator** dropdown.
+ 2. Specify the number of flames to create in the **Count** field.
+ 3. Click **Gen Random** to automatically populate your pool with new variations ready for animation.
 
 ==== Motions
 You can define any number of motions, for example:
