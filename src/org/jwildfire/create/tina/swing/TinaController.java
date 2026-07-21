@@ -1381,6 +1381,15 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   }
 
   public void refreshFlameImage(boolean pQuickRender, boolean pMouseDown, int pDownScale, boolean pReRender, boolean pAllowUseCache) {
+    if (layersTabController != null) {
+      layersTabController.refreshControls();
+    }
+    if (cameraTabController != null) {
+      cameraTabController.refreshControls();
+    }
+    if (shadingTabController != null) {
+      shadingTabController.refresh();
+    }
     flamePreviewHelper.refreshFlameImage(pQuickRender, pMouseDown, pDownScale, pReRender, pAllowUseCache);
     if(pQuickRender && !pMouseDown) {
       for(FlameChangeOberserver observer:flameChangeOberservers) {
@@ -2423,6 +2432,15 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
         }
         if (transformationsColorController != null) {
           transformationsColorController.refresh();
+        }
+        if (transformationsGammaController != null) {
+          transformationsGammaController.refresh();
+        }
+        if (transformationsXaosController != null) {
+          transformationsXaosController.refreshControls();
+        }
+        if (transformationsWFieldController != null) {
+          transformationsWFieldController.refresh();
         }
         xFormControls.enableControls(xForm);
         nonlinearControls.resizeNonlinearParamsPanel();
@@ -7058,6 +7076,16 @@ public class TinaController implements FlameHolder, LayerHolder, ScriptRunnerEnv
   }
 
   private TransformationsWFieldControllerFX transformationsWFieldController;
+  private LayersTabControllerFX layersTabController;
+  private CameraTabControllerFX cameraTabController;
+
+  public void setLayersTabController(LayersTabControllerFX layersTabController) {
+    this.layersTabController = layersTabController;
+  }
+
+  public void setCameraTabController(CameraTabControllerFX cameraTabController) {
+    this.cameraTabController = cameraTabController;
+  }
 
   public void setTransformationsWFieldController(TransformationsWFieldControllerFX transformationsWFieldController) {
     this.transformationsWFieldController = transformationsWFieldController;

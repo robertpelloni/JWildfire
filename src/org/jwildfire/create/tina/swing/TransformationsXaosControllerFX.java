@@ -102,6 +102,57 @@ public class TransformationsXaosControllerFX implements Initializable {
     }
 
     public void refreshControls() {
-        // Not yet fully implemented, acts as a stub to avoid errors when TinaController tries to update it
+        if (tinaController == null) return;
+        org.jwildfire.create.tina.base.XForm xForm = tinaController.getCurrXForm();
+        org.jwildfire.create.tina.base.Layer layer = tinaController.getCurrLayer();
+
+        refreshing = true;
+        try {
+            ObservableList<XaosRow> items = FXCollections.observableArrayList();
+
+            boolean viewAsTo = viewAsToBtn.isSelected();
+
+            // Replicate table model logic
+            if (layer != null && xForm != null && layer.getFinalXForms().indexOf(xForm) < 0 && layer.getBGXForms().indexOf(xForm) < 0) {
+                int transformIndex = tinaController.getData().transformationsTable.getSelectedRow();
+                if (transformIndex >= 0 && transformIndex < layer.getXForms().size()) {
+                    for (int rowIndex = 0; rowIndex < layer.getXForms().size(); rowIndex++) {
+                        String fromStr, toStr, weightStr;
+                        if (viewAsTo) {
+                            fromStr = (String) tinaController.getXFormCaption(layer.getXForms().get(transformIndex));
+                            toStr = (String) tinaController.getXFormCaption(layer.getXForms().get(rowIndex));
+                            weightStr = org.jwildfire.base.Tools.doubleToString(layer.getXForms().get(transformIndex).getModifiedWeights()[rowIndex]);
+                        } else {
+                            fromStr = (String) tinaController.getXFormCaption(layer.getXForms().get(rowIndex));
+                            toStr = (String) tinaController.getXFormCaption(layer.getXForms().get(transformIndex));
+                            weightStr = org.jwildfire.base.Tools.doubleToString(layer.getXForms().get(rowIndex).getModifiedWeights()[transformIndex]);
+                        }
+                        items.add(new XaosRow(fromStr, toStr, weightStr));
+                    }
+                }
+            }
+            relWeightsTable.setItems(items);
+
+            int xaosRow = tinaController.getData().relWeightsTable.getSelectedRow();
+            if (layer != null && xaosRow >= 0 && xaosRow < items.size()) {
+                relWeightsTable.getSelectionModel().select(xaosRow);
+
+                int transformRow = tinaController.getData().transformationsTable.getSelectedRow();
+                if (transformRow >= 0 && transformRow < layer.getXForms().size()) {
+                    if (viewAsTo) {
+                        relWeightField.setText(org.jwildfire.base.Tools.doubleToString(layer.getXForms().get(transformRow).getModifiedWeights()[xaosRow]));
+                    } else {
+                        relWeightField.setText(org.jwildfire.base.Tools.doubleToString(layer.getXForms().get(xaosRow).getModifiedWeights()[transformRow]));
+                    }
+                }
+            } else {
+                relWeightField.setText("");
+            }
+
+            viewAsToBtn.setSelected(tinaController.getData().xaosViewAsToBtn.isSelected());
+            viewAsFromBtn.setSelected(tinaController.getData().xaosViewAsFromBtn.isSelected());
+        } finally {
+            refreshing = false;
+        }
     }
 }

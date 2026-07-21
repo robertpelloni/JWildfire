@@ -122,6 +122,44 @@ public class TransformationsWFieldControllerFX implements Initializable {
         this.tinaController = tinaController;
     }
 
+    public void refresh() {
+        if (tinaController == null) return;
+        refreshing = true;
+        try {
+            org.jwildfire.create.tina.base.XForm xForm = tinaController.getCurrXForm();
+            boolean enabled = xForm != null;
+
+            typeCmb.setDisable(!enabled);
+            inputCmb.setDisable(!enabled);
+            param01Field.setDisable(!enabled);
+            param02Field.setDisable(!enabled);
+            param03Field.setDisable(!enabled);
+            param04Cmb.setDisable(!enabled);
+            param05Field.setDisable(!enabled);
+            param06Field.setDisable(!enabled);
+            param07Field.setDisable(!enabled);
+            param08Cmb.setDisable(!enabled);
+
+            if (enabled) {
+                param01Field.setText(String.valueOf(tinaController.getMainEditorFrame().getWeightingFieldParam01REd().getValue()));
+                param02Field.setText(String.valueOf(tinaController.getMainEditorFrame().getWeightingFieldParam02REd().getValue()));
+                param03Field.setText(String.valueOf(tinaController.getMainEditorFrame().getWeightingFieldParam03REd().getValue()));
+                param05Field.setText(String.valueOf(tinaController.getMainEditorFrame().getWeightingFieldParam05REd().getValue()));
+                param06Field.setText(String.valueOf(tinaController.getMainEditorFrame().getWeightingFieldParam06REd().getValue()));
+                param07Field.setText(String.valueOf(tinaController.getMainEditorFrame().getWeightingFieldParam07REd().getValue()));
+            } else {
+                param01Field.setText("");
+                param02Field.setText("");
+                param03Field.setText("");
+                param05Field.setText("");
+                param06Field.setText("");
+                param07Field.setText("");
+            }
+        } finally {
+            refreshing = false;
+        }
+    }
+
     @FXML private void resetWFieldType(MouseEvent event) { if (event.getClickCount() == 2 && tinaController != null) { tinaController.saveUndoPoint(); tinaController.weightingFieldTypeCmb_reset(); } }
     @FXML private void resetInput(MouseEvent event) { if (event.getClickCount() == 2 && tinaController != null) { tinaController.saveUndoPoint(); tinaController.weightMapInputCmb_reset(); } }
     @FXML private void resetImageFile(MouseEvent event) { if (event.getClickCount() == 2 && tinaController != null) { tinaController.saveUndoPoint(); tinaController.weightMapColorMapFilename_reset(); } }

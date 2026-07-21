@@ -106,6 +106,48 @@ public class ShadingTabControllerFX implements Initializable {
         this.tinaController = tinaController;
     }
 
+    public void refresh() {
+        if (tinaController == null) return;
+        refreshing = true;
+        try {
+            org.jwildfire.create.tina.base.Flame flame = tinaController.getCurrFlame();
+            boolean enabled = flame != null;
+
+            postBlurRadiusField.setDisable(!enabled);
+            postBlurRadiusSlider.setDisable(!enabled);
+            postBlurFadeField.setDisable(!enabled);
+            postBlurFadeSlider.setDisable(!enabled);
+            postBlurFalloffField.setDisable(!enabled);
+            postBlurFalloffSlider.setDisable(!enabled);
+
+            if (enabled) {
+                dofAreaField.setText(String.valueOf(flame.getCamDOFArea()));
+                dofExponentField.setText(String.valueOf(flame.getCamDOFExponent()));
+                dofDofField.setText(String.valueOf(flame.getCamDOF()));
+                postBokehIntensityField.setText(String.valueOf(tinaController.getFrameControlsUtil().getEvaluatedPropertyValue(flame, "solidRendering.postBokehIntensity")));
+                postBokehSizeField.setText(String.valueOf(tinaController.getFrameControlsUtil().getEvaluatedPropertyValue(flame, "solidRendering.postBokehSize")));
+                postBokehBrightnessField.setText(String.valueOf(tinaController.getFrameControlsUtil().getEvaluatedPropertyValue(flame, "solidRendering.postBokehBrightness")));
+                postBokehActivationField.setText(String.valueOf(tinaController.getFrameControlsUtil().getEvaluatedPropertyValue(flame, "solidRendering.postBokehActivation")));
+                postBlurRadiusField.setText(String.valueOf(flame.getPostBlurRadius()));
+                postBlurFadeField.setText(String.valueOf(flame.getPostBlurFade()));
+                postBlurFalloffField.setText(String.valueOf(flame.getPostBlurFallOff()));
+            } else {
+                dofAreaField.setText("");
+                dofExponentField.setText("");
+                dofDofField.setText("");
+                postBokehIntensityField.setText("");
+                postBokehSizeField.setText("");
+                postBokehBrightnessField.setText("");
+                postBokehActivationField.setText("");
+                postBlurRadiusField.setText("");
+                postBlurFadeField.setText("");
+                postBlurFalloffField.setText("");
+            }
+        } finally {
+            refreshing = false;
+        }
+    }
+
     @FXML private void resetDofArea(MouseEvent event) { if (event.getClickCount() == 2 && tinaController != null) tinaController.getFlameControls().cameraDOFAreaREd_reset(); }
     @FXML private void resetDofExponent(MouseEvent event) { if (event.getClickCount() == 2 && tinaController != null) tinaController.getFlameControls().cameraDOFExponentREd_reset(); }
     @FXML private void resetDofDof(MouseEvent event) { if (event.getClickCount() == 2 && tinaController != null) tinaController.getFlameControls().cameraDOFREd_reset(); }

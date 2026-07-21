@@ -662,6 +662,27 @@ public class MainEditorFrame extends JFrame {
     if (tinaSouthTabbedPane == null) {
       tinaSouthTabbedPane = new JTabbedPane();
       tinaSouthTabbedPane.setFont(Prefs.getPrefs().getFont("Dialog", Font.BOLD, 10));
+
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        JPanel cameraPanel = getTinaCameraPanel();
+        cameraPanel.removeAll();
+        cameraPanel.setLayout(new BorderLayout());
+        JFXPanel cameraJfxPanel = new JFXPanel();
+        cameraPanel.add(cameraJfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/camera_tab.fxml"));
+            Parent root = loader.load();
+            CameraTabControllerFX controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setCameraTabController(controller);
+            cameraJfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
+
       tinaSouthTabbedPane.addTab("Camera ", new ImageIcon(MainEditorFrame.class.getResource("/org/jwildfire/swing/icons/new/modify_view.png")), getTinaCameraPanel(), null);
 
       tinaDOFPanel = new JPanel();
@@ -1412,6 +1433,26 @@ public class MainEditorFrame extends JFrame {
       tinaSouthTabbedPane.addTab("Stereo3d ", new ImageIcon(MainEditorFrame.class.getResource("/org/jwildfire/swing/icons/new/layer-novisible.png")), getPanel_82(), null);
       tinaSouthTabbedPane.addTab("Post symmetry", null, getPanel_34(), null);
       tinaSouthTabbedPane.addTab("FPS / Motion blur", null, getMotionBlurPanel(), null);
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        JPanel layersPanel = getPanel_74();
+        layersPanel.removeAll();
+        layersPanel.setLayout(new BorderLayout());
+        JFXPanel layersJfxPanel = new JFXPanel();
+        layersPanel.add(layersJfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/layers_tab.fxml"));
+            Parent root = loader.load();
+            LayersTabControllerFX controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setLayersTabController(controller);
+            layersJfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
+
       tinaSouthTabbedPane.addTab("Layers ", new ImageIcon(MainEditorFrame.class.getResource("/org/jwildfire/swing/icons/new/emblem-photos.png")), getPanel_74(), null);
       tinaSouthTabbedPane.addTab("Channel mixer ", new ImageIcon(MainEditorFrame.class.getResource("/org/jwildfire/swing/icons/new/color-fill.png")), getChannelMixerPanel(), null);
 
@@ -2844,6 +2885,64 @@ public class MainEditorFrame extends JFrame {
       panel_1.setLayout(null);
       tinaTransformationsTabbedPane.addTab("WField", null, getTinaWeightMapPanel(), null);
 
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        // Gamma
+        panel_1.removeAll();
+        panel_1.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        panel_1.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_gamma.fxml"));
+            Parent root = loader.load();
+            TransformationsGammaControllerFX controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsGammaController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+
+        // Xaos
+        JPanel xaosPanel = getTinaModifiedWeightsPanel();
+        xaosPanel.removeAll();
+        xaosPanel.setLayout(new BorderLayout());
+        JFXPanel xaosJfxPanel = new JFXPanel();
+        xaosPanel.add(xaosJfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_xaos.fxml"));
+            Parent root = loader.load();
+            TransformationsXaosControllerFX controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsXaosController(controller);
+            xaosJfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+
+        // WField
+        JPanel wfieldPanel = getTinaWeightMapPanel();
+        wfieldPanel.removeAll();
+        wfieldPanel.setLayout(new BorderLayout());
+        JFXPanel wfieldJfxPanel = new JFXPanel();
+        wfieldPanel.add(wfieldJfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_wfield.fxml"));
+            Parent root = loader.load();
+            TransformationsWFieldControllerFX controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsWFieldController(controller);
+            wfieldJfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
+
       xFormModGammaSlider = new JSlider();
       xFormModGammaSlider.setValue(0);
       xFormModGammaSlider.setSize(new Dimension(172, 22));
@@ -3589,30 +3688,8 @@ public class MainEditorFrame extends JFrame {
   
   private JPanel getTinaVariationPanel() {
     if (tinaVariationPanel == null) {
-      if (Prefs.getPrefs().isUseJavaFX()) {
-        tinaVariationPanel = new JPanel();
-        tinaVariationPanel.setLayout(new BorderLayout());
-        JFXPanel jfxPanel = new JFXPanel();
-        tinaVariationPanel.add(jfxPanel, BorderLayout.CENTER);
-        Platform.runLater(() -> {
-          try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_nonlinear.fxml"));
-            Parent root = loader.load();
-            org.jwildfire.create.tina.swing.TransformationsNonlinearController controller = loader.getController();
-            controller.setTinaController(tinaController);
-            tinaController.setTransformationsNonlinearController(controller);
-            jfxPanel.setScene(new Scene(root));
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        });
-        // Still need to initialize legacy components to avoid NPEs if they are referenced
-        // But since we return the panel here, we can perhaps just initialize them but not add them?
-        // Let's rely on the fact that existing fields are null and TinaController checks for null or lazily initializes.
-        // Actually, TinaController.NonlinearControlsDelegate likely accesses them.
-        // So we should probably let the legacy code run to init components, then replace content?
-        // Yes, let's fall through to legacy init, then replace if FX.
-      }
+      tinaVariationPanel = new JPanel();
+      tinaVariationPanel.setLayout(new BorderLayout());
 
       nonlinearParams1Lbl = new JLabel();
       nonlinearParams1Lbl.setPreferredSize(new Dimension(50, 22));
@@ -3635,10 +3712,27 @@ public class MainEditorFrame extends JFrame {
       nonlinearVar1Lbl.setSize(new Dimension(38, 22));
       nonlinearVar1Lbl.setLocation(new Point(28, 2));
       nonlinearVar1Lbl.setFont(Prefs.getPrefs().getFont("Dialog", Font.BOLD, 10));
-      tinaVariationPanel = new JPanel();
-      tinaVariationPanel.setLayout(new BorderLayout());
       tinaVariationPanel.add(getPanel_16(), BorderLayout.NORTH);
       tinaVariationPanel.add(getNonlinearScrollPane(), BorderLayout.CENTER);
+
+      if (Prefs.getPrefs().isUseJavaFX()) {
+        tinaVariationPanel.removeAll();
+        tinaVariationPanel.setLayout(new BorderLayout());
+        JFXPanel jfxPanel = new JFXPanel();
+        tinaVariationPanel.add(jfxPanel, BorderLayout.CENTER);
+        Platform.runLater(() -> {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_nonlinear.fxml"));
+            Parent root = loader.load();
+            org.jwildfire.create.tina.swing.TransformationsNonlinearController controller = loader.getController();
+            controller.setTinaController(tinaController);
+            tinaController.setTransformationsNonlinearController(controller);
+            jfxPanel.setScene(new Scene(root));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+      }
     }
     return tinaVariationPanel;
   }
@@ -3677,25 +3771,6 @@ public class MainEditorFrame extends JFrame {
         }
       });
       panel_1.add(xaosViewAsFromBtn);
-
-      if (Prefs.getPrefs().isUseJavaFX()) {
-        tinaModifiedWeightsPanel.removeAll();
-        tinaModifiedWeightsPanel.setLayout(new BorderLayout());
-        JFXPanel jfxPanel = new JFXPanel();
-        tinaModifiedWeightsPanel.add(jfxPanel, BorderLayout.CENTER);
-        Platform.runLater(() -> {
-          try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/jwildfire/create/tina/swing/transformations_xaos.fxml"));
-            Parent root = loader.load();
-            TransformationsXaosControllerFX controller = loader.getController();
-            controller.setTinaController(tinaController);
-            tinaController.setTransformationsXaosController(controller);
-            jfxPanel.setScene(new Scene(root));
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        });
-      }
     }
     return tinaModifiedWeightsPanel;
   }

@@ -64,6 +64,30 @@ public class TransformationsGammaControllerFX implements Initializable {
         this.tinaController = tinaController;
     }
 
+    public void refresh() {
+        if (tinaController == null) return;
+        refreshing = true;
+        try {
+            org.jwildfire.create.tina.base.XForm xForm = tinaController.getCurrXForm();
+            boolean enabled = xForm != null;
+
+            gammaField.setDisable(!enabled);
+            gammaSlider.setDisable(!enabled);
+            gammaSpeedField.setDisable(!enabled);
+            gammaSpeedSlider.setDisable(!enabled);
+
+            if (enabled) {
+                gammaField.setText(String.valueOf(xForm.getModGamma()));
+                gammaSpeedField.setText(String.valueOf(xForm.getModGammaSpeed()));
+            } else {
+                gammaField.setText("");
+                gammaSpeedField.setText("");
+            }
+        } finally {
+            refreshing = false;
+        }
+    }
+
     @FXML
     private void resetGamma(MouseEvent event) {
         if (event.getClickCount() == 2 && tinaController != null) {
